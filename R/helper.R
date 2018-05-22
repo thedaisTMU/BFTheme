@@ -145,6 +145,8 @@ brookfield.base.theme <- function(){
 }
 
 
+
+#Experimental Function
 generate.dot <- function(number,
                          nrow,direction="right",
                          starting.coord=c(0,0),

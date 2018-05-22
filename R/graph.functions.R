@@ -54,14 +54,21 @@ plot.scatter.bf <- function(data,x,y,
                             export = FALSE,
                             export.name = ""){
   #This bit sets up the base Brookfield theme elements
+  if(!data.table::is.data.table(data)){ #Chek and coerce into data.table
+    clone <- data.table::as.data.table(data)
+  }
+  else{
+    clone <- cbind(data)
+    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
+  }
   scatter.theme <- brookfield.base.theme()
   scatter.theme <- scatter.theme + ggplot2::theme(axis.line=ggplot2::element_blank())
   #This bit sets the plot size, as well as the frequency of the ticks
   if(is.null(plot.limit)){
-    plot.limit["min.x"] <- signif(floor(min(data[,get(x)],na.rm=TRUE)*0.9),2) #Get it down to 2 significant figures
-    plot.limit["max.x"] <- signif(ceiling(max(data[,get(x)],na.rm=TRUE)*1.1),2) #Get it down to 2 significant figures
-    plot.limit["min.y"] <- signif(floor(min(data[,get(y)],na.rm=TRUE)*0.9),2) #Get it down to 2 significant figures
-    plot.limit["max.y"] <- signif(ceiling(max(data[,get(y)],na.rm=TRUE)*1.1),2) #Get it down to 2 significant figures
+    plot.limit["min.x"] <- signif(floor(min(clone[,get(x)],na.rm=TRUE)*0.9),2) #Get it down to 2 significant figures
+    plot.limit["max.x"] <- signif(ceiling(max(clone[,get(x)],na.rm=TRUE)*1.1),2) #Get it down to 2 significant figures
+    plot.limit["min.y"] <- signif(floor(min(clone[,get(y)],na.rm=TRUE)*0.9),2) #Get it down to 2 significant figures
+    plot.limit["max.y"] <- signif(ceiling(max(clone[,get(y)],na.rm=TRUE)*1.1),2) #Get it down to 2 significant figures
   }
   else{
     names(plot.limit) <- c("min.x","max.x","min.y","max.y")
@@ -77,7 +84,7 @@ plot.scatter.bf <- function(data,x,y,
     p.size <- 1
   }
   #Generate base plot
-  p <- ggplot2::ggplot(data=data,ggplot2::aes_string(x,y)) +
+  p <- ggplot2::ggplot(data=clone,ggplot2::aes_string(x,y)) +
     scatter.theme
   #Dealing for cases of having groupings
 
@@ -86,21 +93,21 @@ plot.scatter.bf <- function(data,x,y,
       colours <- set.colours(1) #Set it to dark blue
     }
     if(trend.line){
-      p <- p + ggplot2::geom_smooth(data=data,ggplot2::aes_string(x,y),colour=colours[1],alpha=1,fill="#D6D6D6",method = "lm") #Add trend line using lm into the plot
+      p <- p + ggplot2::geom_smooth(data=clone,ggplot2::aes_string(x,y),colour=colours[1],alpha=1,fill="#D6D6D6",method = "lm") #Add trend line using lm into the plot
     }
     p <- p + ggplot2::geom_point(ggplot2::aes_string(size=p.size),colour=colours) #Only one colour needed
   }
   if(!is.null(group.by)){ #If group by is active
     if(is.null(colours)){ #And colour is not specified
-      colours <- set.colours(length(unique(data[,get(group.by)]))) #Generate default categorical set
+      colours <- set.colours(length(unique(clone[,get(group.by)]))) #Generate default categorical set
     }
     if(trend.line){
-      p <- p + ggplot2::geom_smooth(data=data,ggplot2::aes_string(x,y),colour=colours[1],alpha=0.5,fill="#D6D6D6", method = "lm") #Add trend line using lm into the plot
+      p <- p + ggplot2::geom_smooth(data=clone,ggplot2::aes_string(x,y),colour=colours[1],alpha=0.5,fill="#D6D6D6", method = "lm") #Add trend line using lm into the plot
     }
     p <- p + ggplot2::geom_point(ggplot2::aes_string(colour=group.by,size=p.size)) +
       ggplot2::scale_colour_manual(values=colours)
     if(legend.title!=""){ #If we know the legend title
-      num.row <- round(sum(nchar(as.character(unique(data[,get(group.by)]))))/100)+1 #Set number of row for legend. It's designed for 7.25in exports
+      num.row <- round(sum(nchar(as.character(unique(clone[,get(group.by)]))))/100)+1 #Set number of row for legend. It's designed for 7.25in exports
       p <- p + ggplot2::guides(colour=ggplot2::guide_legend(title=legend.title,
                                                             title.hjust = 0.5,
                                                             title.position = "top",
@@ -181,14 +188,21 @@ plot.column.bf <- function(data,x,cat,
                            caption = "",
                            export=FALSE,
                            export.name=""){
+  if(!data.table::is.data.table(data)){ #Chek and coerce into data.table
+    clone <- data.table::as.data.table(data)
+  }
+  else{
+    clone <- cbind(data)
+    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
+  }
   #Set up basic theme elements
   column.theme <- brookfield.base.theme() +
     theme(axis.text.x = ggplot2::element_text(size=9, margin=ggplot2::margin(t=2), family = "RooneySans-Light", angle=90, hjust = 1, vjust = 0.5),
           axis.ticks.x = ggplot2::element_blank(),
           axis.title.x = ggplot2::element_blank())
-  max.plot <- max(data[,get(x)]*1.04) #Scale the plot maximum
+  max.plot <- max(clone[,get(x)]*1.04) #Scale the plot maximum
   if(stacked){
-    max.plot <- max(data[,sum(get(x)),by=cat][,V1])
+    max.plot <- max(clone[,sum(get(x)),by=cat][,V1])
   }
   n.sig <- 1 #Set number of significant figures - maybe parametarize in the future
   ticks.seq <- set.ticks.seq(max.plot,0,unit=label.unit)
@@ -197,10 +211,10 @@ plot.column.bf <- function(data,x,cat,
   #Bar ordering
   if(order.bar != "No"){
     if(order.bar == "ascending"){
-      data[,cat] <- reorder(data[,get(cat)],data[,get(x)]) #Reorder bars ascending order
+      clone[,cat] <- reorder(clone[,get(cat)],clone[,get(x)]) #Reorder bars ascending order
     }
     else if(order.bar == "descending"){
-      data[,cat] <- reorder(data[,get(cat)],-data[,get(x)]) #Reorder bars descending order
+      clone[,cat] <- reorder(clone[,get(cat)],-clone[,get(x)]) #Reorder bars descending order
     }
     else{
       stop("Order has to be either 'ascending' or 'descending'")
@@ -212,19 +226,19 @@ plot.column.bf <- function(data,x,cat,
       colours <- set.colours(1) #If not, generate dark blue basic
     }
     #Set up base plot
-    p <- ggplot2::ggplot(data,ggplot2::aes_string(cat,x)) +
+    p <- ggplot2::ggplot(clone,ggplot2::aes_string(cat,x)) +
       column.theme +
       ggplot2::geom_col(width=0.6,fill=colours) +
       ggplot2::scale_y_continuous(expand=c(0,0),limits = c(0,max.plot), breaks = ticks.seq$breaks, labels = ticks.seq$labels) +
       ggplot2::scale_fill_manual(values=colours)
   }
   else{
-    num.row <- round(sum(nchar(as.character(unique(data[,get(group.by)]))))/100)+1
+    num.row <- round(sum(nchar(as.character(unique(clone[,get(group.by)]))))/100)+1
     #Set up base plot if colours are different
     if(is.null(colours)){ #Check for specified colours
-      colours <- set.colours(length(unique(data[,get(group.by)]))) #If not, generate colours
+      colours <- set.colours(length(unique(clone[,get(group.by)]))) #If not, generate colours
     }
-    p <- ggplot2::ggplot(data,ggplot2::aes_string(cat,x,fill=group.by)) +
+    p <- ggplot2::ggplot(clone,ggplot2::aes_string(cat,x,fill=group.by)) +
       column.theme
     if(stacked){
       p <- p + ggplot2::geom_col(width=0.6, position="stack") +
@@ -242,10 +256,10 @@ plot.column.bf <- function(data,x,cat,
   }
   #Set numeric label for values into the columns
   if(label){
-    p <- p + ggplot2::geom_text(data=data,ggplot2::aes(label=str_c(scales::comma(round(unlist(data[,get(x)]),1)),label.unit)),
+    p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=str_c(scales::comma(round(unlist(clone[,get(x)]),1)),label.unit)),
                                 nudge_y=nudge.amt, size=11*0.352777778, family="RooneySans-Regular")
   }
-  if(length(unique(data[,get(cat)]))<= 5){ #If there are more than 10 groups, make the x axis certicle
+  if(length(unique(clone[,get(cat)]))<= 5){ #If there are more than 10 groups, make the x axis certicle
     p <- p + theme(axis.text.x = ggplot2::element_text(angle=90,size=11, margin=ggplot2::margin(t=0,l=10),hjust=1,vjust=0.5))
   }
   p <- p + ggplot2::labs(subtitle = plot.title, title=plot.fig.num,y=y.axis, caption=caption)
@@ -294,6 +308,7 @@ plot.waffle.bf <- function(named.vector,
                            label.unit = "",
                            export = FALSE,
                            export.name = "Rplot") {
+
   #Set up the main theme element
   waffle.theme <- brookfield.base.theme() +
     theme(panel.spacing = ggplot2::unit(c(0,0,0,0),units=c("cm","cm","cm","cm")),
@@ -435,39 +450,46 @@ plot.line.bf <- function(data,x,y,
                          caption = "",
                          export = FALSE,
                          export.name = ""){
+  if(!data.table::is.data.table(data)){ #Chek and coerce into data.table
+    clone <- data.table::as.data.table(data)
+  }
+  else{
+    clone <- cbind(data)
+    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
+  }
   #This bit sets up the base Brookfield theme elements
   line.theme <- brookfield.base.theme()
   if(is.null(plot.limit)){
-    plot.limit["min.y"] <- min(data[,get(y)]) #Set the plot limit for minimum
-    plot.limit["max.y"] <- max(data[,get(y)])*1.05 #Set the max plot limit - add in a bit of buffer
+    plot.limit["min.y"] <- min(clone[,get(y)]) #Set the plot limit for minimum
+    plot.limit["max.y"] <- max(clone[,get(y)])*1.05 #Set the max plot limit - add in a bit of buffer
   }
   names(plot.limit) <- c("min.y","max.y")
   ticks.seq.y <- set.ticks.seq(plot.limit["max.y"],plot.limit["min.y"],unit.y) #Set tick sequence based on the plot limits
-  if(is.numeric(data[,get(x)])){
+  if(is.numeric(clone[,get(x)])){
     dum <- FALSE #Scale x continuous as opposed to discrete later on.
-    ticks.seq.x <- unique(data[,get(x)]) #Set the x axis ticks, if it's numeric then extract ordered set directly
+    ticks.seq.x <- unique(clone[,get(x)]) #Set the x axis ticks, if it's numeric then extract ordered set directly
   }
   else{ #But if it's not
     dum <- TRUE #Scale x discrete as opposed to continuous later on.
     if(!is.null(cat.order)){ #If a categorical order is not provided - alphabetica order will be used
-      dum.vec <- data[,get(x)]
+      dum.vec <- clone[,get(x)]
       cat.ord.num <- seq(1,length(cat.order))
       names(cat.ord.num) <- cat.order
       dum.vec <- unname(cat.ord.num[dum.vec])
-      data[,x] <- factor(data[,get(x)],levels = cat.order) #This makes sure every data has an ordered category
+      clone[,x] <- factor(clone[,get(x)],levels = cat.order) #This makes sure every data has an ordered category
     }
   }
   if(is.null(group.by)){ #If there is only one group
     if(is.null(colours)){
       colours <- set.colours(1) #Only use one colour
     }
-    p <- ggplot2::ggplot(data,aes_string(x,y),colour=colours) + #Main plot object
+    p <- ggplot2::ggplot(clone,aes_string(x,y),colour=colours) + #Main plot object
       line.theme +
       ggplot2::geom_line(colour=colours,size=1.2)
   }
   else{
     if(is.null(colours)){
-      colours <- set.colours(length(unique(data[,get(group.by)]))) #Set colours according to the group
+      colours <- set.colours(length(unique(clone[,get(group.by)]))) #Set colours according to the group
     }
     p <- ggplot2::ggplot(data,aes_string(x,y,colour=group.by,group=group.by)) + #Main plot object
       line.theme +
@@ -481,10 +503,10 @@ plot.line.bf <- function(data,x,y,
     p <- p + scale_x_continuous(breaks = ticks.seq.x, labels = paste0(ticks.seq.x,unit.x))
 
   }
-  if(length(unique(data[,get(x)]))>= 10){ #If there are more than 10 groups, make the x axis certicle
+  if(length(unique(clone[,get(x)]))>= 10){ #If there are more than 10 groups, make the x axis certicle
     p <- p + theme(axis.text.x = ggplot2::element_text(angle=90,size=11, margin=ggplot2::margin(t=0,l=10),hjust=1,vjust=0.5))
   }
-  num.row <- round(sum(nchar(as.character(unique(data[,get(group.by)]))))/100)+1 #Set numnber of legend rows
+  num.row <- round(sum(nchar(as.character(unique(clone[,get(group.by)]))))/100)+1 #Set numnber of legend rows
   p <- p + labs(title=plot.fig.num,subtitle=plot.title,x=x.axis,y=y.axis,caption = caption) + #Add in all the captions
     guides(colour=guide_legend(title=legend.title,nrow=num.row,title.position = "top")) +
     scale_y_continuous(breaks = ticks.seq.y$breaks,labels = ticks.seq.y$labels)
@@ -533,9 +555,16 @@ plot.pyramid.bf <- function(data,
                             caption = "",
                             export = FALSE,
                             export.name = ""){
+
   #Set up basic theme elements
   levels <- unique(data[,get(diff)])
-  clone <- cbind(data) #Clone the data because data is being manipulated
+  if(!data.table::is.data.table(data)){ #Chek and coerce into data.table
+    clone <- data.table::as.data.table(data)
+  }
+  else{
+    clone <- cbind(data)
+    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
+  }
   if(length(levels)!=2){ #Pyramid plot only makes sense if you have 2 levels
     stop("There are either more or less than 2 levels. Can't draw a pyramid in that case")
   }
@@ -610,7 +639,13 @@ plot.mekko.bf <- function(data,
                           y.axis = "",
                           export = FALSE,
                           export.name = ""){
-  clone <- data
+  if(!data.table::is.data.table(data)){ #Chek and coerce into data.table
+    clone <- data.table::as.data.table(data)
+  }
+  else{
+    clone <- cbind(data)
+    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
+  }
   setkeyv(x=clone,y)
   clone[,w:=cumsum(get(x))]
   clone[,wm:=w-get(x)]
@@ -684,7 +719,13 @@ plot.change.arrow.bf <- function(data,
                                  plot.title = "",
                                  plot.fig.num = "",
                                  caption = ""){
-  clone    <- data #Clone the data so the original data doesn't get changed
+  if(!data.table::is.data.table(data)){ #Chek and coerce into data.table
+    clone <- data.table::as.data.table(data)
+  }
+  else{
+    clone <- cbind(data)
+    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
+  }
   max.plot <- max(clone[, get(x)]) #Find the maximum for the plot
   min.plot <- min(clone[, get(x)]) #Find the minimum for the plot
   ticks    <- set.ticks.seq(max.plot, min.plot, unit.x) #Set nice tick with units
@@ -844,7 +885,13 @@ plot.area.bf <- function(data,
                          plot.title = "",
                          plot.fig.num = "",
                          caption = ""){
-  clone <- data
+  if(!data.table::is.data.table(data)){ #Chek and coerce into data.table
+    clone <- data.table::as.data.table(data)
+  }
+  else{
+    clone <- cbind(data)
+    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
+  }
   #At this point, we're dealing with the detailed stuff like how to order the categories around and stuff
 
   if(is.null(order.area)){ #Check if an ordering has been provided, if not make one
