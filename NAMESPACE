@@ -1,1 +1,7 @@
 exportPattern("^[[:alpha:]]+")
+import(data.table)
+import(stringr)
+import(extrafont)
+import(ggplot2)
+import(scales)
+import(mapproj)
