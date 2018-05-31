@@ -99,21 +99,42 @@ set.ticks.seq <- function(max,min,unit,num.ticks=5){
 #' @return Exported .PDF with the file name for the given plot object
 #' @examples
 #' export.bf.plot("Rplot.PDF",plot)
-export.bf.plot <- function(f.name,p.obj, p.height=6,p.width=7.25){
-  if(stringr::str_sub(f.name,nchar(f.name)-3,nchar(f.name))!=".pdf"){
-    f.name <- stringr::str_c(f.name,".pdf") #Add the extension into the name if it's not already added
+export.bf.plot <- function(f.name,p.obj, p.height=6,p.width=7.25,type="pdf"){
+  if(type=="pdf"){
+    if(stringr::str_sub(f.name,nchar(f.name)-3,nchar(f.name))!=".pdf"){
+      f.name <- stringr::str_c(f.name,".pdf") #Add the extension into the name if it's not already added
+    }
+    ggplot2::ggsave(f.name,
+                    plot=p.obj,
+                    family = "RooneySans-Regular",
+                    fonts = c("RooneySans-Light","RooneySans-Medium"),
+                    device = "pdf", #Device used is pdf
+                    width=p.width,
+                    height=p.height,
+                    pointsize=12,
+                    bg = "transparent")
+    extrafont::embed_fonts(f.name,options="-dEPSCrop") #This embeds the fonts - the option prevents weird cropping from happening
   }
-  ggplot2::ggsave(f.name,
-                  plot=p.obj,
-                  family = "RooneySans-Regular",
-                  fonts = c("RooneySans-Light","RooneySans-Medium"),
-                  device = "pdf", #Device used is pdf
-                  width=p.width,
-                  height=p.height,
-                  pointsize=12,
-                  bg = "transparent")
-  extrafont::embed_fonts(f.name,options="-dEPSCrop") #This embeds the fonts - the option prevents weird cropping from happening
+  else if(type == "eps"){
+    if(stringr::str_sub(f.name,nchar(f.name)-3,nchar(f.name))!=".eps"){
+      f.name <- stringr::str_c(f.name,".eps") #Add the extension into the name if it's not already added
+    }
+    ggplot2::ggsave(f.name,
+                    plot=p.obj,
+                    family = "RooneySans-Regular",
+                    fonts = c("RooneySans-Light","RooneySans-Medium"),
+                    device = "eps", #Device used is pdf
+                    width=p.width,
+                    height=p.height,
+                    pointsize=12,
+                    bg = "transparent")
+    extrafont::embed_fonts(f.name,options="-dEPSCrop") #This embeds the fonts - the option prevents weird cropping from happening
+  }
+  else{
+    stop("File type is not surpported")
+  }
 }
+
 
 
 #' Set Brookfield's base theme

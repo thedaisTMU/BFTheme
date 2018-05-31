@@ -14,7 +14,7 @@
 #' unit.y="",plot.title="",plot.fig.num="",title.x.axis="",
 #' title.y.axis="",legend.title = "",deg.45 = FALSE,
 #' export = FALSE,export.name = "")
-#' @param data Main data table to plot
+#' @param data Main data table to plot A
 #' @param x Character corresponding the column name for x-axis
 #' @param y Character corresponding to the column name for y-axis
 #' @param group.by Character corresponding to the column name that points are grouped by (colour)
@@ -56,10 +56,11 @@ plot.scatter.bf <- function(data,x,y,
   #This bit sets up the base Brookfield theme elements
   if(!data.table::is.data.table(data)){ #Chek and coerce into data.table
     clone <- data.table::as.data.table(data)
+    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
   }
   else{
     clone <- cbind(data)
-    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
+
   }
   scatter.theme <- brookfield.base.theme()
   scatter.theme <- scatter.theme + ggplot2::theme(axis.line=ggplot2::element_blank())
@@ -190,10 +191,11 @@ plot.column.bf <- function(data,x,cat,
                            export.name=""){
   if(!data.table::is.data.table(data)){ #Chek and coerce into data.table
     clone <- data.table::as.data.table(data)
+    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
   }
   else{
-    clone <- cbind(data)
-    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
+    clone <- data
+
   }
   #Set up basic theme elements
   column.theme <- brookfield.base.theme() +
@@ -256,8 +258,15 @@ plot.column.bf <- function(data,x,cat,
   }
   #Set numeric label for values into the columns
   if(label){
-    p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=str_c(scales::comma(round(unlist(clone[,get(x)]),1)),label.unit)),
-                                nudge_y=nudge.amt, size=11*0.352777778, family="RooneySans-Regular")
+    if(label.unit == "$"){
+      p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=str_c(label.unit,scales::comma(round(unlist(clone[,get(x)]),1)))),
+                                  nudge_y=nudge.amt, size=11*0.352777778, family="RooneySans-Regular")
+    }
+    else{
+      p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=str_c(scales::comma(round(unlist(clone[,get(x)]),1)),label.unit)),
+                                  nudge_y=nudge.amt, size=11*0.352777778, family="RooneySans-Regular")
+    }
+
   }
   if(length(unique(clone[,get(cat)]))<= 5){ #If there are more than 10 groups, make the x axis certicle
     p <- p + theme(axis.text.x = ggplot2::element_text(angle=90,size=11, margin=ggplot2::margin(t=0,l=10),hjust=1,vjust=0.5))
