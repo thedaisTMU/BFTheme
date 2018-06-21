@@ -258,26 +258,57 @@ plot.column.bf <- function(data,x,cat,
   }
   #Set numeric label for values into the columns
   if(label){
-    if(label.unit == "$"){
-      p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=str_c(label.unit,scales::comma(round(unlist(clone[,get(x)]),1)))),
-                                  nudge_y=nudge.amt, size=11*0.352777778, family="RooneySans-Regular")
+    if(stacked){ #Label for stacked bar chart - has an extra argument of position = position_stacked(vjust=0.5)
+      if(label.unit == "$"){
+        p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=stringr::str_c(label.unit,scales::comma(round(unlist(clone[,get(x)]),1)))),
+                                    nudge_y=nudge.amt,
+                                    size=11*0.352777778,
+                                    family="RooneySans-Regular",
+                                    position = position_stack(vjust = 0.5))
+      }
+      else{
+        p <- p + ggplot2::geom_text(data=clone,
+                                    ggplot2::aes(label=stringr::str_c(scales::comma(round(unlist(clone[,get(x)]),1)),
+                                                                        label.unit)),
+                                    nudge_y=nudge.amt,
+                                    size=11*0.352777778,
+                                    family="RooneySans-Regular",
+                                    position = position_stack(vjust = 0.5))
+      }
     }
-    else{
-      p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=str_c(scales::comma(round(unlist(clone[,get(x)]),1)),label.unit)),
-                                  nudge_y=nudge.amt, size=11*0.352777778, family="RooneySans-Regular")
+    else{ #Label when it is not a stacked bar
+      if(label.unit == "$"){
+        p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=stringr::str_c(label.unit,scales::comma(round(unlist(clone[,get(x)]),1)))),
+                                    nudge_y=nudge.amt,
+                                    size=11*0.352777778,
+                                    family="RooneySans-Regular")
+      }
+      else{
+        p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=stringr::str_c(scales::comma(round(unlist(clone[,get(x)]),1)),label.unit)),
+                                    nudge_y=nudge.amt,
+                                    size=11*0.352777778,
+                                    family="RooneySans-Regular")
+      }
     }
+
 
   }
   if(length(unique(clone[,get(cat)]))<= 5){ #If there are more than 10 groups, make the x axis certicle
-    p <- p + theme(axis.text.x = ggplot2::element_text(angle=90,size=11, margin=ggplot2::margin(t=0,l=10),hjust=1,vjust=0.5))
+    p <- p + theme(axis.text.x = ggplot2::element_text(angle = 90, size = 11,
+                                                       margin = ggplot2::margin(t = 0, l = 10),
+                                                       hjust = 1,
+                                                       vjust = 0.5))
   }
-  p <- p + ggplot2::labs(subtitle = plot.title, title=plot.fig.num,y=y.axis, caption=caption)
+  p <- p + ggplot2::labs(subtitle = plot.title,
+                         title = plot.fig.num,
+                         y = y.axis,
+                         caption = caption)
   #Export into file
   if(export){
-    if(export.name==""){
+    if(export.name == ""){
       export.name <- "Rplot"
     }
-    export.bf.plot(export.name,p,p.height=6,p.width=7.25)
+    export.bf.plot(export.name, p, p.height=6, p.width=7.25)
   }
   return(p)
 }

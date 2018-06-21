@@ -199,7 +199,17 @@ generate.dot <- function(number,
   return(main.data)
 }
 
-
+#Calculate label brightness
+label.colour <- function(col.input){
+  rgb <- col2rbg(col.input)
+  brightness <- (rgb[1]*299+rgb[2]*587+rgb[3]*114)/1000
+  if(brightness > 123){
+    return("black")
+  }
+  else{
+    return("white")
+  }
+}
 
 
 

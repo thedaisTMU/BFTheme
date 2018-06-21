@@ -1,0 +1,234 @@
+Name,Variable
+CENSUS_YEAR,CENSUS.YEAR
+GEO_CODE (POR),GEO.CODE
+GEO_LEVEL,GEO.LEVEL
+GEO_NAME,GEO.NAME
+GNR,GNR
+DATA_QUALITY_FLAG,DATA.QUAL.FLAG
+ALT_GEO_CODE,ALT.GEO.CODE
+Aboriginal ancestry (22),ABO.ANC22
+Aboriginal ancestry responses (73),ABO.ACC73
+Aboriginal identity (9),ABO.IDE9
+Aboriginal language spoken at home (90),ABO.LNG90
+Aboriginal mother tongue (11),ABO.MOT11
+Aboriginal mother tongue (90),ABO.MOT90
+Admission category and applicant type (31),IM.ADD.CAT31
+Admission category and applicant type (46),IM.ADD.CAT46
+Admission category and applicant type (7),IM.ADD.CAT7
+Admission category and applicant type (8),IM.ADD.CAT8
+After-tax income groups (17),AT.INC17
+Age (10),AGE10
+Age (10B),AGE10B
+Age (11B),AGE11B
+Age (12),AGE12
+Age (12A),AGE12A
+Age (13A),AGE13A
+Age (14),AGE14
+Age (15A),AGE15A
+Age (18),AGE18
+Age (19),AGE19
+Age (20),AGE20
+Age (4B),AGE4B
+Age (4C),AGE4C
+Age (4D),AGE4D
+Age (5),AGE5
+Age (5A),AGE5A
+Age (6),AGE6
+Age (6A),AGE6A
+Age (6B),AGE6B
+Age (7A),AGE7A
+Age (8A),AGE8A
+Age (8B),AGE8B
+Age (9),AGE9
+Age at immigration (8),AGE.IM8
+Age of primary household maintainer (15),AGE.PRI.HH15
+Age of primary household maintainer (9),AGE.PRI.HH9
+Age of seniors (7),AGE.SEN7
+Ages of economic family members (18),AGE.EC.FM18
+Census year (3),CENSUS.YEAR
+Citizenship (5),CITI5
+Citizenship (9),CITI9
+Class of worker (10),WORK.CLASS10
+Class of worker (3),WORK.CLASS3
+Class of worker (5A),WORK.CLASS5A
+Class of worker (7A),WORK.CLASS7A
+Commuting destination (5),COMM.DEST5
+Commuting duration (6),COMM.DUR6
+Commuting duration (7),COMM.DUR7
+Components of migration (in- and out-): Mobility 1 year ago (4),MOBIL1YR4
+Components of migration (in- and out-): Mobility 1 year ago (7),MOBIL1YR7
+Components of migration (in- and out-): Mobility 5 years ago (4),MOBIL5YR4
+Components of migration (in- and out-): Mobility 5 years ago (7),MOBIL5YR7
+Condominium status (3),CONDO3
+Countries of citizenship (184),COUNT.CITI184
+Current - Census metropolitan areas and census agglomerations (160),CMA.CA160
+Current - Province or territory of residence (13),PROV.RESD13
+Current - Province or territory of residence (14),PROV.RESD14
+Distance from home to work (12),DIST.WORK12
+Dwelling condition (3),DWEL.COND3
+Dwelling condition (4),DWEL.COND4
+Economic family characteristics of persons (25),EC.FAML.CHAR25
+Economic family income decile group (13),EC.FAML.INC13
+Economic family structure (9),EC.FAML.STR9
+Employment income groups (18),EMP.INC.GR18
+Employment income statistics (3),EMP.INC3
+Employment income statistics (4),EMP.INC4
+Employment income statistics (7),EMP.INC7
+Ethnic origin (101),ETH.OR101
+Ethnic origin (279),ETH.OR279
+Family characteristics (22),FAM.CHAR22
+Family characteristics of adults including presence and ages of children (12),FAM.CHAR.CHIL12
+Family characteristics of children including presence of grandparents (10),FAM.CHAR.CHILGRAN10
+Family characteristics of seniors (8),FAM.CHAR.SEN8
+Family MBM low-income status (5),FAM.MBM5
+Family size of economic family (5),FAM.SIZ5
+Father - Place of birth (128),FATHER.BIRTH128
+First official language spoken (5),OFF.LNG5
+First official language spoken (6),OFF.LNG6
+First official language spoken (7),OFF.LNG7
+Generation status (4),GEN4
+Generation status (6),GEN6
+"Highest certificate, diploma or degree (11)",EDUC11
+"Highest certificate, diploma or degree (12)",EDUC12
+"Highest certificate, diploma or degree (15)",EDUC15
+"Highest certificate, diploma or degree (7)",EDUC7
+"Highest certificate, diploma or degree (9)",EDUC9
+Household income statistics (3A),HH.INC3A
+Household living arrangements for persons not in economic families (3),HH.LA3
+Household size (8),HH.SIZE8
+Household total income groups (14),HH.TOT.INC14
+Household type including census family structure (11),HH.CENSUS.FAM11
+Household type including census family structure (16),HH.CENSUS.FAM16
+Household type including census family structure (9),HH.CENSUS.FAM9
+Household type of person (9),HH.TYPE9
+Housing indicators (5),HH.IND5
+Housing suitability (3),HOUSE.SUIT3
+Housing suitability (6),HOUSE.SUIT6
+Immigrant status (4),IMM.ST4
+Immigrant status (4A),IMM.ST4A
+Immigrant status (5),IMM.STA5
+Immigrant status and admission category (12),IMM.STA.CAT12
+Immigrant status and period of immigration (10),IMM.STA.PER10
+Immigrant status and period of immigration (11),IMM.STA.PER11
+Immigrant status and period of immigration (11A),IMM.STA.PER11A
+Immigrant status and period of immigration (11B),IMM.STA.PER11B
+Immigrant status and period of immigration (11C),IMM.STA.PER11C
+Immigrant status and period of immigration (9),IMM.STA.PER9
+Income sources and taxes (16),INC.TAX16
+Income sources and taxes (34),INC.TAX34
+Income statistics (13),INC.STA13
+Income statistics (17),INC.STA17
+Income statistics (5),INC.STA5
+Income statistics (5A),INC.STA5A
+Income statistics (5B),INC.STA5B
+Individual low-income status (6),IND.LI6
+Individual MBM low-income status (5),IND.MBM5
+Individual MBM low-income status (6),IND.MBM6
+Industry - North American Industry Classification System (NAICS) 2012 (122),NAICS122
+Industry - North American Industry Classification System (NAICS) 2012 (21),NAICS21
+Industry - North American Industry Classification System (NAICS) 2012 (23A),NAICS23A
+Industry - North American Industry Classification System (NAICS) 2012 (425),NAICS425
+Industry - North American Industry Classification System (NAICS) 2012 (427A),NAICS427A
+Knowledge of Aboriginal languages (90),ABO.LNG.KNOW90
+Knowledge of languages: single and multiple language responses (3),LNG.KNOW.MULT3
+Knowledge of official languages (5),KNOW.OFF.LNG5
+Labour Force Status (3),LF3
+Labour force status (8),LF8
+Language spoken most often at home (187),LNG.HOME187
+Language spoken most often at home (8),LNG.HOME8
+Language used at work (263),LNG.WORK263
+Language used most often at work (10),LNG.OFT.WORK10
+Language used most often at work (8),LNG.OFT.WORK8
+Location of study (16),LOC.STU16
+Location of study (18),LOC.STU18
+Location of study (29),LOC.STU29
+Location of study (5),LOC.STU5
+Location of study compared with province or territory of residence (7),LOC.STU.PROV.RES7
+Location of study compared with province or territory of residence with countries outside Canada (18),LOC.STU.PROV.RES18
+Low-income indicators (4),LICO4
+Main mode of commuting (10),MODE.COMMUTE10
+Main mode of commuting (20),MODE.COMMUTE20
+Major field of study - Classification of Instructional Programs (CIP) 2016 (14),CIP14
+Major field of study - Classification of Instructional Programs (CIP) 2016 (43),CIP43
+Major field of study - Classification of Instructional Programs (CIP) 2016 (432),CIP432
+Major field of study - Classification of Instructional Programs (CIP) 2016 (82),CIP82
+Marital status (9),MARITAL9
+Mobility Status 1 Year Ago (9),MOBST1YR9
+Mobility Status 5 Years Ago (9),MOBST5YR9
+Mother - Place of birth (128),MOTHER.BIRTH128
+Mother tongue (10),MOT.TONG10
+Mother tongue (187),MOT.TONG187
+Mother tongue (4),MOT.TONG4
+Mother tongue (8),MOT/TONG8
+Number of bedrooms (6),NUM.BED6
+Number of earners in the economic family (6),NUM.ERN6
+Number of languages known (11),NUM.LNG11
+Number of persons per room (3),NUM.PER.ROOM3
+Number of persons per room (5),NUM.PER.ROOM5
+Number of rooms (12),NUM.ROOM12
+Number of rooms and number of bedrooms (12),NUM.ROOM.BED.ROOM12
+Occupation - National Occupational Classification (NOC) 2016 - Skill-level category (8A),NOC8A
+Occupation - National Occupational Classification (NOC) 2016 (11),NOC11
+Occupation - National Occupational Classification (NOC) 2016 (13A),NOC13A
+Occupation - National Occupational Classification (NOC) 2016 (193A),NOC193A
+Occupation - National Occupational Classification (NOC) 2016 (51),NOC51
+Occupation - National Occupational Classification (NOC) 2016 (691),NOC691
+Occupation - National Occupational Classification (NOC) 2016 (693A),NOC693A
+Other language(s) spoken regularly at home (9),LNG.HOME.OTH9
+Period of construction (12),PER.CONST12
+Period of immigration (7),PER.IMM7
+Person - Place of birth (128),PLC.BIRTH128
+Place of birth (144),PLC.BIRTH144
+Place of birth (272),PLC.BIRTH272
+Place of residence 1 year ago (15),PLC.REZ1YR15
+Place of Residence 5 Years Ago (15),PLC.REZ5YR15
+Place of work census division (296),CD.WORK296
+Place of work status (5),PL.WORK5
+Presence of mortgage payments (3),MORT3
+Province or Territory of Residence 1 Year Ago (14),PROVREZ1YR14
+Province or Territory of Residence 5 Years Ago (14),PROVREZ5YR14
+Registered or Treaty Indian status (3),REG.IND3
+Residence by Aboriginal geography (10),REZ.ABO.GEOG10
+Residence inside or outside Inuit Nunangat (7),REZ.INU7
+Residence on or off reserve (3),REZ.RESE3
+School attendance (3),SCL.ATT3
+Secondary (high) school diploma or equivalency certificate (14),SEC.DIP14
+"Selected Demographic, Cultural, Educational, Labour Force and Income Characteristics (981)",SEL.DEM981
+"Selected Demographic, Cultural, Educational, Labour Force and Income Characteristics (984)",SEL.DEM984
+"Selected demographic, cultural, labour force, educational and income characteristics (651)",SEL.DEM651
+"Selected demographic, cultural, labour force, educational and income characteristics (900)",SEL.DEM900
+Sex (3),SEX3
+Sex and age (15),SEXAGE15
+Sex and age (18),SEXAGE18
+Sex and age (24),SEXAGE24
+Shelter cost (12),SHEL.COST12
+Shelter-cost-to-income ratio (5),SHEL.INC.RAT5
+Shelter-cost-to-income ratio (5A),SHEL.INC.RAT5A
+Shelter-cost-to-income ratio (9),SHEL.INC.RAT9
+Single and multiple Aboriginal ancestry responses (4),ABO.ANC.MULT.FLAG4
+Single and multiple citizenship responses (3),MULT.CITI.FLAG3
+Single and multiple ethnic origin responses (3),MULT.ETH.FLAG3
+Single and multiple mother tongue responses (3),MULT.MOT.TONG.FLAG3
+Single and multiple responses of language spoken at home (3),MULT.LNG.HOME.FLAG3
+Single and multiple responses of language used at work (3),MULT.LNG.WORK3
+Spoken regularly at home - Other language(s) (9),LNG.REG.HOME.OTH9
+"STEM and BHASE (non-STEM) groupings, Major field of study - Classification of Instructional Programs (CIP) 2016 (16)",STEM.CIP16
+"STEM and BHASE (non-STEM) groupings, Major field of study - Classification of Instructional Programs (CIP) 2016 (36)",STEM.CIP36
+Structural type of dwelling (10),STR.DWEL10
+Structural type of dwelling (5),STR.DWEL5
+Tenure (4),TEN4
+Tenure including presence of mortgage payments and subsidized housing (7),TEN.MOR7
+Time leaving for work (7),TIME.WORK7
+Total income groups (17),INC.GROUP17
+Total income statistics (4),INC.STAT4
+Used regularly at work - Other language(s) (9),LNG.REG.WORK.OTH9
+Value (owner-estimated) of dwelling (16),VAL.DWEL16
+Value (owner-estimated) of dwelling (4),VAL.DWEL4
+Visible minority (15),VIS.MIN15
+Work activity during the reference year (3),WA3
+Work activity during the reference year (4),WA4
+Work activity during the reference year (4A),WA4A
+Work activity during the reference year (5),WA5
+Work activity during the reference year (6),WA6
+Work activity during the reference year (9),WA9
+Year (2),YR

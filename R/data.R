@@ -68,3 +68,9 @@
 #'   ...
 #' }
 "areas.cmaDF"
+
+#' A named vector for 2016 census column name quick reference
+#'
+#' @format A named vector with about 200 elements
+"census.2016.varnames"
+
