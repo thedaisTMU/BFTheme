@@ -178,6 +178,7 @@ plot.column.bf <- function(data,x,cat,
                            order.bar="No",
                            group.by=NULL,
                            colours=NULL,
+                           col.invert=FALSE,
                            stacked = FALSE,
                            label=FALSE,
                            label.unit = "",
@@ -199,9 +200,21 @@ plot.column.bf <- function(data,x,cat,
   }
   #Set up basic theme elements
   column.theme <- brookfield.base.theme() +
-    theme(axis.text.x = ggplot2::element_text(size=9, margin=ggplot2::margin(t=2), family = "RooneySans-Light", angle=90, hjust = 1, vjust = 0.5),
+    ggplot2::theme(axis.text.x = ggplot2::element_text(size=9, margin=ggplot2::margin(t=2), family = "RooneySans-Light", angle=90, hjust = 1, vjust = 0.5),
           axis.ticks.x = ggplot2::element_blank(),
           axis.title.x = ggplot2::element_blank())
+  if(col.invert){
+    column.theme <- brookfield.base.theme(inverted=TRUE) +
+      ggplot2::theme(axis.text.x = ggplot2::element_text(size=9,
+                                                         margin=ggplot2::margin(t=2),
+                                                         family = "RooneySans-Light",
+                                                         angle=90,
+                                                         hjust = 1,
+                                                         vjust = 0.5,
+                                                         color = "white"),
+                     axis.ticks.x = ggplot2::element_blank(),
+                     axis.title.x = ggplot2::element_blank())
+  }
   max.plot <- max(clone[,get(x)]*1.04) #Scale the plot maximum
   if(stacked){
     max.plot <- max(clone[,sum(get(x)),by=cat][,V1])
