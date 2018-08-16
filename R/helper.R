@@ -74,18 +74,18 @@ set.colours <- function(n,
 #' set.ticks.seq(100,0,"%")
 set.ticks.seq <- function(max,min,unit,num.ticks=5){
   if(unit==""){ #If there are no unit
-    ticks <- scales::cbreaks(c(max,min),labels= unit_format(unit,sep=""))
+    ticks <- scales::cbreaks(c(max,min),labels= unit_format(unit=unit,sep=""))
   }
   if(unit=="$"){
     ticks <- scales::cbreaks(c(max,min),labels = dollar_format(largest_with_cents = 100)) #Format money
     return(ticks)
   }
   if(unit=="%" & max >= 75){
-    ticks <- scales::cbreaks(c(100,0),labels = unit_format("%",sep="")) #Format percentage
+    ticks <- scales::cbreaks(c(100,0),labels = unit_format(unit="%",sep="")) #Format percentage
     return(ticks)
   }
   else{
-    ticks <- scales::cbreaks(c(max,min),labels=unit_format(unit,sep=" ")) #Format percentage without the percentage sign
+    ticks <- scales::cbreaks(c(max,min),labels=unit_format(unit=unit,sep=" ")) #Format percentage without the percentage sign
     return(ticks)
   }
 }
