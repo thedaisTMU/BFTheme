@@ -1,7 +1,7 @@
 
 library(rgdal)
-library(r)
-
+library(rgeos)
+library(data.table)
 
 
 
@@ -82,10 +82,29 @@ csd.data[,long:=coordinates(areas.csd.simp)[,1]]
 csd.data[,lat:=coordinates(areas.csd.simp)[,2]]
 csd.data[,num.row:=areas.csdDF[,.N,by=id][,2]]
 
+#Dealing with ER data
+areas.er <- readOGR("ler_000b16a_e.shp")
+areas.er <- spTransform(areas.er,CRS=CRS("+proj=longlat +datum=NAD83"))
+areas.er.simp <- gSimplify(areas.er,tol=0.05,topologyPreserve=TRUE)
+areas.erDF <- fortify(areas.er.simp)
+areas.erDF <- as.data.table(areas.erDF)
+areas.erDF[,num.row:=.N,by=group]
+areas.erDF <- areas.erDF[num.row>6]
+areas.erDF.row <- areas.erDF[,.N,by=id]
+areas.erDF[,id:=rep(er.data[,ID],areas.erDF.row[,N])]
+
+er.data <- geography[,.(unique(`ERname/REnom`)),by=`ERuid/REidu`]
+names(er.data) <- c("ID","Name")
+er.data[,ID:=as.character(ID)]
+setkey(er.data,ID)
+er.data[,long:=coordinates(areas.er.simp)[,1]]
+er.data[,lat:=coordinates(areas.er.simp)[,2]]
+er.data[,num.row:=areas.erDF[,.N,by=id][,2]]
+
 
 
 #General testing
-test.plot <- ggplot(data=areas.csdDF) +
+test.plot <- ggplot(data=areas.erDF) +
   brookfield.base.theme() +
   theme(axis.line.x = element_blank(),
         axis.line.y = element_blank(),

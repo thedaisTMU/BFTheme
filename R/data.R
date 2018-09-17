@@ -63,14 +63,51 @@
 #'   \item{order}{Order by which points are connected}
 #'   \item{hole}{Logical marking if shape drawn is an island or not}
 #'   \item{piece}{id of each unbroken piece}
-#'   \item{id}{Province ID}
-#'   \item{group}{Province ID + id for each unbroken piece}
+#'   \item{id}{CMA/CA ID}
+#'   \item{group}{CMA/CA ID + id for each unbroken piece}
 #'   ...
 #' }
 "areas.cmaDF"
+
+#' Meta-data for each ER
+#'
+#' A dataset that contains meta data on each of the ER - used for mapping purposes
+#'
+#'
+#' @format A data table with 76 rows and 5 variables
+#' \describe{
+#'   \item{ID}{Statistics Canada's code for ER}
+#'   \item{Name}{English name of the ER}
+#'   \item{long}{longitude of the centroid points}
+#'   \item{lat}{latitude of the centroid points}
+#'   \item{row.num}{row number for iterating on the colour gradients}
+#'   ...
+#' }
+"er.data"
+
+#' Data table for drawing ER
+#'
+#' A dataset that contains vector information for drawing provinces
+#'
+#'
+#' @format A data table with 38,166 rows and 8 variables
+#' \describe{
+#'   \item{long}{longitude of the point}
+#'   \item{lat}{latitude of the point}
+#'   \item{order}{Order by which points are connected}
+#'   \item{hole}{Logical marking if shape drawn is an island or not}
+#'   \item{piece}{id of each unbroken piece}
+#'   \item{id}{ER ID}
+#'   \item{group}{ER ID + id for each unbroken piece}
+#'   ...
+#' }
+"areas.erDF"
 
 #' A named vector for 2016 census column name quick reference
 #'
 #' @format A named vector with about 200 elements
 "census.2016.varnames"
+
+
+
 
