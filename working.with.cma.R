@@ -56,7 +56,10 @@ cma.data[,Name:=tstrsplit(Name," \\(",keep=1)]
 setkey(cma.data,ID)
 cma.data[,long:=coordinates(areas.cma)[,1]]
 cma.data[,lat:=coordinates(areas.cma)[,2]]
-cma.data[,num.row:=areas.cmaDF[,.N,by=id][,2]]
+rows.cma <- areas.cmaDF[,.N,by=id]
+rows.cma[,id:=as.character(id)]
+setkey(rows.cma,id)
+cma.data[,num.row:=rows.cma[,N]]
 use_data(cma.data,overwrite=TRUE)
 
 
