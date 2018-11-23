@@ -10,7 +10,7 @@ title.y.axis="",legend.title = "",deg.45 = FALSE,
 export = FALSE,export.name = "")
 }
 \arguments{
-\item{data}{Main data table to plot}
+\item{data}{Main data table to plot A}
 
 \item{x}{Character corresponding the column name for x-axis}
 

@@ -4,7 +4,7 @@
 \alias{brookfield.base.theme}
 \title{Set Brookfield's base theme}
 \usage{
-brookfield.base.theme()
+brookfield.base.theme(inverted = FALSE)
 }
 \description{
 Set Brookfield's base theme

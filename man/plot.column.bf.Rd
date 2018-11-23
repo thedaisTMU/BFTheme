@@ -21,7 +21,7 @@ export.name = "")
 
 \item{colours}{Vector (or set.colour function) of colours to use. If not, default palette is generated.}
 
-\item{stacked}{TRUE/FALSE to stack the columns or not}
+\item{stacked}{TRUE/FALSE to stack the columns or not still supported but maybe not in the future}
 
 \item{label}{TRUE/FALSE on whether to label the points or not}
 
@@ -42,6 +42,8 @@ export.name = "")
 \item{export}{TRUE or FALSE whether to export file as EPS under default options (height=6 inches, width=9 inches)}
 
 \item{export.name}{Name of the exported EPS file}
+
+\item{position}{One of "identity", "stacked" or "dodge"}
 }
 \value{
 Single column plot that conforms to Brookfield styling

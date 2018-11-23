@@ -74,18 +74,18 @@ set.colours <- function(n,
 #' set.ticks.seq(100,0,"%")
 set.ticks.seq <- function(max,min,unit,num.ticks=5){
   if(unit==""){ #If there are no unit
-    ticks <- scales::cbreaks(c(max,min),labels= unit_format(unit=unit,sep=""))
+    ticks <- scales::cbreaks(c(max,min),labels= unit_format(unit=unit,big.mark = ",",sep=""))
   }
   if(unit=="$"){
     ticks <- scales::cbreaks(c(max,min),labels = dollar_format(largest_with_cents = 100)) #Format money
     return(ticks)
   }
   if(unit=="%" & max >= 75){
-    ticks <- scales::cbreaks(c(100,0),labels = unit_format(unit="%",sep="")) #Format percentage
+    ticks <- scales::cbreaks(c(100,0),labels = unit_format(unit="%",big.mark = ",",sep="")) #Format percentage
     return(ticks)
   }
   else{
-    ticks <- scales::cbreaks(c(max,min),labels=unit_format(unit=unit,sep=" ")) #Format percentage without the percentage sign
+    ticks <- scales::cbreaks(c(max,min),labels=unit_format(unit=unit,big.mark = ",",sep=" ")) #Format percentage without the percentage sign
     return(ticks)
   }
 }
@@ -112,8 +112,9 @@ export.bf.plot <- function(f.name,p.obj, p.height=6,p.width=7.25,type="pdf"){
                     width=p.width,
                     height=p.height,
                     pointsize=12,
-                    bg = "transparent")
-    extrafont::embed_fonts(f.name,options="-dEPSCrop") #This embeds the fonts - the option prevents weird cropping from happening
+                    bg = "transparent",
+                    useDingbats=FALSE)
+    extrafont::embed_fonts(f.name,options="-dEPSCrop -dSubsetFonts=false") #This embeds the fonts - the option prevents weird cropping from happening
   }
   else if(type == "eps"){
     if(stringr::str_sub(f.name,nchar(f.name)-3,nchar(f.name))!=".eps"){
@@ -127,8 +128,9 @@ export.bf.plot <- function(f.name,p.obj, p.height=6,p.width=7.25,type="pdf"){
                     width=p.width,
                     height=p.height,
                     pointsize=12,
-                    bg = "transparent")
-    extrafont::embed_fonts(f.name,options="-dEPSCrop") #This embeds the fonts - the option prevents weird cropping from happening
+                    bg = "transparent",
+                    useDingbats=FALSE)
+    extrafont::embed_fonts(f.name,options="-dEPSCrop -dSubsetFonts=false") #This embeds the fonts - the option prevents weird cropping from happening
   }
   else{
     stop("File type is not surpported")

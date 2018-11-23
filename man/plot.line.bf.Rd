@@ -6,10 +6,10 @@
 Make sure you don't confuse between x and y. X is what goes on the bottom (Year...)}
 \usage{
 \method{plot}{line.bf}(data, x, y, group.by = NULL, show.points = FALSE,
-  cat.order = NULL, colours = NULL, plot.title = "", plot.fig.num = "",
-  plot.limit = NULL, unit.x = "", unit.y = "", x.axis = "",
-  y.axis = "", legend.title = "", caption = "", export = FALSE,
-  export.name = "")
+  cat.order = NULL, ingraph.labels = FALSE, colours = NULL,
+  plot.title = "", plot.fig.num = "", plot.limit = NULL, unit.x = "",
+  unit.y = "", x.axis = "", y.axis = "", legend.title = "",
+  caption = "", export = FALSE, export.name = "")
 }
 \arguments{
 \item{data}{Data to use}
@@ -20,10 +20,12 @@ Make sure you don't confuse between x and y. X is what goes on the bottom (Year.
 
 \item{group.by}{Line colour will be determined by this}
 
-\item{show.points}{TRUE/FALSE whether to hsow the poitns on the line or not}
+\item{show.points}{TRUE/FALSE whether to show the points on the line or not}
 
 \item{cat.order}{Put the order of categorical variable in here (as a vector) c("cat.1","cat.2","cat.3") and so on.
 If you don't, a default order will be generated.}
+
+\item{ingraph.labels}{TRUE/FALSE whether to show a label at the end of the line}
 
 \item{colours}{Vector (or set.colour function) of colours to use. If not, default palette is generated.}
 

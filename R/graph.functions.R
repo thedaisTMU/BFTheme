@@ -160,7 +160,8 @@ plot.scatter.bf <- function(data,x,y,
 #' @param order.bar One of "none", "ascending", or "descending"
 #' @param group.by Character corresponding to the column name that columns are grouped by (colour)
 #' @param colours Vector (or set.colour function) of colours to use. If not, default palette is generated.
-#' @param stacked TRUE/FALSE to stack the columns or not
+#' @param stacked TRUE/FALSE to stack the columns or not still supported but maybe not in the future
+#' @param position One of "identity", "stacked" or "dodge"
 #' @param label TRUE/FALSE on whether to label the points or not
 #' @param label.unit What unit does y axis (and labels if any) will have
 #' @param legend.title Title for the legend if multiple colours are used
@@ -467,9 +468,10 @@ plot.waffle.bf <- function(named.vector,
 #' @param x The X axis the line will be connected along this point
 #' @param y The Y axis points will reside along this
 #' @param group.by Line colour will be determined by this
-#' @param show.points TRUE/FALSE whether to hsow the poitns on the line or not
+#' @param show.points TRUE/FALSE whether to show the points on the line or not
 #' @param cat.order Put the order of categorical variable in here (as a vector) c("cat.1","cat.2","cat.3") and so on.
 #' If you don't, a default order will be generated.
+#' @param ingraph.labels TRUE/FALSE whether to show a label at the end of the line
 #' @param colours Vector (or set.colour function) of colours to use. If not, default palette is generated.
 #' @param plot.title Character denoting title of the plot
 #' @param plot.fig.num Character denoting plot number (or another plot annotations)
@@ -491,6 +493,7 @@ plot.line.bf <- function(data,x,y,
                          group.by=NULL,
                          show.points = FALSE,
                          cat.order = NULL,
+                         ingraph.labels = FALSE,
                          colours = NULL,
                          plot.title="",
                          plot.fig.num="",
@@ -559,10 +562,16 @@ plot.line.bf <- function(data,x,y,
   if(length(unique(clone[,get(x)]))>= 10){ #If there are more than 10 groups, make the x axis certicle
     p <- p + theme(axis.text.x = ggplot2::element_text(angle=90,size=11, margin=ggplot2::margin(t=0,l=10),hjust=1,vjust=0.5))
   }
+
   num.row <- round(sum(nchar(as.character(unique(clone[,get(group.by)]))))/100)+1 #Set numnber of legend rows
   p <- p + labs(title=plot.fig.num,subtitle=plot.title,x=x.axis,y=y.axis,caption = caption) + #Add in all the captions
     guides(colour=guide_legend(title=legend.title,nrow=num.row,title.position = "top")) +
     scale_y_continuous(breaks = ticks.seq.y$breaks,labels = ticks.seq.y$labels)
+  if(ingraph.labels){
+    p <- p + directlabels::geom_dl(aes_string(label=group.by),method=list("last.points",
+                                                                          fontfamily="RooneySans-Regular",
+                                                                          cex = 0.8))
+  }
   if(export){
     if(export.name==""){
       export.name <- "Rplot"
@@ -571,6 +580,7 @@ plot.line.bf <- function(data,x,y,
   }
   return(p)
 }
+
 
 #' Plot a pyramid
 #' Make sure diff is 2 groups and x has the aggregated value
@@ -842,37 +852,45 @@ plot.change.arrow.bf <- function(data,
     start.year <- min(clone[, get(time.var)]) #Get the start year
     end.year <- max(clone[, get(time.var)]) #Set the end year
     if(max(clone[, diff]) > 0){ #For the positive changes
+
       p <- p + geom_text(data = clone[(diff > 0 & get(time.var) == start.year)], #Set the text for starting year for increase
                          aes(label = str_c(comma(clone[(diff > 0 & get(time.var) == start.year), get(x)]), unit.x),
                              x     = clone[(diff > 0 & get(time.var) == start.year), get(x)] - max.plot * nudge.end, #Subtract because increase implies starting year is on the right
                              y     = clone[(diff > 0 & get(time.var) == start.year), get(cat)]),
                          family = "RooneySans-Regular",
                          hjust  = 1,
+                         size = 9*0.352777778,
                          colour = set.colours(1, categorical.choice = "dark.blue"))
+
+      print(clone[(diff > 0 & get(time.var) == end.year), get(cat)])
+
       p <- p + geom_text(data = clone[(diff > 0 & get(time.var)==end.year)], #Set the text for ending year for increase
                          aes(label = str_c(comma(clone[(diff > 0 & get(time.var) == end.year), get(x)]), unit.x),
                              x     = clone[(diff > 0 & get(time.var) == end.year), get(x)] + max.plot * nudge.beg, #Add because increase implies ending year is on the right
                              y     = clone[(diff > 0 & get(time.var) == end.year), get(cat)]),
                          family = "RooneySans-Regular",
                          hjust  = 0,
+                         size = 9*0.352777778,
                          colour = set.colours(1, categorical.choice = "dark.blue"))
     }
     #Now dealing with the cases where value decreased
     if(min(clone[,diff])<0){
       p <- p + geom_text(data   = clone[(diff < 0 & get(time.var) == start.year)], #Set the text for starting year for decrease
-                         aes(label = str_c(comma(clone[(diff > 0 & get(time.var) == start.year), get(x)]), unit.x),
-                             x     = clone[(diff > 0 & get(time.var) == start.year), get(x)] + max.plot * nudge.beg, #Add because decrease imply starting year is on the right
-                             y     = clone[(diff > 0 & get(time.var) ==start.year), get(cat)]),
+                         aes(label = str_c(comma(clone[(diff < 0 & get(time.var) == start.year), get(x)]), unit.x),
+                             x     = clone[(diff < 0 & get(time.var) == start.year), get(x)] + max.plot * nudge.beg, #Add because decrease imply starting year is on the right
+                             y     = clone[(diff < 0 & get(time.var) ==start.year), get(cat)]),
                          family = "RooneySans-Regular",
                          hjust  = 1,
+                         size = 9*0.352777778,
                          colour = set.colours(1, categorical.choice = "pink")) #Set colour pink here, but probably change so it can be dynamics
 
       p <- p + geom_text(data   = clone[(diff < 0 & get(time.var) == end.year)], #Set the text for ending year for decrease
-                        aes(label = str_c(comma(clone[(diff > 0 & get(time.var) == end.year), get(x)]), unit.x),
-                            x     = clone[(diff > 0 & get(time.var) == end.year), get(x)] - max.plot * nudge.end, #Subtract because decrease imply ending year is on the left
-                            y     = clone[(diff > 0 & get(time.var) == end.year), get(cat)]),
+                        aes(label = str_c(comma(clone[(diff < 0 & get(time.var) == end.year), get(x)]), unit.x),
+                            x     = clone[(diff < 0 & get(time.var) == end.year), get(x)] - max.plot * nudge.end, #Subtract because decrease imply ending year is on the left
+                            y     = clone[(diff < 0 & get(time.var) == end.year), get(cat)]),
                          family = "RooneySans-Regular",
                          hjust  = 0,
+                        size = 9*0.352777778,
                          colour = set.colours(1, categorical.choice = "pink")) #Set colour pink here, but probably change so it can be dynamic
     }
   }

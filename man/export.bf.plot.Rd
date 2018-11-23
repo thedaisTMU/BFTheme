@@ -4,7 +4,7 @@
 \alias{export.bf.plot}
 \title{Export a graph into PDF}
 \usage{
-export.bf.plot(f.name, p.obj, p.height = 6, p.width = 7.25)
+export.bf.plot(f.name, p.obj, p.height = 6, p.width = 7.25, type = "pdf")
 }
 \arguments{
 \item{f.name}{Character denoting file name, can end with or without .pdf Basically a wrapper for ggsave and then embed font}
