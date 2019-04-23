@@ -71,7 +71,7 @@ plot.map.prov.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB
   }
   p <- ggplot(data=areas.provDF[id %in% code.comparison]) + #Set up base plot - only choose shapes within province chosen
     brookfield.base.theme() + #Base theme
-    theme(aixs.line.x = element_blank(),
+    theme(axis.line.x = element_blank(),
           axis.line.y = element_blank(),
           axis.ticks.x = element_blank(),
           axis.ticks.y = element_blank(),
