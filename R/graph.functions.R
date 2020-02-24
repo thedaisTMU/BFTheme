@@ -263,7 +263,7 @@ plot.column.bf <- function(data,x,cat,
         ggplot2::guides(fill=guide_legend(title=legend.title,nrow=num.row,title.position = "top"))
     }
     else{
-      p <- p + ggplot2::geom_col(width=0.6,position="dodge") +
+      p <- p + ggplot2::geom_col(width=0.6,position=position_dodge(width=0.9)) +
         ggplot2::scale_y_continuous(expand=c(0,0),limits = c(0,max.plot), breaks = ticks.seq$breaks, labels = ticks.seq$labels) +
         ggplot2::scale_fill_manual(values=colours) +
         ggplot2::guides(fill=guide_legend(title=legend.title,nrow=num.row,title.position = "top"))
@@ -294,6 +294,7 @@ plot.column.bf <- function(data,x,cat,
       if(label.unit == "$"){
         p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=stringr::str_c(label.unit,scales::comma(round(unlist(clone[,get(x)]),1)))),
                                     nudge_y=nudge.amt,
+                                    position = position_dodge(width=0.9),
                                     size=11*0.352777778,
                                     family="RooneySans-Regular")
       }
@@ -301,6 +302,7 @@ plot.column.bf <- function(data,x,cat,
         p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=stringr::str_c(scales::comma(round(unlist(clone[,get(x)]),1)),label.unit)),
                                     nudge_y=nudge.amt,
                                     size=11*0.352777778,
+                                    position = position_dodge(width=0.9),
                                     family="RooneySans-Regular")
       }
     }
