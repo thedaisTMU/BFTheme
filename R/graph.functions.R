@@ -178,6 +178,7 @@ plot.scatter.bf <- function(data,x,y,
 plot.column.bf <- function(data,x,cat,
                            order.bar="No",
                            group.by=NULL,
+                           column.width=0.6,
                            colours=NULL,
                            col.invert=FALSE,
                            stacked = FALSE,
@@ -244,7 +245,7 @@ plot.column.bf <- function(data,x,cat,
     #Set up base plot
     p <- ggplot2::ggplot(clone,ggplot2::aes_string(cat,x)) +
       column.theme +
-      ggplot2::geom_col(width=0.6,fill=colours) +
+      ggplot2::geom_col(width=column.width,fill=colours) +
       ggplot2::scale_y_continuous(expand=c(0,0),limits = c(0,max.plot), breaks = ticks.seq$breaks, labels = ticks.seq$labels) +
       ggplot2::scale_fill_manual(values=colours)
   }
@@ -257,13 +258,13 @@ plot.column.bf <- function(data,x,cat,
     p <- ggplot2::ggplot(clone,ggplot2::aes_string(cat,x,fill=group.by)) +
       column.theme
     if(stacked){
-      p <- p + ggplot2::geom_col(width=0.6, position="stack") +
+      p <- p + ggplot2::geom_col(width=column.width, position="stack") +
         ggplot2::scale_y_continuous(expand=c(0,0),limits = c(0,max.plot), breaks = ticks.seq$breaks, labels = ticks.seq$labels) +
         ggplot2::scale_fill_manual(values=colours) +
         ggplot2::guides(fill=guide_legend(title=legend.title,nrow=num.row,title.position = "top"))
     }
     else{
-      p <- p + ggplot2::geom_col(width=0.6,position=position_dodge(width=0.9)) +
+      p <- p + ggplot2::geom_col(width=column.width,position=position_dodge(width=column.width)) +
         ggplot2::scale_y_continuous(expand=c(0,0),limits = c(0,max.plot), breaks = ticks.seq$breaks, labels = ticks.seq$labels) +
         ggplot2::scale_fill_manual(values=colours) +
         ggplot2::guides(fill=guide_legend(title=legend.title,nrow=num.row,title.position = "top"))
@@ -294,7 +295,7 @@ plot.column.bf <- function(data,x,cat,
       if(label.unit == "$"){
         p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=stringr::str_c(label.unit,scales::comma(round(unlist(clone[,get(x)]),1)))),
                                     nudge_y=nudge.amt,
-                                    position = position_dodge(width=0.9),
+                                    position = position_dodge(width=column.width),
                                     size=11*0.352777778,
                                     family="RooneySans-Regular")
       }
@@ -302,7 +303,7 @@ plot.column.bf <- function(data,x,cat,
         p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=stringr::str_c(scales::comma(round(unlist(clone[,get(x)]),1)),label.unit)),
                                     nudge_y=nudge.amt,
                                     size=11*0.352777778,
-                                    position = position_dodge(width=0.9),
+                                    position = position_dodge(width=column.width),
                                     family="RooneySans-Regular")
       }
     }
