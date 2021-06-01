@@ -23,6 +23,7 @@
 #' @param label TRUE/FALSE whether to label the provinces or not
 #' @param value.vector a vector with values for the shades - has to be in the order of the provinces
 #' @param colours Vector (or set.colour function) of colours to use. If not, default palette is generated.
+#' @param null.colour Colour for null values
 #' @param plot.title Character denoting title of the plot
 #' @param plot.fig.num Character denoting plot number (or another plot annotations)
 #' @param legend.title Character denoting legend titles
@@ -36,6 +37,7 @@ plot.map.prov.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB
                            label = TRUE,
                            value.vector = NULL,
                            colours = NULL,
+                           null.colour = set.colours(7,type="gradient",gradient.choice="grey")[7],
                            plot.title = "",
                            plot.fig.num = "",
                            caption = "",
@@ -84,14 +86,14 @@ plot.map.prov.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB
     p <- p + geom_polygon(aes(x=long,
                             y=lat,
                             group=group,
-                            fill=fill.vector),colour=set.colours(1,categorical.choice = "grey"),size=0.1) + #geom_polygon actually draws the shapes
+                            fill=fill.vector),colour=null.colour,size=0.1) + #geom_polygon actually draws the shapes
       scale_fill_gradient(low=gradient.end,high=gradient.start) + #Set the colour scale
       ggplot2::coord_map("lambert",parameters=c(49,77),expand=FALSE) #Project it using lambert projection
   }
   else{
     p <- p + geom_polygon(aes(x=long,
                           y=lat,
-                          group=group),colour=set.colours(1,categorical.choice = "grey"),fill=NA,size=0.1) + #Same thing, but without a fill
+                          group=group),colour=null.colour,fill=NA,size=0.1) + #Same thing, but without a fill
       ggplot2::coord_map("lambert",parameters=c(49,77),expand=FALSE) #Project is using lambert projection
   }
   if(label){ #Label provinces
@@ -120,6 +122,7 @@ plot.map.prov.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB
 #' "NL","PE","NS","NB","QC","ON","MB","SK","AB","BC","YT","NT","NU"
 #' @param value.data a data table with 2 columns - first column must be string that denotes Province-CMA ID. Second column has to be numeric and is the value you want to show
 #' @param colours Vector (or set.colour function) of colours to use. If not, default palette is generated.
+#' @param null.colour Colour for null values
 #' @param plot.title Character denoting title of the plot
 #' @param plot.fig.num Character denoting plot number (or another plot annotations)
 #' @param legend.title Character denoting legend titles
@@ -132,6 +135,7 @@ plot.map.prov.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB
 plot.map.cma.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB","SK","AB","BC","YT","NT","NU"),
                             value.data = NULL,
                             colours = NULL,
+                            null.colour = set.colours(7,type="gradient",gradient.choice="grey")[7],
                             plot.title = "",
                             plot.fig.num = "",
                             caption = "",
@@ -183,13 +187,13 @@ plot.map.cma.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB"
   if(is.null(fill.vector)){
     p <- p + geom_polygon(data=areas.cmaDF[str_sub(id,1,2) %in% code.comparison],
                           aes(x=long,y=lat,group=group),
-                          colour=set.colours(1,categorical.choice = "grey"),fill=NA,size=0.1) +
+                          colour=null.colour,fill=NA,size=0.1) +
       ggplot2::coord_map("lambert",parameters=c(49,77),expand=FALSE)
   }
   else{
     p <- p + geom_polygon(data=areas.cmaDF[str_sub(id,1,2) %in% code.comparison],
                           aes(x=long,y=lat,group=group,fill=fill.vector),
-                          colour=set.colours(1,categorical.choice = "grey"),size=0.1) +
+                          colour=null.colour,size=0.1) +
       ggplot2::coord_map("lambert",parameters=c(49,77),expand=FALSE) +
       scale_fill_gradient(low = gradient.start,high=gradient.end)
 
@@ -213,6 +217,7 @@ plot.map.cma.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB"
 #' "NL","PE","NS","NB","QC","ON","MB","SK","AB","BC","YT","NT","NU"
 #' @param value.data a data table with 2 columns - first column must be string that denotes Province-CSD ID. Second column has to be numeric and is the value you want to show
 #' @param colours Vector (or set.colour function) of colours to use. If not, default palette is generated.
+#' @param null.colour Colour for null values
 #' @param plot.title Character denoting title of the plot
 #' @param plot.fig.num Character denoting plot number (or another plot annotations)
 #' @param legend.title Character denoting legend titles
@@ -226,6 +231,7 @@ plot.map.csd.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB"
                             label = TRUE,
                             value.data = NULL,
                             colours = NULL,
+                            null.colour = set.colours(7,type="gradient",gradient.choice="grey")[7],
                             plot.title = "",
                             plot.fig.num = "",
                             caption = "",
@@ -276,15 +282,15 @@ plot.map.csd.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB"
   if(is.null(fill.vector)){
     p <- p + geom_polygon(data=areas.csdDF[str_sub(id,1,2) %in% code.comparison],
                           aes(x=long,y=lat,group=group),
-                          colour=set.colours(1,categorical.choice = "grey"),fill=NA,size=0.01) +
+                          colour=null.colour,fill=NA,size=0.01) +
       ggplot2::coord_map("lambert",parameters=c(49,77),expand=FALSE)
   }
   else{
     p <- p + geom_polygon(data=areas.csdDF[str_sub(id,1,2) %in% code.comparison],
                           aes(x=long,y=lat,group=group,fill=fill.vector),
-                          colour=set.colours(1,categorical.choice = "grey"),size=0.01) +
+                          colour=null.colour,size=0.01) +
       ggplot2::coord_map("lambert",parameters=c(49,77),expand=FALSE) +
-      scale_fill_gradient(low=gradient.start,high=gradient.end,na.value = set.colours(1,categorical.choice = "grey"))
+      scale_fill_gradient(low=gradient.start,high=gradient.end,na.value = null.colour)
 
   }
   p <- p + labs(subtitle = plot.title,title = plot.fig.num, caption = caption) +
@@ -307,6 +313,7 @@ plot.map.csd.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB"
 #' "NL","PE","NS","NB","QC","ON","MB","SK","AB","BC","YT","NT","NU"
 #' @param value.data a data table with 2 columns - first column must be string that denotes Province-CSD ID. Second column has to be numeric and is the value you want to show
 #' @param colours Vector (or set.colour function) of colours to use. If not, default palette is generated.
+#' @param null.colour Colour chosen to be the null colour in the map
 #' @param plot.title Character denoting title of the plot
 #' @param plot.fig.num Character denoting plot number (or another plot annotations)
 #' @param legend.title Character denoting legend titles
@@ -320,6 +327,7 @@ plot.map.er.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB",
                             label = TRUE,
                             value.data = NULL,
                             colours = NULL,
+                            null.colour = set.colours(7,type="gradient",gradient.choice="grey")[7],
                             plot.title = "",
                             plot.fig.num = "",
                             caption = "",
@@ -370,15 +378,15 @@ plot.map.er.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB",
   if(is.null(fill.vector)){
     p <- p + geom_polygon(data=areas.erDF[str_sub(id,1,2) %in% code.comparison],
                           aes(x=long,y=lat,group=group),
-                          colour=set.colours(1,categorical.choice = "grey"),fill=NA,size=0.1) +
+                          colour=null.colour,fill=NA,size=0.1) +
       ggplot2::coord_map("lambert",parameters=c(49,77),expand=FALSE)
   }
   else{
     p <- p + geom_polygon(data=areas.erDF[str_sub(id,1,2) %in% code.comparison],
                           aes(x=long,y=lat,group=group,fill=fill.vector),
-                          colour=set.colours(1,categorical.choice = "grey"),size=0.1) +
+                          colour=null.colour,size=0.1) +
       ggplot2::coord_map("lambert",parameters=c(49,77),expand=FALSE) +
-      scale_fill_gradient(low=gradient.start,high=gradient.end,na.value = set.colours(1,categorical.choice = "grey"))
+      scale_fill_gradient(low=gradient.start,high=gradient.end,na.value = null.colour)
 
   }
   p <- p + labs(subtitle = plot.title,title = plot.fig.num, caption = caption) +
