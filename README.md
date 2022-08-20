@@ -9,7 +9,7 @@ style elements for data visualization used at the Brookfield Institute.
 ## Colours
 
 At the Brookfiled Institute, we use three primary colours: Magenta:
-`#DD347A` , Cyan: `#8AD4DF` ,and Yellow: `#FAAF19`
+`#dd347a` , Cyan: `#8ad4df` ,and Yellow: `#faaf19`
 
 ## Installation
 

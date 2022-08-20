@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 This package, and associated data visualization style guide lays out the style elements for data visualization used at the Brookfield Institute.
 
 ## Colours
-At the Brookfiled Institute, we use three primary colours: Magenta: `#DD347A` , Cyan: `#8AD4DF` ,and Yellow: `#FAAF19`
+At the Brookfiled Institute, we use three primary colours: Magenta: `#dd347a` , Cyan: `#8ad4df` ,and Yellow: `#faaf19`
 
 ## Installation
 As the fonts used by the Brookfield Institute in data visualization is licensed only for our use - you will notice that those font files are missing from this public repository. To download the package binary, go to the Policy Team Resources folder on our Google Drive and you will be able to find it here. This public version is available for reference purposes.
