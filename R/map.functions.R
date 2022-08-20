@@ -1,7 +1,3 @@
-# Key Installation point
-# 1. You need to have the fonts downloaded
-# 2. You need to run extrafont and import those fonts
-# 3. You need to manually edit the font family names in the resultatnt table so the viewer and the exporter doesn't get tripped up
 
 
 
@@ -30,6 +26,8 @@
 #' @param caption character for caption (sources etc)
 #' @param export TRUE/FALSE whether to export file as EPS under default options (height=6 inches, width=9 inches)
 #' @param export.name Name of the exported EPS file
+#' @param logo logical (TRUE/FALSE) denote whether to add BIIE logo or not
+#' @param logo.type Character; either "small" or "big" and activates only when logo is TRUE, decides whether to add full (big) or abridged (small) logo
 #' @return A map plot that conforms to Brookfield style
 #' @examples
 #' plot.map.prov.bf()
@@ -41,6 +39,8 @@ plot.map.prov.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB
                            plot.title = "",
                            plot.fig.num = "",
                            caption = "",
+                           logo = FALSE,
+                           logo.type = "small",
                            legend.title = ""){
   code.comparison <- sort(province.data[abbrev %in% province.name,code]) #Get the Province ID for the provinces in the list to plot
   fill.vector <- NA #Initialize the fill vector
@@ -103,6 +103,10 @@ plot.map.prov.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB
     scale_x_continuous(expand=c(0,0)) +
     scale_y_continuous(expand=c(0,0)) +
     guides(fill=guide_legend(title=legend.title))
+  #Add logo if needed
+  if(logo){
+    p <- add_logo(p,logo.type)
+  }
   return(p)
 }
 
@@ -127,6 +131,8 @@ plot.map.prov.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB
 #' @param plot.fig.num Character denoting plot number (or another plot annotations)
 #' @param legend.title Character denoting legend titles
 #' @param caption character for caption (sources etc)
+#' @param logo logical (TRUE/FALSE) denote whether to add BIIE logo or not
+#' @param logo.type Character; either "small" or "big" and activates only when logo is TRUE, decides whether to add full (big) or abridged (small) logo
 #' @param export TRUE/FALSE whether to export file as EPS under default options (height=6 inches, width=9 inches)
 #' @param export.name Name of the exported EPS file
 #' @return A map plot that conforms to Brookfield style
@@ -139,6 +145,8 @@ plot.map.cma.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB"
                             plot.title = "",
                             plot.fig.num = "",
                             caption = "",
+                            logo = FALSE,
+                            logo.type = "small",
                             legend.title = ""){
   fill.vector <- NULL
   code.comparison <- sort(province.data[abbrev %in% province.name,code])
@@ -202,6 +210,10 @@ plot.map.cma.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB"
     scale_x_continuous(expand=c(0,0)) +
     scale_y_continuous(expand=c(0,0)) +
     guides(fill=guide_legend(title=legend.title))
+  #Add logo if needed
+  if(logo){
+    p <- add_logo(p,logo.type)
+  }
   return(p)
 }
 
@@ -222,6 +234,8 @@ plot.map.cma.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB"
 #' @param plot.fig.num Character denoting plot number (or another plot annotations)
 #' @param legend.title Character denoting legend titles
 #' @param caption character for caption (sources etc)
+#' @param logo logical (TRUE/FALSE) denote whether to add BIIE logo or not
+#' @param logo.type Character; either "small" or "big" and activates only when logo is TRUE, decides whether to add full (big) or abridged (small) logo
 #' @param export TRUE/FALSE whether to export file as EPS under default options (height=6 inches, width=9 inches)
 #' @param export.name Name of the exported EPS file
 #' @return A map plot that conforms to Brookfield style
@@ -235,6 +249,8 @@ plot.map.csd.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB"
                             plot.title = "",
                             plot.fig.num = "",
                             caption = "",
+                            logo = FALSE,
+                            logo.type = "small",
                             legend.title = ""){
   fill.vector <- NULL
   code.comparison <- sort(province.data[abbrev %in% province.name,code])
@@ -297,6 +313,10 @@ plot.map.csd.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB"
     scale_x_continuous(expand=c(0,0)) +
     scale_y_continuous(expand=c(0,0)) +
     guides(fill=guide_legend(title=legend.title,title.position = "top",title.hjust = 0.5))
+  #Add logo if needed
+  if(logo){
+    p <- add_logo(p,logo.type)
+  }
   return(p)
 }
 
@@ -318,6 +338,8 @@ plot.map.csd.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB"
 #' @param plot.fig.num Character denoting plot number (or another plot annotations)
 #' @param legend.title Character denoting legend titles
 #' @param caption character for caption (sources etc)
+#' @param logo logical (TRUE/FALSE) denote whether to add BIIE logo or not
+#' @param logo.type Character; either "small" or "big" and activates only when logo is TRUE, decides whether to add full (big) or abridged (small) logo
 #' @param export TRUE/FALSE whether to export file as EPS under default options (height=6 inches, width=9 inches)
 #' @param export.name Name of the exported EPS file
 #' @return A map plot that conforms to Brookfield style
@@ -331,6 +353,8 @@ plot.map.er.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB",
                             plot.title = "",
                             plot.fig.num = "",
                             caption = "",
+                           logo = FALSE,
+                           logo.type = "small",
                             legend.title = ""){
   fill.vector <- NULL
   code.comparison <- sort(province.data[abbrev %in% province.name,code])
@@ -393,6 +417,10 @@ plot.map.er.bf <- function(province.name = c("NL","PE","NS","NB","QC","ON","MB",
     scale_x_continuous(expand=c(0,0)) +
     scale_y_continuous(expand=c(0,0)) +
     guides(fill=guide_legend(title=legend.title,title.position = "top",title.hjust = 0.5))
+  #Add logo if needed
+  if(logo){
+    p <- add_logo(p,logo.type)
+  }
   return(p)
 }
 

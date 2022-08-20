@@ -20,21 +20,20 @@
 #' set.colours(1,type="categorical",gradient.choice="dark.blue")
 set.colours <- function(n,
                         type = "categorical",
-                        gradient.choice = "dark.blue",
+                        gradient.choice = "magenta",
                         categorical.choice = NULL,
                         special = NULL){
   #Setting all the base vectors to refer to - precise because I don't trust R's generation of gradients
-  base.set <- c("dark.blue"="#14365D","light.blue"="#8AD4DF","pink"="#DD347A","yellow"="#FFC800",
-                "magenta"="#79133E","orange"="#F7941E","green"="#82C458","teal"="#005F61","grey"="#707D85")
-  dark.blue <- c("#14365D","#29486B","#3E5A7A","#546C89","#697F97","#7E91A6","#94A3B5","#A9B5C4")
+  base.set <- c("dark.blue"="#14365D","light.blue"="#8AD4DF","magenta"="#DD347A","yellow"="#FAAF19"
+                ,"pink"="#FFA5B9","green"="#3C7D78","brown"="#C37546","grey"="#626466")
+  dark.blue <- c("#14365D","#29486B","#4F6885","#546C89","#8A9BAE","#7E91A6","#94A3B5","#C4CDD7")
   light.blue <- c("#8AD4DF","#94D7E1","#9FDBE4","#A9DFE7","#B4E3EA","#BFE7ED","#C9EBF0","#D4EFF3")
-  pink <- c("#DD347A","#E04686","#E35892","#E66B9E","#E97DAA","#EC90B6","#EFA2C2","#F2B5CE")
+  magenta <- c("#DD347A","#E04686","#E35892","#E66B9E","#E97DAA","#EC90B6","#EFA2C2","#F2B5CE")
   yellow <- c("#FFC800","#FFCD17","#FFD22E","#FFD745","#FFDC5C","#FFE173","#FFE68B","#FFEBA2")
-  magenta <- c("#79133E","#85284F","#913D61","#9D5372","#A96884","#B57E95","#C293A7","#CEA9B8")
-  orange <- c("#F7941E","#F79D32","#F8A746","#F9B15B","#F9BA6F","#FAC484","#FBCE98","#FCD8AD")
-  green <- c("#82C458","#8DC967","#98CE76","#A4D485","#AFD994","#BADEA3","#C6E4B3","#D1E9C2")
-  teal <- c("#005F61","#176D6F","#2E7C7D","#458A8C","#5C999A","#73A7A8","#8BB6B7","#A2C4C5")
-  grey <- c("#707D85","#7D8890","#8A949B","#97A0A6","#A4ACB1","#B1B8BC","#B1B8BC","#B1B8BC")
+  pink <- c("#FFA5B9","#85284F","#913D61","#9D5372","#A96884","#B57E95","#C293A7","#CEA9B8")
+  brown <- c("#F7941E","#F79D32","#F8A746","#F9B15B","#F9BA6F","#FAC484","#FBCE98","#FCD8AD")
+  green <- c("#3C7D78","#8DC967","#6D9E9A","#A4D485","#9EBEBC","#BADEA3","#CEDFDD","#D1E9C2")
+  grey <- c("#626466","#7D8890","#8A949B","#939598","#A4ACB1","#B1B8BC","#626466","#B1B8BC")
   #Check if you have way too many categories - 7 is the absolute max!
   if(n > 7){
     stop("You have way too many categories. Reduce it!")
@@ -106,15 +105,12 @@ export.bf.plot <- function(f.name,p.obj, p.height=6,p.width=7.25,type="pdf"){
     }
     ggplot2::ggsave(f.name,
                     plot=p.obj,
-                    family = "RooneySans-Regular",
-                    fonts = c("RooneySans-Light","RooneySans-Medium"),
                     device = "pdf", #Device used is pdf
                     width=p.width,
                     height=p.height,
                     pointsize=12,
                     bg = "transparent",
                     useDingbats=FALSE)
-    extrafont::embed_fonts(f.name,options="-dEPSCrop -dSubsetFonts=false") #This embeds the fonts - the option prevents weird cropping from happening
   }
   else if(type == "eps"){
     if(stringr::str_sub(f.name,nchar(f.name)-3,nchar(f.name))!=".eps"){
@@ -122,15 +118,12 @@ export.bf.plot <- function(f.name,p.obj, p.height=6,p.width=7.25,type="pdf"){
     }
     ggplot2::ggsave(f.name,
                     plot=p.obj,
-                    family = "RooneySans-Regular",
-                    fonts = c("RooneySans-Light","RooneySans-Medium"),
                     device = "eps", #Device used is pdf
                     width=p.width,
                     height=p.height,
                     pointsize=12,
                     bg = "transparent",
                     useDingbats=FALSE)
-    extrafont::embed_fonts(f.name,options="-dEPSCrop -dSubsetFonts=false") #This embeds the fonts - the option prevents weird cropping from happening
   }
   else{
     stop("File type is not surpported")
@@ -145,14 +138,16 @@ brookfield.base.theme <- function(inverted=FALSE){
   if(!inverted){
     return(ggplot2::theme(panel.background = ggplot2::element_rect(fill="transparent", colour=NA), #Make sure plot area background is transparent
                           plot.background = ggplot2::element_rect(fill="transparent", colour=NA), #Make sure render area background is transparent
-                          axis.line = ggplot2::element_line(size=0.25, colour = "#DCDDDE"), #Set axis line width and set colour to grey
-                          axis.ticks = ggplot2::element_line(size=0.25, colour = "#DCDDDE"), #Set axis tick width and set colour to grey
+                          axis.line = ggplot2::element_line(size=0.4, colour = "#626466"), #Set axis line width and set colour to grey
+                          axis.ticks = ggplot2::element_line(size=0.4, colour = "#626466"), #Set axis tick width and set colour to grey
                           panel.grid.major = ggplot2::element_blank(), #Remove the panel grid lines
                           panel.grid.minor = ggplot2::element_blank(), #Remove the panel grid lines
                           text = ggplot2::element_text(family="RooneySans-Regular"), #Set the font for every text element (except for geom elements)
-                          plot.title = ggplot2::element_text(family="RooneySans-Regular",face="italic", size=9), #Format figure number
-                          plot.subtitle = ggplot2::element_text(family="RooneySans-Medium", size=12), #Format main title
-                          plot.caption = ggplot2::element_text(family="RooneySans-Regular",face="italic", size=8.2, margin=ggplot2::margin(t=10),hjust=0,colour="#707D85"), #Format for caption and other notes
+                          plot.title = ggplot2::element_text(family="GT-Pressura-Bold", size=13, colour = "#14365D"), #Format figure number
+                          plot.subtitle = ggplot2::element_text(family="RooneySans-Regular", size=11), #Format main title
+                          plot.caption = ggplot2::element_text(family="RooneySans-Regular", size=8.2,hjust=0,colour="#707D85"), #Format for caption and other notes
+                          plot.tag = ggtext::element_markdown(),
+                          plot.tag.position = c(0.98, 0.02),
                           legend.background = ggplot2::element_rect(fill="transparent",colour=NA), #Make sure legend box is transparent (for export)
                           legend.key = ggplot2::element_blank(), #Background on each key is transparent
                           legend.box.margin = ggplot2::margin(b=4,t=6), #Set margin for the box for appropriate distance
@@ -162,23 +157,25 @@ brookfield.base.theme <- function(inverted=FALSE){
                           legend.margin = ggplot2::margin(b=1), #Small margin in the bottom
                           legend.position = "top", #Set the legend to top so panel can be full width (for export)
                           legend.box.spacing = ggplot2::unit(c(0,0,0,0),units=c("cm","cm","cm","cm")), #Legend box spacing - maybe not needed?
-                          axis.text.x = ggplot2::element_text(size=9, margin=ggplot2::margin(t=2), family = "RooneySans-Light"), #Set axis text. Light to make it less prominent - margin is also precise
-                          axis.text.y = ggplot2::element_text(size=9, margin=ggplot2::margin(r=2), family = "RooneySans-Light"), #Set axis text. Light to make it less prominent - margin is also precise
-                          axis.title.x = ggplot2::element_text(size=10, margin=ggplot2::margin(t=4)), #Set axis title. Margin is also precise
-                          axis.title.y = ggplot2::element_text(size=10, margin=ggplot2::margin(r=4)))) #Set axis title. Margin is also precise
+                          axis.text.x = ggplot2::element_text(size=10, margin=ggplot2::margin(t=2), family = "GT-Pressura-Light"), #Set axis text. Light to make it less prominent - margin is also precise
+                          axis.text.y = ggplot2::element_text(size=10, margin=ggplot2::margin(r=2), family = "GT-Pressura-Light"), #Set axis text. Light to make it less prominent - margin is also precise
+                          axis.title.x = ggplot2::element_text(size=11, margin=ggplot2::margin(t=4)), #Set axis title. Margin is also precise
+                          axis.title.y = ggplot2::element_text(size=11, margin=ggplot2::margin(r=4)))) #Set axis title. Margin is also precise
 
   }
   else{
     return(ggplot2::theme(panel.background = ggplot2::element_rect(fill="transparent", colour=NA), #Make sure plot area background is transparent
                           plot.background = ggplot2::element_rect(fill="transparent", colour=NA), #Make sure render area background is transparent
-                          axis.line = ggplot2::element_line(size=0.25, colour = "#B1B8BC"), #Set axis line width and set colour to grey
-                          axis.ticks = ggplot2::element_line(size=0.25, colour = "#B1B8BC"), #Set axis tick width and set colour to grey
+                          axis.line = ggplot2::element_line(size=0.4, colour = "#B1B8BC"), #Set axis line width and set colour to grey
+                          axis.ticks = ggplot2::element_line(size=0.4, colour = "#B1B8BC"), #Set axis tick width and set colour to grey
                           panel.grid.major = ggplot2::element_blank(), #Remove the panel grid lines
                           panel.grid.minor = ggplot2::element_blank(), #Remove the panel grid lines
                           text = ggplot2::element_text(family="RooneySans-Regular",color="white"), #Set the font for every text element (except for geom elements)
-                          plot.title = ggplot2::element_text(family="RooneySans-Regular",face="italic", size=9,color="white"), #Format figure number
-                          plot.subtitle = ggplot2::element_text(family="RooneySans-Medium", size=12,color="white"), #Format main title
+                          plot.title = ggplot2::element_text(family="GT-Pressura-Bold", size=13,color="white"), #Format figure number
+                          plot.subtitle = ggplot2::element_text(family="RooneySans-Regular", size=11,color="white"), #Format main title
                           plot.caption = ggplot2::element_text(family="RooneySans-Regular",face="italic", size=8.2, margin=ggplot2::margin(t=10),hjust=0,colour="#B1B8BC"), #Format for caption and other notes
+                          plot.tag = ggtext::element_markdown(),
+                          plot.tag.position = c(0.98, 0.02),
                           legend.background = ggplot2::element_rect(fill="transparent",colour=NA), #Make sure legend box is transparent (for export)
                           legend.key = ggplot2::element_blank(), #Background on each key is transparent
                           legend.box.margin = ggplot2::margin(b=4,t=6), #Set margin for the box for appropriate distance
@@ -188,14 +185,81 @@ brookfield.base.theme <- function(inverted=FALSE){
                           legend.margin = ggplot2::margin(b=1), #Small margin in the bottom
                           legend.position = "top", #Set the legend to top so panel can be full width (for export)
                           legend.box.spacing = ggplot2::unit(c(0,0,0,0),units=c("cm","cm","cm","cm")), #Legend box spacing - maybe not needed?
-                          axis.text.x = ggplot2::element_text(size=9, margin=ggplot2::margin(t=2), family = "RooneySans-Light",color="white"), #Set axis text. Light to make it less prominent - margin is also precise
-                          axis.text.y = ggplot2::element_text(size=9, margin=ggplot2::margin(r=2), family = "RooneySans-Light",color="white"), #Set axis text. Light to make it less prominent - margin is also precise
+                          axis.text.x = ggplot2::element_text(size=9, margin=ggplot2::margin(t=2), family = "GT-Pressura-Light",color="white"), #Set axis text. Light to make it less prominent - margin is also precise
+                          axis.text.y = ggplot2::element_text(size=9, margin=ggplot2::margin(r=2), family = "GT-Pressura-Light",color="white"), #Set axis text. Light to make it less prominent - margin is also precise
                           axis.title.x = ggplot2::element_text(size=10, margin=ggplot2::margin(t=4),color="white"), #Set axis title. Margin is also precise
                           axis.title.y = ggplot2::element_text(size=10, margin=ggplot2::margin(r=4),color="white"))) #Set axis title. Margin is also precise
 
   }
 }
 
+
+#' Initial set up for the BFTheme package that installs the fonts
+#'
+#' @return Set up for bftheme
+#' @examples
+#' bftheme.init()
+
+
+bftheme.init <- function(){
+    ##########################
+    #Add fonts - Rooney Pro
+    ##########################
+    sysfonts::font_add("RooneyPro-Regular",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Rooney_Pro/RooneyPro-Regular.otf"))
+    sysfonts::font_add("RooneyPro-RegularItalic",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Rooney_Pro/RooneyPro-RegularItalic.otf"))
+    sysfonts::font_add("RooneyPro-Bold",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Rooney_Pro/RooneyPro-Bold.otf"))
+    sysfonts::font_add("RooneyPro-BoldItalic",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Rooney_Pro/RooneyPro-BoldItalic.otf"))
+    sysfonts::font_add("RooneyPro-Medium",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Rooney_Pro/RooneyPro-Medium.otf"))
+    sysfonts::font_add("RooneyPro-MediumItalic",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Rooney_Pro/RooneyPro-MediumItalic.otf"))
+    sysfonts::font_add("RooneyPro-Light",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Rooney_Pro/RooneyPro-Light.otf"))
+    sysfonts::font_add("RooneyPro-LightItalic",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Rooney_Pro/RooneyPro-LightItalic.otf"))
+    ##########################
+    #Add fonts - Rooney Sans
+    ##########################
+    sysfonts::font_add("RooneySans-Regular",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Rooney_Sans/RooneySans-Regular.otf"))
+    sysfonts::font_add("RooneySans-RegularItalic",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Rooney_Sans/RooneySans-RegularItalic.otf"))
+    sysfonts::font_add("RooneySans-Bold",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Rooney_Sans/RooneySans-Bold.otf"))
+    sysfonts::font_add("RooneySans-BoldItalic",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Rooney_Sans/RooneySans-BoldItalic.otf"))
+    sysfonts::font_add("RooneySans-Medium",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Rooney_Sans/RooneySans-Medium.otf"))
+    sysfonts::font_add("RooneySans-MediumItalic",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Rooney_Sans/RooneySans-MediumItalic.otf"))
+    sysfonts::font_add("RooneySans-Light",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Rooney_Sans/RooneySans-Light.otf"))
+    sysfonts::font_add("RooneySans-LightItalic",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Rooney_Sans/RooneySans-LightItalic.otf"))
+    ##########################
+    #Add fonts - Pressura
+    ##########################
+    sysfonts::font_add("GT-Pressura-Regular",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Pressura/GT-Pressura-Regular.otf"))
+    sysfonts::font_add("GT-Pressura-RegularItalic",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Pressura/GT-Pressura-RegularItalic.otf"))
+    sysfonts::font_add("GT-Pressura-Bold",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Pressura/GT-Pressura-Bold.otf"))
+    sysfonts::font_add("GT-Pressura-BoldItalic",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Pressura/GT-Pressura-BoldItalic.otf"))
+    sysfonts::font_add("GT-Pressura-Light",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Pressura/GT-Pressura-Light.otf"))
+    sysfonts::font_add("GT-Pressura-LightItalic",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Pressura/GT-Pressura-LightItalic.otf"))
+    ##########################
+    #Add fonts - Entypo
+    ##########################
+    sysfonts::font_add("Entypo",stringr::str_c(.libPaths(),"/BFTheme/extdata/font_files/Entypo/Entypo-Social.otf"))
+    showtext::showtext_auto()
+
+}
+
+#' Support function to add logo to a graph
+#' @param p Graph object
+#' @param logo.type String, takes either "small" or "big" and returns the logo of the appropriate size
+#' @return Graph object with the logo added
+#' @examples
+#' bftheme.init()
+#'
+add_logo <- function(p,logo.type){
+  if(logo.type == "small"){
+    brookfield_logo_tag <- str_c("<img src='",.libPaths(),"/BFTheme/extdata/small_icon.png' width='20'/>")
+    p <- p + ggplot2::labs(tag = brookfield_logo_tag)
+    return(p)
+  }
+  if(logo.type == "big"){
+    brookfield_logo_tag <- str_c("<img src='",.libPaths(),"/BFTheme/extdata/big_icon.png' width='75'/>")
+    p <- p + ggplot2::labs(tag = brookfield_logo_tag) + theme(plot.tag.position = c(0.91,0.02))
+    return(p)
+  }
+}
 
 
 #Experimental Function

@@ -10,9 +10,9 @@
 
 
 #' Create a scatter plot with Brookfield formatting. Uses Rooney font family - make sure you install that with extrafonts before using this.
-#' @usage plot.scatter.bf(data,x,y,group.by=NULL,p.size=NULL,unit.x="",
-#' unit.y="",plot.title="",plot.fig.num="",title.x.axis="",
-#' title.y.axis="",legend.title = "",deg.45 = FALSE,
+#' @usage plot.scatter.bf(data,x,y,group.by=NULL,colours=NULL,p.size=NULL,deg.45=FALSE,trend.line=FALSE
+#' plot.limit = NULL,unit.x="",unit.y="",x.axis="",y.axis="",
+#' plot.title="",plot.fig.num="",caption= "",logo = FALSE, logo.type = "small",legend.title = "",
 #' export = FALSE,export.name = "")
 #' @param data Main data table to plot A
 #' @param x Character corresponding the column name for x-axis
@@ -29,7 +29,9 @@
 #' @param plot.limit Vector of form c(min.x,max.x,min.y,max.y) that sets out plot limits
 #' @param plot.title Character denoting title of the plot
 #' @param plot.fig.num Character denoting plot number (or another plot annotations)
-#' @param caption character for caption (sources etc)
+#' @param caption Character for caption (sources etc)
+#' @param logo logical (TRUE/FALSE) denote whether to add BIIE logo or not
+#' @param logo.type Character; either "small" or "big" and activates only when logo is TRUE, decides whether to add full (big) or abridged (small) logo
 #' @param legend.title Character denoting legend titles
 #' @param export TRUE/FALSE whether to export file as EPS under default options (height=6 inches, width=9 inches)
 #' @param export.name Name of the exported EPS file
@@ -50,6 +52,8 @@ plot.scatter.bf <- function(data,x,y,
                             plot.title="",
                             plot.fig.num="",
                             caption = "",
+                            logo = FALSE,
+                            logo.type = "small",
                             legend.title = "",
                             export = FALSE,
                             export.name = ""){
@@ -136,8 +140,13 @@ plot.scatter.bf <- function(data,x,y,
                   caption = caption)
   line.limits <- data.table(x=c(min(ticks.seq.x$breaks),max(ticks.seq.x$breaks)),y=c(min(ticks.seq.y$breaks),max(ticks.seq.y$breaks)))
   names(line.limits) <- c(x,y)
-  p <- p + ggthemes::geom_rangeframe(data= line.limits,size=0.5, colour="#DCDDDE")
+  p <- p + ggthemes::geom_rangeframe(data= line.limits,size=0.5, colour="#626466")
+  #Add logo if needed
+  if(logo){
+    p <- add_logo(p,logo.type)
+  }
   #Export into a file if export option is on - with default options
+
 
   if(export){
     if(export.name==""){
@@ -159,7 +168,9 @@ plot.scatter.bf <- function(data,x,y,
 #' @param cat Character corresponding to the column name categories of the column
 #' @param order.bar One of "none", "ascending", or "descending"
 #' @param group.by Character corresponding to the column name that columns are grouped by (colour)
+#' @param column.width Numerical Width of the column, ranges from 0 to 1. Default at 0.6
 #' @param colours Vector (or set.colour function) of colours to use. If not, default palette is generated.
+#' @param col.invert TRUE/FALSE Whether to use inverted colours or not
 #' @param stacked TRUE/FALSE to stack the columns or not still supported but maybe not in the future
 #' @param position One of "identity", "stacked" or "dodge"
 #' @param label TRUE/FALSE on whether to label the points or not
@@ -170,6 +181,8 @@ plot.scatter.bf <- function(data,x,y,
 #' @param plot.fig.num Character denoting plot number (or another plot annotations)
 #' @param y.axis Character denoting axis title for y (unit)
 #' @param caption Character denoting sources and other captions
+#' @param logo logical (TRUE/FALSE) denote whether to add BIIE logo or not
+#' @param logo.type Character; either "small" or "big" and activates only when logo is TRUE, decides whether to add full (big) or abridged (small) logo
 #' @param export TRUE or FALSE whether to export file as EPS under default options (height=6 inches, width=9 inches)
 #' @param export.name Name of the exported EPS file
 #' @return Single column plot that conforms to Brookfield styling
@@ -190,6 +203,8 @@ plot.column.bf <- function(data,x,cat,
                            y.axis = "",
                            legend.title = "",
                            caption = "",
+                           logo = FALSE,
+                           logo.type = "small",
                            export=FALSE,
                            export.name=""){
   if(!data.table::is.data.table(data)){ #Chek and coerce into data.table
@@ -202,14 +217,14 @@ plot.column.bf <- function(data,x,cat,
   }
   #Set up basic theme elements
   column.theme <- brookfield.base.theme() +
-    ggplot2::theme(axis.text.x = ggplot2::element_text(size=9, margin=ggplot2::margin(t=2), family = "RooneySans-Light", angle=90, hjust = 1, vjust = 0.5),
+    ggplot2::theme(axis.text.x = ggplot2::element_text(size=10, margin=ggplot2::margin(t=2), family = "GT-Pressura-Light", angle=90, hjust = 1, vjust = 0.5),
           axis.ticks.x = ggplot2::element_blank(),
           axis.title.x = ggplot2::element_blank())
   if(col.invert){
     column.theme <- brookfield.base.theme(inverted=TRUE) +
-      ggplot2::theme(axis.text.x = ggplot2::element_text(size=9,
+      ggplot2::theme(axis.text.x = ggplot2::element_text(size=10,
                                                          margin=ggplot2::margin(t=2),
-                                                         family = "RooneySans-Light",
+                                                         family = "GT-Pressura-Light",
                                                          angle=90,
                                                          hjust = 1,
                                                          vjust = 0.5,
@@ -278,7 +293,7 @@ plot.column.bf <- function(data,x,cat,
         p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=stringr::str_c(label.unit,scales::comma(round(unlist(clone[,get(x)]),1)))),
                                     nudge_y=nudge.amt,
                                     size=11*0.352777778,
-                                    family="RooneySans-Regular",
+                                    family="GT-Pressura-Regular",
                                     position = position_stack(vjust = 0.5))
       }
       else{
@@ -287,7 +302,7 @@ plot.column.bf <- function(data,x,cat,
                                                                         label.unit)),
                                     nudge_y=nudge.amt,
                                     size=11*0.352777778,
-                                    family="RooneySans-Regular",
+                                    family="GT-Pressura-Regular",
                                     position = position_stack(vjust = 0.5))
       }
     }
@@ -297,14 +312,14 @@ plot.column.bf <- function(data,x,cat,
                                     nudge_y=nudge.amt,
                                     position = position_dodge(width=column.width),
                                     size=11*0.352777778,
-                                    family="RooneySans-Regular")
+                                    family="GT-Pressura-Regular")
       }
       else{
         p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=stringr::str_c(scales::comma(round(unlist(clone[,get(x)]),1)),label.unit)),
                                     nudge_y=nudge.amt,
                                     size=11*0.352777778,
                                     position = position_dodge(width=column.width),
-                                    family="RooneySans-Regular")
+                                    family="GT-Pressura-Regular")
       }
     }
 
@@ -320,6 +335,10 @@ plot.column.bf <- function(data,x,cat,
                          title = plot.fig.num,
                          y = y.axis,
                          caption = caption)
+  #Add logo if needed
+  if(logo){
+    p <- add_logo(p,logo.type)
+  }
   #Export into file
   if(export){
     if(export.name == ""){
@@ -342,6 +361,8 @@ plot.column.bf <- function(data,x,cat,
 #' @param plot.fig.num Character denoting plot number (or another plot annotations)
 #' @param plot.cat.title Legend title for the colour of the plot
 #' @param caption String that sets the caption: Sources, notes stc
+#' @param logo logical (TRUE/FALSE) denote whether to add BIIE logo or not
+#' @param logo.type Character; either "small" or "big" and activates only when logo is TRUE, decides whether to add full (big) or abridged (small) logo
 #' @param x.axis Notes to be placed - Recommended place to put what each square means if not clear already
 #' @param dividing.line TRUE/FALSE on whether we want to display the dividing lines between the groups
 #' @param labels TRUE/FALSE on whether we want to have labels on them or not
@@ -359,6 +380,8 @@ plot.waffle.bf <- function(named.vector,
                            plot.fig.num="",
                            plot.cat.title="",
                            caption = "",
+                           logo = FALSE,
+                           logo.type = "small",
                            x.axis="",
                            dividing.line=FALSE,
                            labels=FALSE,
@@ -445,7 +468,7 @@ plot.waffle.bf <- function(named.vector,
       p <- p +
         ggplot2::annotate("segment",x = max.x, y = max.y, xend = max.x - 1, yend = y.dest, colour="#727D84", size=0.25) + #Add the diagonal segment
         ggplot2::annotate("segment",x=max.x-1,y=y.dest,xend=max.x-2,yend=y.dest,colour="#727D84",size=0.25) + #Add the horizontal segment
-        ggplot2::annotate("text",x=max.x-1-size.text,y=y.dest,label=label,size=11*0.352777778,family="RooneySans-Regular") #Add the text
+        ggplot2::annotate("text",x=max.x-1-size.text,y=y.dest,label=label,size=11*0.352777778,family="GT-Pressura-Regular") #Add the text
       prev.x <- max.x
       prev.y <- y.dest
     }
@@ -456,6 +479,10 @@ plot.waffle.bf <- function(named.vector,
     ggplot2::scale_y_continuous(limits=c(-1,row.num+1)) +
     labs(title=plot.fig.num,subtitle=plot.title,x=x.axis,caption=caption) +
     guides(fill=guide_legend(title=plot.cat.title,title.position = "top"))
+  #Add logo if needed
+  if(logo){
+    p <- add_logo(p,logo.type)
+  }
   #Export things
   if(export){
     ratio = round(row.num/most.x,2)
@@ -485,6 +512,8 @@ plot.waffle.bf <- function(named.vector,
 #' @param y.axis Character denoting the y axis title
 #' @param legend.title Character denoting the title for the colour legend
 #' @param caption Character that denotes caption (Sources)
+#' @param logo logical (TRUE/FALSE) denote whether to add BIIE logo or not
+#' @param logo.type Character; either "small" or "big" and activates only when logo is TRUE, decides whether to add full (big) or abridged (small) logo
 #' @param export TRUE/FALSE whether to export file as EPS under default options
 #' (height=scaled according to row number and cell number, width=12 inches)
 #' @param export.name Name of the exported EPS file
@@ -507,14 +536,17 @@ plot.line.bf <- function(data,x,y,
                          y.axis = "",
                          legend.title = "",
                          caption = "",
+                         logo = FALSE,
+                         logo.type = "small",
                          export = FALSE,
                          export.name = ""){
   if(!data.table::is.data.table(data)){ #Chek and coerce into data.table
     clone <- data.table::as.data.table(data)
+    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
   }
   else{
     clone <- cbind(data)
-    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
+
   }
   #This bit sets up the base Brookfield theme elements
   line.theme <- brookfield.base.theme()
@@ -572,8 +604,12 @@ plot.line.bf <- function(data,x,y,
     scale_y_continuous(breaks = ticks.seq.y$breaks,labels = ticks.seq.y$labels)
   if(ingraph.labels){
     p <- p + directlabels::geom_dl(aes_string(label=group.by),method=list("last.points",
-                                                                          fontfamily="RooneySans-Regular",
+                                                                          fontfamily="GT-Pressura-Regular",
                                                                           cex = 0.8))
+  }
+  #Add logo if needed
+  if(logo){
+    p <- add_logo(p,logo.type)
   }
   if(export){
     if(export.name==""){
@@ -600,6 +636,8 @@ plot.line.bf <- function(data,x,y,
 #' @param y.axis Character denoting the y axis title
 #' @param legend.title Character denoting the title for the colour legend
 #' @param caption Character that denotes caption (Sources)
+#' @param logo logical (TRUE/FALSE) denote whether to add BIIE logo or not
+#' @param logo.type Character; either "small" or "big" and activates only when logo is TRUE, decides whether to add full (big) or abridged (small) logo
 #' @param export TRUE/FALSE whether to export file as EPS under default options
 #' (height=scaled according to row number and cell number, width=12 inches)
 #' @param export.name Name of the exported EPS file
@@ -619,6 +657,8 @@ plot.pyramid.bf <- function(data,
                             y.axis = "",
                             legend.title = "",
                             caption = "",
+                            logo = FALSE,
+                            logo.type = "small",
                             export = FALSE,
                             export.name = ""){
 
@@ -626,10 +666,11 @@ plot.pyramid.bf <- function(data,
   levels <- unique(data[,get(diff)])
   if(!data.table::is.data.table(data)){ #Chek and coerce into data.table
     clone <- data.table::as.data.table(data)
+    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
   }
   else{
     clone <- cbind(data)
-    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
+
   }
   if(length(levels)!=2){ #Pyramid plot only makes sense if you have 2 levels
     stop("There are either more or less than 2 levels. Can't draw a pyramid in that case")
@@ -658,6 +699,10 @@ plot.pyramid.bf <- function(data,
   #Handle exporting
   p <- p + labs(title=plot.fig.num,subtitle=plot.title,y=x.axis,x=y.axis,caption=caption) +
     guides(fill=guide_legend(title=legend.title,title.position = "top"))
+  #Add logo if needed
+  if(logo){
+    p <- add_logo(p,logo.type)
+  }
   if(export){
     if(export.name==""){
       export.name <- "Rplot"
@@ -683,6 +728,8 @@ plot.pyramid.bf <- function(data,
 #' @param y.axis Character denoting the y axis title
 #' @param legend.title Character denoting the title for the colour legend
 #' @param caption Character that denotes caption (Sources)
+#' @param logo logical (TRUE/FALSE) denote whether to add BIIE logo or not
+#' @param logo.type Character; either "small" or "big" and activates only when logo is TRUE, decides whether to add full (big) or abridged (small) logo
 #' @param export TRUE/FALSE whether to export file as EPS under default options
 #' (height=scaled according to row number and cell number, width=12 inches)
 #' @param export.name Name of the exported EPS file
@@ -696,6 +743,8 @@ plot.mekko.bf <- function(data,
                           plot.title = "",
                           plot.fig.num = "",
                           caption = "",
+                          logo = FALSE,
+                          logo.type = "small",
                           group.by = NULL,
                           legend.title = "",
                           colours = NULL,
@@ -707,10 +756,11 @@ plot.mekko.bf <- function(data,
                           export.name = ""){
   if(!data.table::is.data.table(data)){ #Chek and coerce into data.table
     clone <- data.table::as.data.table(data)
+    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
   }
   else{
     clone <- cbind(data)
-    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
+
   }
   setkeyv(x=clone,y)
   clone[,w:=cumsum(get(x))]
@@ -744,6 +794,10 @@ plot.mekko.bf <- function(data,
     scale_x_continuous(expand = c(0,0),limits=c(0,max.plot.x),breaks = ticks.x$breaks, labels = ticks.x$labels) +
     scale_y_continuous(expand=c(0,0),limits=c(0,max.plot.y),breaks = ticks.y$breaks, labels = ticks.y$labels) +
     guides(fill = guide_legend(title = legend.title, title.position = "top"))
+  #Add logo if needed
+  if(logo){
+    p <- add_logo(p,logo.type)
+  }
   if(export){
     if(export.name==""){
       export.name <- "Rplot"
@@ -761,12 +815,18 @@ plot.mekko.bf <- function(data,
 #' @param cat String. Column name for the category of things that are changing
 #' @param time.var String. Column name of variable that denotes time - time has to be numeric
 #' @param order.by String. One of "change" or "value", way to order the categories. Either by the magnitude of change, or the absolute magnitude
+#' @param annotate logical (TRUE/FALSE) on whether to add annotation on beginning period and end period for one of the arrows
+#' @param label logical TRUE/FALSE whether to add numbers for each of the arrows denoting starting and ending values
+#' @param nudge.beg numeric amount to nudge the text for each arrow, recommended to not change from default
+#' @param nudge.end numeric amount of nudget the text for each arrow, recommended to not change from default
 #' @param plot.title Character denoting title of the plot
 #' @param plot.fig.num Character denoting plot number (or another plot annotations)
 #' @param unit.x Character denoting the unit for x-axis. Special formatting for \% and $
 #' @param x.axis Character denoting the x axis title
 #' @param y.axis Character denoting the y axis title
 #' @param caption Character that denotes caption (Sources)
+#' @param logo logical (TRUE/FALSE) denote whether to add BIIE logo or not
+#' @param logo.type Character; either "small" or "big" and activates only when logo is TRUE, decides whether to add full (big) or abridged (small) logo
 #' @return ggplot2 object with all the right formatting
 #' @examples
 #' plot.change.arrow.bf(change.gdp,"gdp","country","year")
@@ -784,13 +844,16 @@ plot.change.arrow.bf <- function(data,
                                  y.axis = "",
                                  plot.title = "",
                                  plot.fig.num = "",
-                                 caption = ""){
+                                 caption = "",
+                                 logo = FALSE,
+                                 logo.type = "small"){
   if(!data.table::is.data.table(data)){ #Chek and coerce into data.table
     clone <- data.table::as.data.table(data)
+    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
   }
   else{
     clone <- cbind(data)
-    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
+
   }
   max.plot <- max(clone[, get(x)]) #Find the maximum for the plot
   min.plot <- min(clone[, get(x)]) #Find the minimum for the plot
@@ -838,13 +901,13 @@ plot.change.arrow.bf <- function(data,
                                    guide = FALSE)
   }
   else if(max(clone[,diff])<=0 & min(clone[,diff])<0){ #If we only have decreasing vectors
-    arrow.colours <- set.colours(2, categorical.choice = c("pink", "grey"))
+    arrow.colours <- set.colours(2, categorical.choice = c("magenta", "grey"))
     p <- p + scale_colour_gradient(low   = arrow.colours[1],
                                    high  = arrow.colours[2],
                                    guide = FALSE)
   }
   else{ #Or if we have both increasing and decreasing vectors
-    arrow.colours <- set.colours(3, categorical.choice = c("pink", "grey", "light.blue"))
+    arrow.colours <- set.colours(3, categorical.choice = c("magenta", "grey", "light.blue"))
     p <- p + scale_colour_gradient2(low   = arrow.colours[1],
                                     mid   = arrow.colours[2],
                                     high  = arrow.colours[3],
@@ -860,7 +923,7 @@ plot.change.arrow.bf <- function(data,
                          aes(label = str_c(comma(clone[(diff > 0 & get(time.var) == start.year), get(x)]), unit.x),
                              x     = clone[(diff > 0 & get(time.var) == start.year), get(x)] - max.plot * nudge.end, #Subtract because increase implies starting year is on the right
                              y     = clone[(diff > 0 & get(time.var) == start.year), get(cat)]),
-                         family = "RooneySans-Regular",
+                         family = "GT-Pressura-Regular",
                          hjust  = 1,
                          size = 9*0.352777778,
                          colour = set.colours(1, categorical.choice = "dark.blue"))
@@ -871,7 +934,7 @@ plot.change.arrow.bf <- function(data,
                          aes(label = str_c(comma(clone[(diff > 0 & get(time.var) == end.year), get(x)]), unit.x),
                              x     = clone[(diff > 0 & get(time.var) == end.year), get(x)] + max.plot * nudge.beg, #Add because increase implies ending year is on the right
                              y     = clone[(diff > 0 & get(time.var) == end.year), get(cat)]),
-                         family = "RooneySans-Regular",
+                         family = "GT-Pressura-Regular",
                          hjust  = 0,
                          size = 9*0.352777778,
                          colour = set.colours(1, categorical.choice = "dark.blue"))
@@ -882,19 +945,19 @@ plot.change.arrow.bf <- function(data,
                          aes(label = str_c(comma(clone[(diff < 0 & get(time.var) == start.year), get(x)]), unit.x),
                              x     = clone[(diff < 0 & get(time.var) == start.year), get(x)] + max.plot * nudge.beg, #Add because decrease imply starting year is on the right
                              y     = clone[(diff < 0 & get(time.var) ==start.year), get(cat)]),
-                         family = "RooneySans-Regular",
+                         family = "GT-Pressura-Regular",
                          hjust  = 1,
                          size = 9*0.352777778,
-                         colour = set.colours(1, categorical.choice = "pink")) #Set colour pink here, but probably change so it can be dynamics
+                         colour = set.colours(1, categorical.choice = "magenta")) #Set colour pink here, but probably change so it can be dynamics
 
       p <- p + geom_text(data   = clone[(diff < 0 & get(time.var) == end.year)], #Set the text for ending year for decrease
                         aes(label = str_c(comma(clone[(diff < 0 & get(time.var) == end.year), get(x)]), unit.x),
                             x     = clone[(diff < 0 & get(time.var) == end.year), get(x)] - max.plot * nudge.end, #Subtract because decrease imply ending year is on the left
                             y     = clone[(diff < 0 & get(time.var) == end.year), get(cat)]),
-                         family = "RooneySans-Regular",
+                         family = "GT-Pressura-Regular",
                          hjust  = 0,
                         size = 9*0.352777778,
-                         colour = set.colours(1, categorical.choice = "pink")) #Set colour pink here, but probably change so it can be dynamic
+                         colour = set.colours(1, categorical.choice = "magenta")) #Set colour pink here, but probably change so it can be dynamic
     }
   }
   #Adding the graph explanation
@@ -903,12 +966,12 @@ plot.change.arrow.bf <- function(data,
                         x      = sooner.x,
                         y      = length(unique(clone[,get(cat)])) + 0.5, #Currently hacked together - should try to find ways to show text more beautifully
                         label  = stringr::str_c("In ",min(unique(clone[,get(time.var)]))),
-                        family = "RooneySans-Regular") +
+                        family = "GT-Pressura-Regular") +
       annotate("text",
                x      = later.x,
                y      = length(unique(clone[,get(cat)])) + 0.5,
                label  = stringr::str_c("In ",max(unique(clone[, get(time.var)]))),
-               family = "RooneySans-Regular")
+               family = "GT-Pressura-Regular")
   }
 
   p <- p + scale_x_continuous(limits = c(min(clone[, get(x)] - max.plot*nudge.beg, ticks$breaks), #Get the tail - it's complicated because also need to get where the labels are
@@ -920,6 +983,10 @@ plot.change.arrow.bf <- function(data,
          x        = x.axis,
          y        = y.axis,
          caption  = caption)
+  #Add logo if needed
+  if(logo){
+    p <- add_logo(p,logo.type)
+  }
 
   return(p)
 }
@@ -931,15 +998,20 @@ plot.change.arrow.bf <- function(data,
 #' @param y String. Column name for the Y axis - main value that is changing
 #' @param group.by String. Group the area being plotted by this column
 #' @param colours Vector. NULL or Specify colours you want the areas to be filled by
+#' @param stacked Default is TRUE, set as FALSE for overlapping but not stacked graph
+#' @param alpha Default is 0.5, be careful changing this as it might impact readability
 #' @param order.area Vector of String - giving the order you want the areas to be plotted, from bottom to top and from backgroudn to foreground
 #' @param order.y Vector of String - giving the order you want the x axis to be plotted - only works if y is non numerical
 #' @param unit.x String. Unit for the x axis. Special formatting for \% and $
 #' @param unit.y String. Unit for the y axis. Special formatting for \% and $
 #' @param x.axis Character denoting the x axis title
 #' @param y.axis Character denoting the y axis title
+#' @param legend.title Character denoting the title for legend box
 #' @param plot.title Character denoting title of the plot
 #' @param plot.fig.num Character denoting plot number (or another plot annotations)
 #' @param caption Character that denotes caption (Sources)
+#' @param logo logical (TRUE/FALSE) denote whether to add BIIE logo or not
+#' @param logo.type Character; either "small" or "big" and activates only when logo is TRUE, decides whether to add full (big) or abridged (small) logo
 #' @return ggplot2 object with all the right formatting
 #' @examples
 #' plot.area.bf()
@@ -949,6 +1021,7 @@ plot.area.bf <- function(data,
                          group.by,
                          colours = NULL,
                          stacked = TRUE,
+                         alpha = 0.5,
                          order.area = NULL,
                          order.y = NULL,
                          unit.x = "",
@@ -958,13 +1031,16 @@ plot.area.bf <- function(data,
                          legend.title = "",
                          plot.title = "",
                          plot.fig.num = "",
-                         caption = ""){
+                         caption = "",
+                         logo = FALSE,
+                         logo.type = "small"){
   if(!data.table::is.data.table(data)){ #Chek and coerce into data.table
     clone <- data.table::as.data.table(data)
+    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
   }
   else{
     clone <- cbind(data)
-    warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
+
   }
   #At this point, we're dealing with the detailed stuff like how to order the categories around and stuff
 
@@ -1008,7 +1084,7 @@ plot.area.bf <- function(data,
     max.plot.y <- max(clone[,get(y)]) #Get max plot in y
     min.plot.y <- 0 #Min plot is always 0
     ticks.y <- set.ticks.seq(max.plot.y, min.plot.y, unit = unit.y) #Set the ticks accordingly
-    p <- p + geom_area(aes(group=group.by), position = "identity", alpha=0.5) #Set up area so it appears one before the other. Alpha is important for opacity and readability
+    p <- p + geom_area(aes(group=group.by), position = "identity", alpha=alpha) #Set up area so it appears one before the other. Alpha is important for opacity and readability
   }
   if(is.null(colours)){ #If colours are not provided, set colours here
     colours <- set.colours(length(unique(clone[,group.by])))
@@ -1028,6 +1104,10 @@ plot.area.bf <- function(data,
                 y        = y.axis,
                 caption  = caption) +
     guides(fill=guide_legend(title=legend.title)) #Add legend and guide
+  #Add logo if needed
+  if(logo){
+    p <- add_logo(p,logo.type)
+  }
   return(p)
 }
 
@@ -1040,7 +1120,9 @@ plot.adjacency.bf <- function(edges.map,
                               y.axis = "",
                               plot.title = "",
                               plot.fig.num = "",
-                              caption = ""){
+                              caption = "",
+                              logo = FALSE,
+                              logo.type = "small"){
   #Make a copy of the original data table so I don't need to make any duplicates
   edge.table <- data.table::copy(edges.map)
   #If edge map also has weight - discard for now. Might add weight based colour in the future
@@ -1087,7 +1169,7 @@ plot.adjacency.bf <- function(edges.map,
   #Main plot function
   p <- ggplot2::ggplot(edge.table, aes(origin.coord, des.coord)) +
     brookfield.base.theme() +
-    ggplot2::theme(axis.text.x = ggplot2::element_text(size=9, margin=ggplot2::margin(t=2), family = "RooneySans-Light")) + #Set axis text. Light to make it less prominent - margin is also precise
+    ggplot2::theme(axis.text.x = ggplot2::element_text(size=9, margin=ggplot2::margin(t=2), family = "GT-Pressura-Light")) + #Set axis text. Light to make it less prominent - margin is also precise
     ggplot2::stat_bin_2d(bins = bin.size) +
     scale_fill_gradient(high = gradient.ends[1],low=gradient.ends[2])
     labs(title    = plot.fig.num,
@@ -1096,6 +1178,10 @@ plot.adjacency.bf <- function(edges.map,
          y        = y.axis,
          caption  = caption)
   return(p)
+    #Add logo if needed
+    if(logo){
+      p <- add_logo(p,logo.type)
+    }
 }
 
 
