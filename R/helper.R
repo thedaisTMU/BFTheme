@@ -145,7 +145,7 @@ brookfield.base.theme <- function(inverted=FALSE){
                           text = ggplot2::element_text(family="RooneySans-Regular"), #Set the font for every text element (except for geom elements)
                           plot.title = ggplot2::element_text(family="GT-Pressura-Bold", size=13, colour = "#14365D"), #Format figure number
                           plot.subtitle = ggplot2::element_text(family="RooneySans-Regular", size=11), #Format main title
-                          plot.caption = ggplot2::element_text(family="RooneySans-Regular", size=8.2,hjust=0,colour="#707D85"), #Format for caption and other notes
+                          plot.caption = ggtext::element_markdown(family="RooneySans-Regular", size=8.2,hjust=0,colour="#707D85"), #Format for caption and other notes
                           plot.tag = ggtext::element_markdown(),
                           plot.tag.position = c(0.98, 0.02),
                           legend.background = ggplot2::element_rect(fill="transparent",colour=NA), #Make sure legend box is transparent (for export)

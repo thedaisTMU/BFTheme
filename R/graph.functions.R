@@ -121,10 +121,10 @@ plot.scatter.bf <- function(data,x,y,
     }
   }
   if(p.size == 1){ #Scale point size
-    p <- p + ggplot2::scale_size(range=c(2.3,2.3),guide=FALSE)
+    p <- p + ggplot2::scale_size(range=c(2.3,2.3),guide="none")
   }
   else{ #Scale point size
-    p <- p + ggplot2::scale_size(range=c(2.3,7),guide=FALSE)
+    p <- p + ggplot2::scale_size(range=c(2.3,7),guide="none")
   }
   #Dealing with tick units
   if(deg.45){
@@ -898,20 +898,20 @@ plot.change.arrow.bf <- function(data,
     arrow.colours <- set.colours(2, categorical.choice = c("grey", "light.blue")) #Set colour from grey to light blue
     p <- p + scale_colour_gradient(low   = arrow.colours[1],
                                    high  = arrow.colours[2],
-                                   guide = FALSE)
+                                   guide = "none")
   }
   else if(max(clone[,diff])<=0 & min(clone[,diff])<0){ #If we only have decreasing vectors
     arrow.colours <- set.colours(2, categorical.choice = c("magenta", "grey"))
     p <- p + scale_colour_gradient(low   = arrow.colours[1],
                                    high  = arrow.colours[2],
-                                   guide = FALSE)
+                                   guide = "none")
   }
   else{ #Or if we have both increasing and decreasing vectors
     arrow.colours <- set.colours(3, categorical.choice = c("magenta", "grey", "light.blue"))
     p <- p + scale_colour_gradient2(low   = arrow.colours[1],
                                     mid   = arrow.colours[2],
                                     high  = arrow.colours[3],
-                                    guide = FALSE)
+                                    guide = "none")
   }
   #Dealing with value annotation
   if(annotate){
