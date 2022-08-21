@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 This package, and associated data visualization style guide lays out the style elements for data visualization used at the Brookfield Institute.
 
 ## Anatomy of a graphic at the Brookfield Institute
-![sample_image](inst/extdata/graph_anatomy.eps)
+![sample_image](inst/extdata/graph_anatomy.svg)
 ## Colours
 At the Brookfiled Institute, we use three primary colours: 
 
