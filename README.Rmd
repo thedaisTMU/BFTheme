@@ -7,12 +7,32 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+![brookfield_logo](inst/extdata/big_icon.png)
+
 ## Introduction
 
 This package, and associated data visualization style guide lays out the style elements for data visualization used at the Brookfield Institute.
 
 ## Anatomy of a graphic at the Brookfield Institute
 ![sample_image](inst/extdata/graph_anatomy.svg)
+
+## Available graph types in the current version of the package
+
+|Graph Type|Function|Use Cases|
+|----------|--------|---------|
+|**Bar graph**|`plot.column.bf()`|Comparing single metric across different groups|
+|**Scatter graph**|`plot.scatter.bf()`|Plot relationship between two metrics across observations|
+|**Waffle chart**|`plot.waffle.bf()`|Represent the shares of different groups in a population|
+|**Line chart**|`plot.line.bf()`|Compare change in metric across multiple period (usually) for different groups|
+|**Pyramid chart**|`plot.pyramid.bf()`|Commonly used to represent age pyramid and similar data|
+|**Mekko chart**|`plot.mekko.bf()`|A variant of a bar graph where the width of each bar represents a different metric|
+|**Arrow Change chart**|`plot.change.arrow.bf()`|Show change in a metric across two time periods across different groups|
+|**Area chart**|`plot.area.bf()`|Used commonly to show how shares of different groups shift over time|
+|**Province map**|`plot.map.prov.bf()`|Maps out data at the provincial level|
+|**ER map**|`plot.map.er.bf()`|Maps out data at the Economic Region level|
+|**CMA map**|`plot.map.cma.bf()`|Maps out data at the Census Metropolitan Area/Census Agglomeration level|
+|**CSD map**|`plot.map.csd.bf()`|Maps out data at the Census Subdivision level|
+
 
 ## Colours
 At the Brookfiled Institute, we use three primary colours: 
