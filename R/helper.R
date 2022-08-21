@@ -32,7 +32,7 @@ set.colours <- function(n,
   yellow <- c("#FFC800","#FFCD17","#FFD22E","#FFD745","#FFDC5C","#FFE173","#FFE68B","#FFEBA2")
   pink <- c("#FFA5B9","#85284F","#913D61","#9D5372","#A96884","#B57E95","#C293A7","#CEA9B8")
   brown <- c("#F7941E","#F79D32","#F8A746","#F9B15B","#F9BA6F","#FAC484","#FBCE98","#FCD8AD")
-  green <- c("#3C7D78","#528b86","#6D9E9A","#679894","#9EBEBC","#7ca6a2","#a5c2bf","#D1E9C2")
+  green <- c("#3C7D78","#528b86","#6D9E9A","#679894","#9EBEBC","#7ca6a2","#a5c2bf","#CEDFDD")
   grey <- c("#626466","#7D8890","#8A949B","#939598","#A4ACB1","#8e9396","#626466","#B1B8BC")
   #Check if you have way too many categories - 7 is the absolute max!
   if(n > 7){

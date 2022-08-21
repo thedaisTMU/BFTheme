@@ -173,8 +173,8 @@ used:
     `#7ca6a2`
     ![\#a5c2bf](https://via.placeholder.com/15/a5c2bf/a5c2bf.png)
     `#a5c2bf`
-    ![\#D1E9C2](https://via.placeholder.com/15/D1E9C2/D1E9C2.png)
-    `#d1e9c2`
+    ![\#CEDFDD](https://via.placeholder.com/15/CEDFDD/CEDFDD.png)
+    `#CEDFDD`
 -   Grey: ![\#626466](https://via.placeholder.com/15/626466/626466.png)
     `#626466`
     ![\#7D8890](https://via.placeholder.com/15/7D8890/7D8890.png)
