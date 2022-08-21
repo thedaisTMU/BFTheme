@@ -6,9 +6,10 @@ Brookfield Institute Data Visualization Style Guide
 This package, and associated data visualization style guide lays out the
 style elements for data visualization used at the Brookfield Institute.
 
-## Colours
+## Anatomy of a graphic at the Brookfield Institute
 
-At the Brookfiled Institute, we use three primary colours:
+![sample_image](inst/extdata/graph_anatomy.eps) \## Colours At the
+Brookfiled Institute, we use three primary colours:
 
 -   Magenta:
     ![\#dd347a](https://via.placeholder.com/15/dd347a/dd347a.png)
@@ -287,6 +288,23 @@ used when appropriate:
     `#fbce98`
     ![\#FCD8AD](https://via.placeholder.com/15/FCD8AD/FCD8AD.png)
     `#fcd8ad`
+
+## Fonts
+
+The Brookfield Institute styleguide uses 2 main family of fonts,
+Pressura, and Rooney. The following general conventions will determine
+the correct font usage when making non-standard graphics. In general,
+default to showing numbers using Pressura (except for cases when the
+numbers are integrated inside a text).
+
+-   **Figure numbering**: Use Pressura Bold typeface, 13pt
+-   **Figure title**: Use RooneySans Regular typeface, 11pt
+-   **Axis titles**: Use RooneySans Regular typeface, 11pt
+-   **Axis labels**: Use Pressura Light typeface, 10pt
+-   **Legend title**: Use RooneySans Light typeface, 11pt
+-   **Legend label**: Use RooneySans Light typeface, 10pt
+-   **Annotation**: Use RooneySans Regular typeface, appropriate type
+    size.
 
 ## Installation
 

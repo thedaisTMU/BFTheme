@@ -11,6 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This package, and associated data visualization style guide lays out the style elements for data visualization used at the Brookfield Institute.
 
+## Anatomy of a graphic at the Brookfield Institute
+![sample_image](inst/extdata/graph_anatomy.eps)
 ## Colours
 At the Brookfiled Institute, we use three primary colours: 
 
@@ -80,6 +82,17 @@ However, the package provides the following additional gradients for used when a
 - Yellow: ![#FFC800](https://via.placeholder.com/15/FFC800/FFC800.png) `#ffc800` ![#FFCD17](https://via.placeholder.com/15/FFCD17/FFCD17.png) `#ffcd17` ![#FFD22E](https://via.placeholder.com/15/FFD22E/FFD22E.png) `#ffd22e` ![#FFD745](https://via.placeholder.com/15/FFD745/FFD745.png) `#ffd745` ![#FFDC5C](https://via.placeholder.com/15/FFDC5C/FFDC5C.png) `#ffdc5c` ![#FFE173](https://via.placeholder.com/15/FFE173/FFE173.png) `#ffe173` ![#FFE68B](https://via.placeholder.com/15/FFE68B/FFE68B.png) `#ffe68b` ![#FFEBA2](https://via.placeholder.com/15/FFEBA2/FFEBA2.png) `#ffeba2`
 - Pink: ![#FFA5B9](https://via.placeholder.com/15/FFA5B9/FFA5B9.png) `#ffa5b9` ![#85284F](https://via.placeholder.com/15/85284F/85284F.png) `#85284f` ![#913D61](https://via.placeholder.com/15/913D61/913D61.png) `#913d61` ![#9D5372](https://via.placeholder.com/15/9D5372/9D5372.png) `#9d5372` ![#A96884](https://via.placeholder.com/15/A96884/A96884.png) `#a96884` ![#B57E95](https://via.placeholder.com/15/B57E95/B57E95.png) `#b57e95` ![#C293A7](https://via.placeholder.com/15/C293A7/C293A7.png) `#c293a7` ![#CEA9B8](https://via.placeholder.com/15/CEA9B8/CEA9B8.png) `#cea9b8`
 - Brown: ![#F7941E](https://via.placeholder.com/15/F7941E/F7941E.png) `#f7941e` ![#F79D32](https://via.placeholder.com/15/F79D32/F79D32.png) `#f79d32` ![#F8A746](https://via.placeholder.com/15/F8A746/F8A746.png) `#f8a746` ![#F9B15B](https://via.placeholder.com/15/F9B15B/F9B15B.png) `#f9b15b` ![#F9BA6F](https://via.placeholder.com/15/F9BA6F/F9BA6F.png) `#f9ba6f` ![#FAC484](https://via.placeholder.com/15/FAC484/FAC484.png) `#fac484` ![#FBCE98](https://via.placeholder.com/15/FBCE98/FBCE98.png) `#fbce98` ![#FCD8AD](https://via.placeholder.com/15/FCD8AD/FCD8AD.png) `#fcd8ad`
+
+## Fonts
+The Brookfield Institute styleguide uses 2 main family of fonts, Pressura, and Rooney. The following general conventions will determine the correct font usage when making non-standard graphics. In general, default to showing numbers using Pressura (except for cases when the numbers are integrated inside a text).
+
+- **Figure numbering**: Use Pressura Bold typeface, 13pt
+- **Figure title**: Use RooneySans Regular typeface, 11pt
+- **Axis titles**: Use RooneySans Regular typeface, 11pt
+- **Axis labels**: Use Pressura Light typeface, 10pt
+- **Legend title**: Use RooneySans Light typeface, 11pt
+- **Legend label**: Use RooneySans Light typeface, 10pt
+- **Annotation**: Use RooneySans Regular typeface, appropriate type size.
 
 ## Installation
 As the fonts used by the Brookfield Institute in data visualization is licensed only for our use - you will notice that those font files are missing from this public repository. To download the package binary, go to the Policy Team Resources folder on our Google Drive and you will be able to find it here. This public version is available for reference purposes.
