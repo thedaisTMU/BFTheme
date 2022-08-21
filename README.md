@@ -41,7 +41,12 @@ In addition, we use the following secondary colours:
 
 Any graphic will use at least one colour from the primary palette. The
 secondary palette should not be used without any colours from the
-primary palette.
+primary palette. Programmatically, the function that will generate
+colours is `set.colours()`. You can specify in a vector the specific
+combination of colours you’d like in the order they appear, and pass it
+in the `colours` argument in most graphing functions.
+
+    set.colours(3, categorical.choice = c("magenta","ecru","green"))
 
 ### Discrete Colour combinations
 
@@ -138,9 +143,14 @@ should never exceed more than 7 separate colours.
 In addition to discrete colours, the style guide (and the package),
 provide the following gradients that can be used. Gradients are
 especially useful in representing data that has a monotonic range
-interpretation (for example in heatmaps). In our official style guide,
-it is recommended that when gradients are used, the following three are
-used:
+interpretation (for example in heatmaps). Programmatically, you just
+need to specify in `set.colours()` how many colours you’re looking for,
+and from which gradient you’d like the colours to come from:
+
+    set.colours(5, type = "gradient", gradient.choice="indigo")
+
+In our official style guide, it is recommended that when gradients are
+used, the following three are prioritized:
 
 -   Indigo:
     ![\#14365D](https://via.placeholder.com/15/14365D/14365D.png)

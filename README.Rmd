@@ -29,7 +29,10 @@ In addition, we use the following secondary colours:
 - Ecru: ![#EBE6DE](https://via.placeholder.com/15/EBE6DE/EBE6DE.png) `#ebe6de`
 - Grey: ![#626466](https://via.placeholder.com/15/626466/626466.png) `#626466`
 
-Any graphic will use at least one colour from the primary palette. The secondary palette should not be used without any colours from the primary palette.
+Any graphic will use at least one colour from the primary palette. The secondary palette should not be used without any colours from the primary palette. Programmatically, the function that will generate colours is `set.colours()`. You can specify in a vector the specific combination of colours you'd like in the order they appear, and pass it in the `colours` argument in most graphing functions.
+```
+set.colours(3, categorical.choice = c("magenta","ecru","green"))
+```
 
 ### Discrete Colour combinations
 The following gives suggested colour combinations for specific number of colours.
@@ -59,7 +62,12 @@ When you have more than 4 colours, you are able to use more than one primary col
 - Magenta ![#dd347a](https://via.placeholder.com/15/dd347a/dd347a.png) `#dd347a` + Pink ![#FFA5B9](https://via.placeholder.com/15/FFA5B9/FFA5B9.png) `#ffa5b9` + Cyan ![#8ad4df](https://via.placeholder.com/15/8ad4df/8ad4df.png) `#8ad4df` + Indigo ![#14365D](https://via.placeholder.com/15/14365D/14365D.png) `#14365d`
 
 ### Colour gradients
-In addition to discrete colours, the style guide (and the package), provide the following gradients that can be used. Gradients are especially useful in representing data that has a monotonic range interpretation (for example in heatmaps). In our official style guide, it is recommended that when gradients are used, the following three are used:
+In addition to discrete colours, the style guide (and the package), provide the following gradients that can be used. Gradients are especially useful in representing data that has a monotonic range interpretation (for example in heatmaps). Programmatically, you just need to specify in `set.colours()` how many colours you're looking for, and from which gradient you'd like the colours to come from:
+```
+set.colours(5, type = "gradient", gradient.choice="indigo")
+```
+
+In our official style guide, it is recommended that when gradients are used, the following three are prioritized:
 
 - Indigo: ![#14365D](https://via.placeholder.com/15/14365D/14365D.png) `#14365d` ![#284469](https://via.placeholder.com/15/284469/284469.png) `#284469` ![#4f6885](https://via.placeholder.com/15/4F6885/4F6885.png) `#4f6885` ![#4c6282](https://via.placeholder.com/15/4c6282/4c6282.png) `#4c6282` ![#8a9bae](https://via.placeholder.com/15/8a9bae/8a9bae.png) `#8a9bae` ![#6f829b](https://via.placeholder.com/15/6f829b/6f829b.png) `#6f829b` ![#8192a8](https://via.placeholder.com/15/8192a8/8192a8.png) `#8192a8` ![#94a3b5](https://via.placeholder.com/15/94a3b5/94a3b5.png) `#94a3b5`
 - Green: ![#3C7D78](https://via.placeholder.com/15/3C7D78/3C7D78.png) `#3c7d78` ![#528b86](https://via.placeholder.com/15/528b86/528b86.png) `#528b86` ![#6D9E9A](https://via.placeholder.com/15/6D9E9A/6D9E9A.png) `#6d9e9a` ![#679894](https://via.placeholder.com/15/679894/679894.png) `#679894` ![#9EBEBC](https://via.placeholder.com/15/9EBEBC/9EBEBC.png) `#9ebebc` ![#7ca6a2](https://via.placeholder.com/15/7ca6a2/7ca6a2.png) `#7ca6a2` ![#a5c2bf](https://via.placeholder.com/15/a5c2bf/a5c2bf.png) `#a5c2bf` ![#CEDFDD](https://via.placeholder.com/15/CEDFDD/CEDFDD.png) `#CEDFDD`
