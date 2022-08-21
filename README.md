@@ -8,8 +8,11 @@ style elements for data visualization used at the Brookfield Institute.
 
 ## Anatomy of a graphic at the Brookfield Institute
 
-![sample_image](inst/extdata/graph_anatomy.svg) \## Colours At the
-Brookfiled Institute, we use three primary colours:
+![sample_image](inst/extdata/graph_anatomy.svg)
+
+## Colours
+
+At the Brookfiled Institute, we use three primary colours:
 
 -   Magenta:
     ![\#dd347a](https://via.placeholder.com/15/dd347a/dd347a.png)

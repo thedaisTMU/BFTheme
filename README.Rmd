@@ -13,6 +13,7 @@ This package, and associated data visualization style guide lays out the style e
 
 ## Anatomy of a graphic at the Brookfield Institute
 ![sample_image](inst/extdata/graph_anatomy.svg)
+
 ## Colours
 At the Brookfiled Institute, we use three primary colours: 
 
