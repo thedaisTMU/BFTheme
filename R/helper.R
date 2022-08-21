@@ -25,15 +25,15 @@ set.colours <- function(n,
                         special = NULL){
   #Setting all the base vectors to refer to - precise because I don't trust R's generation of gradients
   base.set <- c("dark.blue"="#14365D","light.blue"="#8AD4DF","magenta"="#DD347A","yellow"="#FAAF19"
-                ,"pink"="#FFA5B9","green"="#3C7D78","brown"="#C37546","grey"="#626466")
-  dark.blue <- c("#14365D","#29486B","#4F6885","#546C89","#8A9BAE","#7E91A6","#94A3B5","#C4CDD7")
+                ,"pink"="#FFA5B9","green"="#3C7D78","brown"="#C37546","grey"="#626466","ecru"="#EBE6DE")
+  dark.blue <- c("#14365D","#284469","#4F6885","#4c6282","#8A9BAE","#6f829b","#8192a8","#94a3b5")
   light.blue <- c("#8AD4DF","#94D7E1","#9FDBE4","#A9DFE7","#B4E3EA","#BFE7ED","#C9EBF0","#D4EFF3")
   magenta <- c("#DD347A","#E04686","#E35892","#E66B9E","#E97DAA","#EC90B6","#EFA2C2","#F2B5CE")
   yellow <- c("#FFC800","#FFCD17","#FFD22E","#FFD745","#FFDC5C","#FFE173","#FFE68B","#FFEBA2")
   pink <- c("#FFA5B9","#85284F","#913D61","#9D5372","#A96884","#B57E95","#C293A7","#CEA9B8")
   brown <- c("#F7941E","#F79D32","#F8A746","#F9B15B","#F9BA6F","#FAC484","#FBCE98","#FCD8AD")
-  green <- c("#3C7D78","#8DC967","#6D9E9A","#A4D485","#9EBEBC","#BADEA3","#CEDFDD","#D1E9C2")
-  grey <- c("#626466","#7D8890","#8A949B","#939598","#A4ACB1","#B1B8BC","#626466","#B1B8BC")
+  green <- c("#3C7D78","#528b86","#6D9E9A","#679894","#9EBEBC","#7ca6a2","#a5c2bf","#D1E9C2")
+  grey <- c("#626466","#7D8890","#8A949B","#939598","#A4ACB1","#8e9396","#626466","#B1B8BC")
   #Check if you have way too many categories - 7 is the absolute max!
   if(n > 7){
     stop("You have way too many categories. Reduce it!")
