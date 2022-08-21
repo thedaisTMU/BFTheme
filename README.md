@@ -185,10 +185,10 @@ used:
     `#939598`
     ![\#A4ACB1](https://via.placeholder.com/15/A4ACB1/A4ACB1.png)
     `#a4acb1`
-    ![\#8e9396](https://via.placeholder.com/15/8e9396/8e9396.png)
-    `#8e9396`
-    ![\#626466](https://via.placeholder.com/15/626466/626466.png)
-    `#626466`
+    ![\#9a9fa3](https://via.placeholder.com/15/9a9fa3/9a9fa3.png)
+    `#9a9fa3`
+    ![\#626466](https://via.placeholder.com/15/a5abaf/a5abaf.png)
+    `#a5abaf`
     ![\#B1B8BC](https://via.placeholder.com/15/B1B8BC/B1B8BC.png)
     `#b1b8bc`
 
