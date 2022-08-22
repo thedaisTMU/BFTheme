@@ -33,7 +33,7 @@ style elements for data visualization used at the Brookfield Institute.
 
 At the Brookfiled Institute, we use three primary colours:
 
--   <span color="#dd347a">Magenta</span>:
+-   Magenta:
     ![\#dd347a](https://via.placeholder.com/15/dd347a/dd347a.png)
     `#dd347a`
 -   Cyan: ![\#8ad4df](https://via.placeholder.com/15/8ad4df/8ad4df.png)
@@ -184,10 +184,10 @@ used, the following three are prioritized:
     `#4f6885`
     ![\#4c6282](https://via.placeholder.com/15/4c6282/4c6282.png)
     `#4c6282`
-    ![\#8a9bae](https://via.placeholder.com/15/8a9bae/8a9bae.png)
-    `#8a9bae`
     ![\#6f829b](https://via.placeholder.com/15/6f829b/6f829b.png)
     `#6f829b`
+    ![\#8a9bae](https://via.placeholder.com/15/8a9bae/8a9bae.png)
+    `#8a9bae`
     ![\#8192a8](https://via.placeholder.com/15/8192a8/8192a8.png)
     `#8192a8`
     ![\#94a3b5](https://via.placeholder.com/15/94a3b5/94a3b5.png)
@@ -200,10 +200,10 @@ used, the following three are prioritized:
     `#6d9e9a`
     ![\#679894](https://via.placeholder.com/15/679894/679894.png)
     `#679894`
-    ![\#9EBEBC](https://via.placeholder.com/15/9EBEBC/9EBEBC.png)
-    `#9ebebc`
-    ![\#7ca6a2](https://via.placeholder.com/15/7ca6a2/7ca6a2.png)
+    ![\#9EBEBC](https://via.placeholder.com/15/7ca6a2/7ca6a2.png)
     `#7ca6a2`
+    ![\#9ebebc](https://via.placeholder.com/15/9ebebc/9ebebc.png)
+    `#9ebebc`
     ![\#a5c2bf](https://via.placeholder.com/15/a5c2bf/a5c2bf.png)
     `#a5c2bf`
     ![\#CEDFDD](https://via.placeholder.com/15/CEDFDD/CEDFDD.png)
@@ -216,10 +216,10 @@ used, the following three are prioritized:
     `#8a949b`
     ![\#939598](https://via.placeholder.com/15/939598/939598.png)
     `#939598`
-    ![\#A4ACB1](https://via.placeholder.com/15/A4ACB1/A4ACB1.png)
-    `#a4acb1`
     ![\#9a9fa3](https://via.placeholder.com/15/9a9fa3/9a9fa3.png)
     `#9a9fa3`
+    ![\#a4acb1](https://via.placeholder.com/15/a4acb1/a4acb1.png)
+    `#a4acb1`
     ![\#626466](https://via.placeholder.com/15/a5abaf/a5abaf.png)
     `#a5abaf`
     ![\#B1B8BC](https://via.placeholder.com/15/B1B8BC/B1B8BC.png)
@@ -280,20 +280,20 @@ used when appropriate:
     `#ffeba2`
 -   Pink: ![\#FFA5B9](https://via.placeholder.com/15/FFA5B9/FFA5B9.png)
     `#ffa5b9`
-    ![\#85284F](https://via.placeholder.com/15/85284F/85284F.png)
-    `#85284f`
-    ![\#913D61](https://via.placeholder.com/15/913D61/913D61.png)
-    `#913d61`
-    ![\#9D5372](https://via.placeholder.com/15/9D5372/9D5372.png)
-    `#9d5372`
-    ![\#A96884](https://via.placeholder.com/15/A96884/A96884.png)
-    `#a96884`
-    ![\#B57E95](https://via.placeholder.com/15/B57E95/B57E95.png)
-    `#b57e95`
-    ![\#C293A7](https://via.placeholder.com/15/C293A7/C293A7.png)
-    `#c293a7`
-    ![\#CEA9B8](https://via.placeholder.com/15/CEA9B8/CEA9B8.png)
-    `#cea9b8`
+    ![\#ffafc1](https://via.placeholder.com/15/ffafc1/ffafc1.png)
+    `#ffafc1`
+    ![\#ffb9c9](https://via.placeholder.com/15/ffb9c9/ffb9c9.png)
+    `#ffb9c9`
+    ![\#ffc3d0](https://via.placeholder.com/15/ffc3d0/ffc3d0.png)
+    `#ffc3d0`
+    ![\#ffccd8](https://via.placeholder.com/15/ffccd8/ffccd8.png)
+    `#ffccd8`
+    ![\#ffd6df](https://via.placeholder.com/15/ffd6df/ffd6df.png)
+    `#ffd6df`
+    ![\#ffdfe7](https://via.placeholder.com/15/ffdfe7/ffdfe7.png)
+    `#ffdfe7`
+    ![\#ffe9ee](https://via.placeholder.com/15/ffe9ee/ffe9ee.png)
+    `#ffe9ee`
 -   Brown: ![\#F7941E](https://via.placeholder.com/15/F7941E/F7941E.png)
     `#f7941e`
     ![\#F79D32](https://via.placeholder.com/15/F79D32/F79D32.png)

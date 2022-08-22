@@ -24,16 +24,16 @@ set.colours <- function(n,
                         categorical.choice = NULL,
                         special = NULL){
   #Setting all the base vectors to refer to - precise because I don't trust R's generation of gradients
-  base.set <- c("dark.blue"="#14365D","light.blue"="#8AD4DF","magenta"="#DD347A","yellow"="#FAAF19"
-                ,"pink"="#FFA5B9","green"="#3C7D78","brown"="#C37546","grey"="#626466","ecru"="#EBE6DE")
-  dark.blue <- c("#14365D","#284469","#4F6885","#4c6282","#8A9BAE","#6f829b","#8192a8","#94a3b5")
-  light.blue <- c("#8AD4DF","#94D7E1","#9FDBE4","#A9DFE7","#B4E3EA","#BFE7ED","#C9EBF0","#D4EFF3")
-  magenta <- c("#DD347A","#E04686","#E35892","#E66B9E","#E97DAA","#EC90B6","#EFA2C2","#F2B5CE")
-  yellow <- c("#FFC800","#FFCD17","#FFD22E","#FFD745","#FFDC5C","#FFE173","#FFE68B","#FFEBA2")
-  pink <- c("#FFA5B9","#85284F","#913D61","#9D5372","#A96884","#B57E95","#C293A7","#CEA9B8")
-  brown <- c("#F7941E","#F79D32","#F8A746","#F9B15B","#F9BA6F","#FAC484","#FBCE98","#FCD8AD")
-  green <- c("#3C7D78","#528b86","#6D9E9A","#679894","#9EBEBC","#7ca6a2","#a5c2bf","#CEDFDD")
-  grey <- c("#626466","#7D8890","#8A949B","#939598","#A4ACB1","#9a9fa3","#a5abaf","#B1B8BC")
+  base.set <- c("dark.blue"="#14365d","light.blue"="#8ad4df","magenta"="#dd347a","yellow"="#faaf19"
+                ,"pink"="#ffa5b9","green"="#3c7d78","brown"="#c37546","grey"="#626466","ecru"="#ebe6de")
+  dark.blue <- c("#14365d","#284469","#4f6885","#4c6282","#6f829b","#8a9bae","#8192a8","#94a3b5")
+  light.blue <- c("#8ad4df","#94d7e1","#9fdbe4","#a9dfe7","#b4e3ea","#bfe7ed","#c9ebf0","#d4eff3")
+  magenta <- c("#dd347a","#e04686","#e35892","#e66b9e","#e97daa","#ec90B6","#efa2c2","#f2b5ce")
+  yellow <- c("#ffc800","#ffcd17","#ffd22e","#ffd745","#ffdc5c","#ffe173","#ffe68b","#ffeba2")
+  pink <- c("#ffa5b9","#ffafc1","#ffb9c9","#ffc3d0","#ffccd8","#ffd6df","#ffdfe7","#ffe9ee")
+  brown <- c("#f7941e","#f79d32","#f8a746","#f9b15b","#f9ba6f","#fac484","#fbce98","#fcd8ad")
+  green <- c("#3c7d78","#528b86","#6d9e9a","#679894","#7ca6a2","#9ebebc","#a5c2bf","#cedfdd")
+  grey <- c("#626466","#7d8890","#8a949b","#939598","#9a9fa3","#a4acb1","#a5abaf","#b1b8bc")
   #Check if you have way too many categories - 7 is the absolute max!
   if(n > 7){
     stop("You have way too many categories. Reduce it!")
