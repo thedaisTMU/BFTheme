@@ -217,14 +217,15 @@ plot.column.bf <- function(data,x,cat,
   }
   #Set up basic theme elements
   column.theme <- brookfield.base.theme() +
-    ggplot2::theme(axis.text.x = ggplot2::element_text(size=10, margin=ggplot2::margin(t=2), family = "GT-Pressura-Light", angle=90, hjust = 1, vjust = 0.5),
+    ggplot2::theme(axis.text.x = ggplot2::element_text(size=10, margin=ggplot2::margin(t=2), family = "RooneySans-Regular", angle=90, hjust = 1, vjust = 0.5),
           axis.ticks.x = ggplot2::element_blank(),
-          axis.title.x = ggplot2::element_blank())
+          axis.title.x = ggplot2::element_blank(),
+          )
   if(col.invert){
     column.theme <- brookfield.base.theme(inverted=TRUE) +
       ggplot2::theme(axis.text.x = ggplot2::element_text(size=10,
                                                          margin=ggplot2::margin(t=2),
-                                                         family = "GT-Pressura-Light",
+                                                         family = "RooneySans-Regular",
                                                          angle=90,
                                                          hjust = 1,
                                                          vjust = 0.5,

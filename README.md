@@ -33,7 +33,7 @@ style elements for data visualization used at the Brookfield Institute.
 
 At the Brookfiled Institute, we use three primary colours:
 
--   Magenta:
+-   <span color="#dd347a">Magenta</span>:
     ![\#dd347a](https://via.placeholder.com/15/dd347a/dd347a.png)
     `#dd347a`
 -   Cyan: ![\#8ad4df](https://via.placeholder.com/15/8ad4df/8ad4df.png)

@@ -122,8 +122,7 @@ export.bf.plot <- function(f.name,p.obj, p.height=6,p.width=7.25,type="pdf"){
                     width=p.width,
                     height=p.height,
                     pointsize=12,
-                    bg = "transparent",
-                    useDingbats=FALSE)
+                    bg = "transparent")
   }
   else{
     stop("File type is not surpported")
