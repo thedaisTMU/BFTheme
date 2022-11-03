@@ -1,7 +1,7 @@
 Package: BFTheme
 Type: Package
 Title: Brookfield R Theme
-Version: 1.0.0
+Version: 1.0.1
 Author: Viet Vu
 Maintainer: Viet Vu <viet.vu@ryerson.ca>
 Description: This has all the nifty functions that relates to making graphs in R that is Brookfield theme approved. It uses ggplot2 as a base set of graphs. Before using this, you should have all the fonts installed so it does things correctly.    If you find that you made a graph that is not included in this, let me (or whoever it is that's maintaining this after I left) know! It should be super simple adding new stuff to this.

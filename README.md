@@ -344,7 +344,13 @@ correctly.
 
 ## Update logs
 
-Current Version: 1.0.0
+Current Version: 1.0.1
+
+New in Version 1.0.1
+
+-   Fixed a small bug with plot.column.bf() displaying Rooney font when
+    it should be showing Pressura font.
+-   Ensured every external package reference is updated.
 
 New in Version 1.0.0
 
@@ -352,7 +358,7 @@ New in Version 1.0.0
     extrafont
 -   Added option to add BIIE logo to generated graphics
 -   Updated graph styles to match revamped Brookfield style and font
-    guide as of AUgust 2022
+    guide as of August 2022
 -   Note that for Caption to work properly, R graphical device has to be
     set to RAGG
 

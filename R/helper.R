@@ -11,7 +11,7 @@
 #' @param n Integer to select the right set of colours
 #' @param type Either "categorical" or "gradient", decides the type of colour you're going to get
 #' @param categorical.choice Specify custom colour names as a vector (same name as gradient.choice)One of:
-#' c("dark.blue","light.blue","pink","yellow","magenta","orange","green","teal","grey")
+#' c("dark.blue","light.blue","magenta","yellow","pink","brown","green","grey")
 #' @param gradient.choice For gradient type, specify the colour. One of: c("dark.blue","light.blue",
 #' "pink","yellow","magenta","orange","green","teal","grey")
 #' @param special special colours, will be added in the future - opposing colours, opposing gradients

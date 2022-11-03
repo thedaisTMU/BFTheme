@@ -14,27 +14,27 @@
 #' plot.limit = NULL,unit.x="",unit.y="",x.axis="",y.axis="",
 #' plot.title="",plot.fig.num="",caption= "",logo = FALSE, logo.type = "small",legend.title = "",
 #' export = FALSE,export.name = "")
-#' @param data Main data table to plot A
+#' @param data Main data table to plot a scatter plot. If not in data.table format, will be converted to it with a warning.
 #' @param x Character corresponding the column name for x-axis
 #' @param y Character corresponding to the column name for y-axis
 #' @param group.by Character corresponding to the column name that points are grouped by (colour)
 #' @param colours Vector (or set.colour function) of colours to use. If not, default palette is generated.
 #' @param p.size Character corresponding to the column name that sets the size for points
-#' @param deg.45 TRUE/FALSE denoting whether to add 45 degree line or not
-#' @param trend.line TRUE/FALSE add a trend line using OLS
+#' @param deg.45 logical TRUE/FALSE denoting whether to add 45 degree line or not
+#' @param trend.line logical TRUE/FALSE add a trend line using OLS
 #' @param unit.x Character denoting the unit for x-axis. Special formatting for \% and $
 #' @param unit.y Character denoting the unit for y-axis. Special formatting for \% and $
 #' @param x.axis Character denoting title for the x axis
 #' @param y.axis Character denoting title for the y axis
-#' @param plot.limit Vector of form c(min.x,max.x,min.y,max.y) that sets out plot limits
+#' @param plot.limit Vector of form c(min.x,max.x,min.y,max.y) or numerics that sets out plot limits
 #' @param plot.title Character denoting title of the plot
-#' @param plot.fig.num Character denoting plot number (or another plot annotations)
+#' @param plot.fig.num Character that is ordinarily in the form of "Figure X" (or another plot annotations)
 #' @param caption Character for caption (sources etc)
 #' @param logo logical (TRUE/FALSE) denote whether to add BIIE logo or not
 #' @param logo.type Character; either "small" or "big" and activates only when logo is TRUE, decides whether to add full (big) or abridged (small) logo
 #' @param legend.title Character denoting legend titles
-#' @param export TRUE/FALSE whether to export file as EPS under default options (height=6 inches, width=9 inches)
-#' @param export.name Name of the exported EPS file
+#' @param export logical TRUE/FALSE whether to export file as PDF under default options (height=6 inches, width=9 inches)
+#' @param export.name Name of the exported PDF file
 #' @return Scatter plot that conforms to Brookfield style
 #' @examples
 #' plot.scatter.bf(data,"income","automation.risk")
@@ -126,10 +126,11 @@ plot.scatter.bf <- function(data,x,y,
   else{ #Scale point size
     p <- p + ggplot2::scale_size(range=c(2.3,7),guide="none")
   }
-  #Dealing with tick units
+  #If 45 degree line is needed
   if(deg.45){
     p <- p + ggplot2::geom_abline(intercept = 0, slope = 1, colour = "#14365D")
   }
+  #Dealing with tick units
   p <- p + ggplot2::scale_x_continuous(expand=c(0,0),limits=plot.limit[c("min.x","max.x")],breaks=ticks.seq.x$breaks,labels=ticks.seq.x$labels) +
     ggplot2::scale_y_continuous(expand=c(0,0),limits=plot.limit[c("min.y","max.y")],breaks=ticks.seq.y$breaks,labels=ticks.seq.y$labels) +
     #Deal with labels
@@ -138,7 +139,8 @@ plot.scatter.bf <- function(data,x,y,
                   x = x.axis,
                   y = y.axis,
                   caption = caption)
-  line.limits <- data.table(x=c(min(ticks.seq.x$breaks),max(ticks.seq.x$breaks)),y=c(min(ticks.seq.y$breaks),max(ticks.seq.y$breaks)))
+  line.limits <- data.table::data.table(x=c(min(ticks.seq.x$breaks),max(ticks.seq.x$breaks)),
+                                        y=c(min(ticks.seq.y$breaks),max(ticks.seq.y$breaks)))
   names(line.limits) <- c(x,y)
   p <- p + ggthemes::geom_rangeframe(data= line.limits,size=0.5, colour="#626466")
   #Add logo if needed
@@ -150,7 +152,7 @@ plot.scatter.bf <- function(data,x,y,
 
   if(export){
     if(export.name==""){
-      export.name <- "Rplot"
+      export.name <- "Rplot.pdf"
     }
     export.bf.plot(export.name,p,p.height=6,p.width=7.25)
   }
@@ -166,25 +168,25 @@ plot.scatter.bf <- function(data,x,y,
 #' @param data Main data table to plot
 #' @param x Character corresponding the column name for what's being counted in the bar graph
 #' @param cat Character corresponding to the column name categories of the column
-#' @param order.bar One of "none", "ascending", or "descending"
+#' @param order.bar Character One of "none", "ascending", or "descending"
 #' @param group.by Character corresponding to the column name that columns are grouped by (colour)
 #' @param column.width Numerical Width of the column, ranges from 0 to 1. Default at 0.6
 #' @param colours Vector (or set.colour function) of colours to use. If not, default palette is generated.
-#' @param col.invert TRUE/FALSE Whether to use inverted colours or not
-#' @param stacked TRUE/FALSE to stack the columns or not still supported but maybe not in the future
-#' @param position One of "identity", "stacked" or "dodge"
-#' @param label TRUE/FALSE on whether to label the points or not
-#' @param label.unit What unit does y axis (and labels if any) will have
-#' @param legend.title Title for the legend if multiple colours are used
-#' @param label.adjust Factor to adjust the labels by default is 2.5\% or 0.025
+#' @param col.invert logical TRUE/FALSE Whether to use inverted colours or not
+#' @param stacked logical TRUE/FALSE to stack the columns or not still supported but maybe not in the future
+#' @param position Character One of "identity", "stacked" or "dodge"
+#' @param label logical TRUE/FALSE on whether to label the points or not
+#' @param label.unit Character What unit does y axis (and labels if any) will have
+#' @param legend.title Character Title for the legend if multiple colours are used
+#' @param label.adjust Numeric Factor to adjust the labels by default is 2.5\% or 0.025
 #' @param plot.title Character denoting title of the plot
 #' @param plot.fig.num Character denoting plot number (or another plot annotations)
 #' @param y.axis Character denoting axis title for y (unit)
 #' @param caption Character denoting sources and other captions
 #' @param logo logical (TRUE/FALSE) denote whether to add BIIE logo or not
 #' @param logo.type Character; either "small" or "big" and activates only when logo is TRUE, decides whether to add full (big) or abridged (small) logo
-#' @param export TRUE or FALSE whether to export file as EPS under default options (height=6 inches, width=9 inches)
-#' @param export.name Name of the exported EPS file
+#' @param export logical TRUE or FALSE whether to export file as PDF under default options (height=6 inches, width=9 inches)
+#' @param export.name Character Name of the exported PDF file
 #' @return Single column plot that conforms to Brookfield styling
 #' @examples
 #' plot.column.bf(data,"income","automation.risk")
@@ -217,7 +219,12 @@ plot.column.bf <- function(data,x,cat,
   }
   #Set up basic theme elements
   column.theme <- brookfield.base.theme() +
-    ggplot2::theme(axis.text.x = ggplot2::element_text(size=10, margin=ggplot2::margin(t=2), family = "RooneySans-Regular", angle=90, hjust = 1, vjust = 0.5),
+    ggplot2::theme(axis.text.x = ggplot2::element_text(size=10,
+                                                       margin=ggplot2::margin(t=2),
+                                                       family = "GT-Pressura-Light",
+                                                       angle=90,
+                                                       hjust = 1,
+                                                       vjust = 0.5),
           axis.ticks.x = ggplot2::element_blank(),
           axis.title.x = ggplot2::element_blank(),
           )
@@ -225,7 +232,7 @@ plot.column.bf <- function(data,x,cat,
     column.theme <- brookfield.base.theme(inverted=TRUE) +
       ggplot2::theme(axis.text.x = ggplot2::element_text(size=10,
                                                          margin=ggplot2::margin(t=2),
-                                                         family = "RooneySans-Regular",
+                                                         family = "GT-Pressura-Light",
                                                          angle=90,
                                                          hjust = 1,
                                                          vjust = 0.5,
@@ -291,35 +298,39 @@ plot.column.bf <- function(data,x,cat,
   if(label){
     if(stacked){ #Label for stacked bar chart - has an extra argument of position = position_stacked(vjust=0.5)
       if(label.unit == "$"){
-        p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=stringr::str_c(label.unit,scales::comma(round(unlist(clone[,get(x)]),1)))),
+        p <- p + ggplot2::geom_text(data=clone,
+                                    ggplot2::aes(label=stringr::str_c(label.unit,
+                                                                      scales::comma(round(unlist(clone[,get(x)]),1)))),
                                     nudge_y=nudge.amt,
+                                    position = ggplot2::position_stack(vjust = 0.5),
                                     size=11*0.352777778,
-                                    family="GT-Pressura-Regular",
-                                    position = position_stack(vjust = 0.5))
+                                    family="GT-Pressura-Regular")
       }
       else{
         p <- p + ggplot2::geom_text(data=clone,
                                     ggplot2::aes(label=stringr::str_c(scales::comma(round(unlist(clone[,get(x)]),1)),
                                                                         label.unit)),
                                     nudge_y=nudge.amt,
+                                    position = ggplot2::position_stack(vjust = 0.5),
                                     size=11*0.352777778,
-                                    family="GT-Pressura-Regular",
-                                    position = position_stack(vjust = 0.5))
+                                    family="GT-Pressura-Regular")
       }
     }
     else{ #Label when it is not a stacked bar
       if(label.unit == "$"){
-        p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=stringr::str_c(label.unit,scales::comma(round(unlist(clone[,get(x)]),1)))),
+        p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=stringr::str_c(label.unit,
+                                                                                 scales::comma(round(unlist(clone[,get(x)]),1)))),
                                     nudge_y=nudge.amt,
-                                    position = position_dodge(width=column.width),
+                                    position = ggplot2::position_dodge(width=column.width),
                                     size=11*0.352777778,
                                     family="GT-Pressura-Regular")
       }
       else{
-        p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=stringr::str_c(scales::comma(round(unlist(clone[,get(x)]),1)),label.unit)),
+        p <- p + ggplot2::geom_text(data=clone,ggplot2::aes(label=stringr::str_c(scales::comma(round(unlist(clone[,get(x)]),1)),
+                                                                                 label.unit)),
                                     nudge_y=nudge.amt,
+                                    position = ggplot2::position_dodge(width=column.width),
                                     size=11*0.352777778,
-                                    position = position_dodge(width=column.width),
                                     family="GT-Pressura-Regular")
       }
     }
@@ -343,7 +354,7 @@ plot.column.bf <- function(data,x,cat,
   #Export into file
   if(export){
     if(export.name == ""){
-      export.name <- "Rplot"
+      export.name <- "Rplot.pdf"
     }
     export.bf.plot(export.name, p, p.height=6, p.width=7.25)
   }
@@ -388,7 +399,7 @@ plot.waffle.bf <- function(named.vector,
                            labels=FALSE,
                            label.unit = "",
                            export = FALSE,
-                           export.name = "Rplot") {
+                           export.name = "") {
 
   #Set up the main theme element
   waffle.theme <- brookfield.base.theme() +
@@ -488,6 +499,9 @@ plot.waffle.bf <- function(named.vector,
   if(export){
     ratio = round(row.num/most.x,2)
     f.height = 12*ratio
+    if(export.name==""){
+      export.name <- "Rplot.pdf"
+    }
     export.bf.plot(export.name,p,p.height=f.height,p.width=12)
   }
   return(p)
@@ -575,7 +589,7 @@ plot.line.bf <- function(data,x,y,
     if(is.null(colours)){
       colours <- set.colours(1) #Only use one colour
     }
-    p <- ggplot2::ggplot(clone,aes_string(x,y),colour=colours) + #Main plot object
+    p <- ggplot2::ggplot(clone,ggplot2::aes_string(x,y),colour=colours) + #Main plot object
       line.theme +
       ggplot2::geom_line(colour=colours,size=1.2)
   }
@@ -583,26 +597,26 @@ plot.line.bf <- function(data,x,y,
     if(is.null(colours)){
       colours <- set.colours(length(unique(clone[,get(group.by)]))) #Set colours according to the group
     }
-    p <- ggplot2::ggplot(data,aes_string(x,y,colour=group.by,group=group.by)) + #Main plot object
+    p <- ggplot2::ggplot(data,ggplot2::aes_string(x,y,colour=group.by,group=group.by)) + #Main plot object
       line.theme +
-      ggplot2::geom_line(aes_string(colour=group.by),size=1.2) +
+      ggplot2::geom_line(ggplot2::aes_string(colour=group.by),size=1.2) +
       ggplot2::scale_colour_manual(values=colours)
   }
   if(show.points){
-    p <- p + geom_point(size=2.3) #Add in points
+    p <- p + ggplot2::geom_point(size=2.3) #Add in points
   }
   if(!dum){ #Scale continuous because underlying categories were numeric
-    p <- p + scale_x_continuous(breaks = ticks.seq.x, labels = paste0(ticks.seq.x,unit.x))
+    p <- p + ggplot2::scale_x_continuous(breaks = ticks.seq.x, labels = paste0(ticks.seq.x,unit.x))
 
   }
   if(length(unique(clone[,get(x)]))>= 10){ #If there are more than 10 groups, make the x axis certicle
-    p <- p + theme(axis.text.x = ggplot2::element_text(angle=90,size=11, margin=ggplot2::margin(t=0,l=10),hjust=1,vjust=0.5))
+    p <- p + ggplot2::theme(axis.text.x = ggplot2::element_text(angle=90,size=11, margin=ggplot2::margin(t=0,l=10),hjust=1,vjust=0.5))
   }
 
   num.row <- round(sum(nchar(as.character(unique(clone[,get(group.by)]))))/100)+1 #Set numnber of legend rows
-  p <- p + labs(title=plot.fig.num,subtitle=plot.title,x=x.axis,y=y.axis,caption = caption) + #Add in all the captions
-    guides(colour=guide_legend(title=legend.title,nrow=num.row,title.position = "top")) +
-    scale_y_continuous(breaks = ticks.seq.y$breaks,labels = ticks.seq.y$labels)
+  p <- p + ggplot2::labs(title=plot.fig.num,subtitle=plot.title,x=x.axis,y=y.axis,caption = caption) + #Add in all the captions
+    ggplot2::guides(colour=guide_legend(title=legend.title,nrow=num.row,title.position = "top")) +
+    ggplot2::scale_y_continuous(breaks = ticks.seq.y$breaks,labels = ticks.seq.y$labels)
   if(ingraph.labels){
     p <- p + directlabels::geom_dl(aes_string(label=group.by),method=list("last.points",
                                                                           fontfamily="GT-Pressura-Regular",
@@ -614,7 +628,7 @@ plot.line.bf <- function(data,x,y,
   }
   if(export){
     if(export.name==""){
-      export.name <- "Rplot"
+      export.name <- "Rplot.pdf"
     }
     export.bf.plot(export.name,p)
   }
@@ -691,22 +705,22 @@ plot.pyramid.bf <- function(data,
   seq.ticks <- c(seq(-max.plot,0,max.plot/5),seq(max.plot/5,max.plot,max.plot/5)) #Set the ticks for x
   ticks.labels <- paste0(scales::comma(c(seq(max.plot,0,-max.plot/5),seq(max.plot/5,max.plot,max.plot/5))),unit.x) #Set the tick labels
   clone[get(diff)==levels[2],(x):=-get(x)] #Invert the amount for second label to construct a pyramid
-  p <- ggplot2::ggplot(data=clone,aes_string(group,x,fill=diff)) + #Set up the base plot
+  p <- ggplot2::ggplot(data=clone,ggplot2::aes_string(group,x,fill=diff)) + #Set up the base plot
     pyramid.theme +
-    geom_bar(stat="identity") +
-    scale_y_continuous(breaks = seq.ticks,labels = ticks.labels, limits = c(-max.plot,max.plot)) +
-    scale_fill_manual(values=colours) +
-    coord_flip() #Flip it - this is most important to make it look like a pyramid.
+    ggplot2::geom_bar(stat="identity") +
+    ggplot2::scale_y_continuous(breaks = seq.ticks,labels = ticks.labels, limits = c(-max.plot,max.plot)) +
+    ggplot2::scale_fill_manual(values=colours) +
+    ggplot2::coord_flip() #Flip it - this is most important to make it look like a pyramid.
   #Handle exporting
-  p <- p + labs(title=plot.fig.num,subtitle=plot.title,y=x.axis,x=y.axis,caption=caption) +
-    guides(fill=guide_legend(title=legend.title,title.position = "top"))
+  p <- p + ggplot2::labs(title=plot.fig.num,subtitle=plot.title,y=x.axis,x=y.axis,caption=caption) +
+    ggplot2::guides(fill=guide_legend(title=legend.title,title.position = "top"))
   #Add logo if needed
   if(logo){
     p <- add_logo(p,logo.type)
   }
   if(export){
     if(export.name==""){
-      export.name <- "Rplot"
+      export.name <- "Rplot.pdf"
     }
     export.bf.plot(export.name,p)
   }
@@ -763,7 +777,7 @@ plot.mekko.bf <- function(data,
     clone <- cbind(data)
 
   }
-  setkeyv(x=clone,y)
+  data.table::setkeyv(x=clone,y)
   clone[,w:=cumsum(get(x))]
   clone[,wm:=w-get(x)]
   clone[,width:=w-wm]
@@ -772,10 +786,12 @@ plot.mekko.bf <- function(data,
     if(is.null(colours)){
       colours <- set.colours(1)
     }
-    p <- ggplot(data=clone) +
+    p <- ggplot2::ggplot(data=clone) +
       mekko.theme +
-      geom_rect(aes_string(xmin = "wm", xmax = "w",
-                    ymax = y, ymin = 0), colour = "white", size = 0.1, fill=colours)
+      ggplot2::geom_rect(ggplot2::aes_string(xmin = "wm", xmax = "w",ymax = y, ymin = 0),
+                         colour = "white",
+                         size = 0.1,
+                         fill=colours)
   }
   else{
     if(is.null(colours)){
@@ -783,25 +799,27 @@ plot.mekko.bf <- function(data,
     }
     p <- ggplot(data=clone) +
       mekko.theme +
-      geom_rect(aes_string(xmin = "wm", xmax = "w",
-                         ymax = y, ymin = 0, fill = group.by), colour = "white", size = 0.1) +
-      scale_fill_manual(values = colours)
+      ggplot2::geom_rect(aes_string(xmin = "wm", xmax = "w",ymax = y, ymin = 0, fill = group.by),
+                         colour = "white",
+                         size = 0.1) +
+      ggplot2::scale_fill_manual(values = colours)
   }
   max.plot.x <- max(clone[,w]) * 1.05
   max.plot.y <- max(clone[,get(y)]) * 1.05
   ticks.x <- set.ticks.seq(max.plot.x,0,unit.x)
   ticks.y <- set.ticks.seq(max.plot.y,0,unit.y)
-  p <- p + labs(title = plot.fig.num, subtitle = plot.title, caption = caption, x=x.axis,y=y.axis) +
-    scale_x_continuous(expand = c(0,0),limits=c(0,max.plot.x),breaks = ticks.x$breaks, labels = ticks.x$labels) +
-    scale_y_continuous(expand=c(0,0),limits=c(0,max.plot.y),breaks = ticks.y$breaks, labels = ticks.y$labels) +
-    guides(fill = guide_legend(title = legend.title, title.position = "top"))
+  p <- p +
+    ggplot2::labs(title = plot.fig.num, subtitle = plot.title, caption = caption, x=x.axis,y=y.axis) +
+    ggplot2::scale_x_continuous(expand = c(0,0),limits=c(0,max.plot.x),breaks = ticks.x$breaks, labels = ticks.x$labels) +
+    ggplot2::scale_y_continuous(expand=c(0,0),limits=c(0,max.plot.y),breaks = ticks.y$breaks, labels = ticks.y$labels) +
+    ggplot2::guides(fill = ggplot2::guide_legend(title = legend.title, title.position = "top"))
   #Add logo if needed
   if(logo){
     p <- add_logo(p,logo.type)
   }
   if(export){
     if(export.name==""){
-      export.name <- "Rplot"
+      export.name <- "Rplot.pdf"
     }
     export.bf.plot(export.name,p)
   }
@@ -885,34 +903,34 @@ plot.change.arrow.bf <- function(data,
   else{
     stop("Invalid order by variable. need to be either 'change' or 'value'") #Otherwise it'll stop
   }
-  p <- ggplot(clone,aes_string(x, cat, group = cat)) + #Base plot elements. Grouping is done by cat for geom_path
+  p <- ggplot2::ggplot(clone,ggplot2::aes_string(x, cat, group = cat)) + #Base plot elements. Grouping is done by cat for geom_path
     brookfield.base.theme() + #Set base theme - nothing new for this plot
-    geom_path(aes(colour = diff),
-              size      = 3,
-              arrow     = arrow(angle  = 25,
-                                length = unit(0.15, "inches"),
-                                type   = "closed"), #All the arrow elements including angle and length, arrow type is closed
-              lineend   = "butt",
-              linejoin  = "mitre", #Lineend and linejoin as well as mitre set to have a "crisp" end
-              linemitre = 4)
+    ggplot2::geom_path(ggplot2::aes(colour = diff),
+                       size      = 3,
+                       arrow     = ggplot2::arrow(angle  = 25,
+                                                  length = unit(0.15, "inches"),
+                                                  type   = "closed"), #All the arrow elements including angle and length, arrow type is closed
+                       lineend   = "butt",
+                       linejoin  = "mitre", #Lineend and linejoin as well as mitre set to have a "crisp" end
+                       linemitre = 4)
   if(min(clone[, diff]) >= 0 & max(clone[, diff]) > 0){ #If we only have increasing vectors
     arrow.colours <- set.colours(2, categorical.choice = c("grey", "light.blue")) #Set colour from grey to light blue
-    p <- p + scale_colour_gradient(low   = arrow.colours[1],
-                                   high  = arrow.colours[2],
-                                   guide = "none")
+    p <- p + ggplot2::scale_colour_gradient(low   = arrow.colours[1],
+                                            high  = arrow.colours[2],
+                                            guide = "none")
   }
   else if(max(clone[,diff])<=0 & min(clone[,diff])<0){ #If we only have decreasing vectors
     arrow.colours <- set.colours(2, categorical.choice = c("magenta", "grey"))
-    p <- p + scale_colour_gradient(low   = arrow.colours[1],
-                                   high  = arrow.colours[2],
-                                   guide = "none")
+    p <- p + ggplot2::scale_colour_gradient(low   = arrow.colours[1],
+                                            high  = arrow.colours[2],
+                                            guide = "none")
   }
   else{ #Or if we have both increasing and decreasing vectors
     arrow.colours <- set.colours(3, categorical.choice = c("magenta", "grey", "light.blue"))
-    p <- p + scale_colour_gradient2(low   = arrow.colours[1],
-                                    mid   = arrow.colours[2],
-                                    high  = arrow.colours[3],
-                                    guide = "none")
+    p <- p + ggplot2::scale_colour_gradient2(low   = arrow.colours[1],
+                                             mid   = arrow.colours[2],
+                                             high  = arrow.colours[3],
+                                             guide = "none")
   }
   #Dealing with value annotation
   if(annotate){
@@ -920,21 +938,21 @@ plot.change.arrow.bf <- function(data,
     end.year <- max(clone[, get(time.var)]) #Set the end year
     if(max(clone[, diff]) > 0){ #For the positive changes
 
-      p <- p + geom_text(data = clone[(diff > 0 & get(time.var) == start.year)], #Set the text for starting year for increase
-                         aes(label = str_c(comma(clone[(diff > 0 & get(time.var) == start.year), get(x)]), unit.x),
-                             x     = clone[(diff > 0 & get(time.var) == start.year), get(x)] - max.plot * nudge.end, #Subtract because increase implies starting year is on the right
-                             y     = clone[(diff > 0 & get(time.var) == start.year), get(cat)]),
-                         family = "GT-Pressura-Regular",
+      p <- p + ggplot2::geom_text(data = clone[(diff > 0 & get(time.var) == start.year)], #Set the text for starting year for increase
+                                  ggplot2::aes(label = stringr::str_c(scales::comma(clone[(diff > 0 & get(time.var) == start.year), get(x)]), unit.x),
+                                               x     = clone[(diff > 0 & get(time.var) == start.year), get(x)] - max.plot * nudge.end, #Subtract because increase implies starting year is on the right
+                                               y     = clone[(diff > 0 & get(time.var) == start.year), get(cat)]),
+                                               family = "GT-Pressura-Regular",
                          hjust  = 1,
                          size = 9*0.352777778,
                          colour = set.colours(1, categorical.choice = "dark.blue"))
 
       print(clone[(diff > 0 & get(time.var) == end.year), get(cat)])
 
-      p <- p + geom_text(data = clone[(diff > 0 & get(time.var)==end.year)], #Set the text for ending year for increase
-                         aes(label = str_c(comma(clone[(diff > 0 & get(time.var) == end.year), get(x)]), unit.x),
-                             x     = clone[(diff > 0 & get(time.var) == end.year), get(x)] + max.plot * nudge.beg, #Add because increase implies ending year is on the right
-                             y     = clone[(diff > 0 & get(time.var) == end.year), get(cat)]),
+      p <- p + ggplot2::geom_text(data = clone[(diff > 0 & get(time.var)==end.year)], #Set the text for ending year for increase
+                                  ggplot2::aes(label = stringr::str_c(scales::comma(clone[(diff > 0 & get(time.var) == end.year), get(x)]), unit.x),
+                                               x     = clone[(diff > 0 & get(time.var) == end.year), get(x)] + max.plot * nudge.beg, #Add because increase implies ending year is on the right
+                                               y     = clone[(diff > 0 & get(time.var) == end.year), get(cat)]),
                          family = "GT-Pressura-Regular",
                          hjust  = 0,
                          size = 9*0.352777778,
@@ -942,48 +960,48 @@ plot.change.arrow.bf <- function(data,
     }
     #Now dealing with the cases where value decreased
     if(min(clone[,diff])<0){
-      p <- p + geom_text(data   = clone[(diff < 0 & get(time.var) == start.year)], #Set the text for starting year for decrease
-                         aes(label = str_c(comma(clone[(diff < 0 & get(time.var) == start.year), get(x)]), unit.x),
-                             x     = clone[(diff < 0 & get(time.var) == start.year), get(x)] + max.plot * nudge.beg, #Add because decrease imply starting year is on the right
-                             y     = clone[(diff < 0 & get(time.var) ==start.year), get(cat)]),
-                         family = "GT-Pressura-Regular",
-                         hjust  = 1,
-                         size = 9*0.352777778,
-                         colour = set.colours(1, categorical.choice = "magenta")) #Set colour pink here, but probably change so it can be dynamics
+      p <- p + ggplot2::geom_text(data   = clone[(diff < 0 & get(time.var) == start.year)], #Set the text for starting year for decrease
+                                  ggplot2::aes(label = stringr::str_c(scales::comma(clone[(diff < 0 & get(time.var) == start.year), get(x)]), unit.x),
+                                               x     = clone[(diff < 0 & get(time.var) == start.year), get(x)] + max.plot * nudge.beg, #Add because decrease imply starting year is on the right
+                                               y     = clone[(diff < 0 & get(time.var) ==start.year), get(cat)]),
+                                  family = "GT-Pressura-Regular",
+                                  hjust  = 1,
+                                  size = 9*0.352777778,
+                                  colour = set.colours(1, categorical.choice = "magenta")) #Set colour pink here, but probably change so it can be dynamics
 
-      p <- p + geom_text(data   = clone[(diff < 0 & get(time.var) == end.year)], #Set the text for ending year for decrease
-                        aes(label = str_c(comma(clone[(diff < 0 & get(time.var) == end.year), get(x)]), unit.x),
-                            x     = clone[(diff < 0 & get(time.var) == end.year), get(x)] - max.plot * nudge.end, #Subtract because decrease imply ending year is on the left
-                            y     = clone[(diff < 0 & get(time.var) == end.year), get(cat)]),
-                         family = "GT-Pressura-Regular",
-                         hjust  = 0,
-                        size = 9*0.352777778,
-                         colour = set.colours(1, categorical.choice = "magenta")) #Set colour pink here, but probably change so it can be dynamic
+      p <- p + ggplot2::geom_text(data   = clone[(diff < 0 & get(time.var) == end.year)], #Set the text for ending year for decrease
+                                  ggplot2::aes(label = stringr::str_c(scales::comma(clone[(diff < 0 & get(time.var) == end.year), get(x)]), unit.x),
+                                               x     = clone[(diff < 0 & get(time.var) == end.year), get(x)] - max.plot * nudge.end, #Subtract because decrease imply ending year is on the left
+                                               y     = clone[(diff < 0 & get(time.var) == end.year), get(cat)]),
+                                  family = "GT-Pressura-Regular",
+                                  hjust  = 0,
+                                  size = 9*0.352777778,
+                                  colour = set.colours(1, categorical.choice = "magenta")) #Set colour pink here, but probably change so it can be dynamic
     }
   }
   #Adding the graph explanation
   if(label){
-    p <- p +   annotate("text",
-                        x      = sooner.x,
-                        y      = length(unique(clone[,get(cat)])) + 0.5, #Currently hacked together - should try to find ways to show text more beautifully
-                        label  = stringr::str_c("In ",min(unique(clone[,get(time.var)]))),
-                        family = "GT-Pressura-Regular") +
-      annotate("text",
-               x      = later.x,
-               y      = length(unique(clone[,get(cat)])) + 0.5,
-               label  = stringr::str_c("In ",max(unique(clone[, get(time.var)]))),
-               family = "GT-Pressura-Regular")
+    p <- p + ggplot2::annotate("text",
+                               x      = sooner.x,
+                               y      = length(unique(clone[,get(cat)])) + 0.5, #Currently hacked together - should try to find ways to show text more beautifully
+                               label  = stringr::str_c("In ",min(unique(clone[,get(time.var)]))),
+                               family = "GT-Pressura-Regular") +
+      ggplot2::annotate("text",
+                        x      = later.x,
+                        y      = length(unique(clone[,get(cat)])) + 0.5,
+                        label  = stringr::str_c("In ",max(unique(clone[, get(time.var)]))),
+                        family = "GT-Pressura-Regular")
   }
 
-  p <- p + scale_x_continuous(limits = c(min(clone[, get(x)] - max.plot*nudge.beg, ticks$breaks), #Get the tail - it's complicated because also need to get where the labels are
-                                         max(clone[, get(x)] + max.plot*nudge.beg, ticks$breaks)), #Get the tail - it's complicated because also need to get where the labels are
-                              breaks = ticks$breaks,
-                              labels = ticks$labels) +
-    labs(title    = plot.fig.num,
-         subtitle = plot.title,
-         x        = x.axis,
-         y        = y.axis,
-         caption  = caption)
+  p <- p + ggplot2::scale_x_continuous(limits = c(min(clone[, get(x)] - max.plot*nudge.beg, ticks$breaks), #Get the tail - it's complicated because also need to get where the labels are
+                                                  max(clone[, get(x)] + max.plot*nudge.beg, ticks$breaks)), #Get the tail - it's complicated because also need to get where the labels are
+                                       breaks = ticks$breaks,
+                                       labels = ticks$labels) +
+    ggplot2::labs(title    = plot.fig.num,
+                  subtitle = plot.title,
+                  x        = x.axis,
+                  y        = y.axis,
+                  caption  = caption)
   #Add logo if needed
   if(logo){
     p <- add_logo(p,logo.type)
@@ -1072,39 +1090,39 @@ plot.area.bf <- function(data,
   }
 
   #Now we're actually onto plotting things
-  p <- ggplot(clone,aes_string(x,y,fill="group.by"),colours=NULL) + #Set up base plot with the colour variable at least
+  p <- ggplot2::ggplot(clone,ggplot2::aes_string(x,y,fill="group.by"),colours=NULL) + #Set up base plot with the colour variable at least
     brookfield.base.theme()
   #If position is stacked
   if(stacked){
     max.plot.y <- max(clone[,sum(get(y)),by=get(x)][,V1]) #Find the max plot in y
     min.plot.y <- 0 #Min plot is always 0
     ticks.y <- set.ticks.seq(max.plot.y,min.plot.y,unit = unit.y) #Set tick accordingly
-    p <- p + geom_area(position = "stack") #Set up the area so it stacks on top of each other
+    p <- p + ggplot2::geom_area(position = "stack") #Set up the area so it stacks on top of each other
   }
   else{ #If it's identity - Wish list: specify different levels of opacity
     max.plot.y <- max(clone[,get(y)]) #Get max plot in y
     min.plot.y <- 0 #Min plot is always 0
     ticks.y <- set.ticks.seq(max.plot.y, min.plot.y, unit = unit.y) #Set the ticks accordingly
-    p <- p + geom_area(aes(group=group.by), position = "identity", alpha=alpha) #Set up area so it appears one before the other. Alpha is important for opacity and readability
+    p <- p + ggplot2::geom_area(ggplot2::aes(group=group.by), position = "identity", alpha=alpha) #Set up area so it appears one before the other. Alpha is important for opacity and readability
   }
   if(is.null(colours)){ #If colours are not provided, set colours here
     colours <- set.colours(length(unique(clone[,group.by])))
   }
-  p <- p + scale_fill_manual(values = colours) #Scale colours accordingly
-  p <- p + scale_y_continuous(expand = c(0,0),
-                              limits = c(min.plot.y, max.plot.y*1.05),
-                              breaks = ticks.y$breaks,
-                              labels = ticks.y$labels) #Set all the tick elements for x
+  p <- p + ggplot2::scale_fill_manual(values = colours) #Scale colours accordingly
+  p <- p + ggplot2::scale_y_continuous(expand = c(0,0),
+                                       limits = c(min.plot.y, max.plot.y*1.05),
+                                       breaks = ticks.y$breaks,
+                                       labels = ticks.y$labels) #Set all the tick elements for x
   if(!dum){
-    p <- p + scale_x_continuous(expand = c(0,0.02)) #
+    p <- p + ggplot2::scale_x_continuous(expand = c(0,0.02)) #
   }
   #Add in all the label components
-  p <- p + labs(title    = plot.fig.num,
-                subtitle = plot.title,
-                x        = x.axis,
-                y        = y.axis,
-                caption  = caption) +
-    guides(fill=guide_legend(title=legend.title)) #Add legend and guide
+  p <- p + ggplot2::labs(title    = plot.fig.num,
+                         subtitle = plot.title,
+                         x        = x.axis,
+                         y        = y.axis,
+                         caption  = caption) +
+    ggplot2::guides(fill=guide_legend(title=legend.title)) #Add legend and guide
   #Add logo if needed
   if(logo){
     p <- add_logo(p,logo.type)
