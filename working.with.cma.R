@@ -1,7 +1,10 @@
 
 library(rgdal)
 library(rgeos)
+library(devtools)
 library(data.table)
+library(stringr)
+library(ggplot2)
 
 
 
@@ -44,7 +47,7 @@ rm(areas.cmaDF.row)
 areas.cmaDF[,num.row:=.N,by=group]
 areas.cmaDF <- areas.cmaDF[num.row>6]
 use_data(areas.cmaDF,overwrite=TRUE)
-
+``
 cma.data <- geography[,.(unique(`CMAname/RMRnom`)),by=`CMAPuid/RMRPidu`]
 names(cma.data) <- c("ID","Name")
 cma.data[,ID:=as.character(ID)]
@@ -121,3 +124,94 @@ test.plot <- ggplot(data=areas.erDF) +
   coord_map("lambert",parameters=c(49,77),expand=FALSE)
 
 
+
+
+
+
+#############################################
+#2021 Census geographies
+
+geography.2021 <- fread("2021_geography/2021_92-151_X.csv")
+
+########################3
+#CMA
+
+areas.cma.2021 <- readOGR("2021_geography/lcma000b21a_e.shp")
+areas.cma.2021 <- spTransform(areas.cma.2021, CRS=CRS("+proj=longlat +datum=NAD83"))
+areas.cma.2021.simp <- gSimplify(areas.cma.2021,tol=0.001,topologyPreserve=TRUE)
+areas.cma.2021DF <- fortify(areas.cma.2021.simp)
+areas.cma.2021DF <- as.data.table(areas.cma.2021DF)
+
+areas.cma.2021DF.row <- areas.cma.2021DF[,.N,by=id]
+areas.cma.2021DF[,id:=rep(areas.cma.2021@data$CMAPUID,areas.cma.2021DF.row[,N])]
+rm(areas.cma.2021DF.row)
+areas.cma.2021DF[,num.row:=.N,by=group]
+areas.cma.2021DF[id=="47755",num.row:=7]
+areas.cma.2021DF <- areas.cma.2021DF[num.row>6]
+use_data(areas.cma.2021DF,overwrite=TRUE)
+
+cma.data.2021 <- geography.2021[,.(unique(`CMANAME_RMRNOM`)),by=`CMAPUID_RMRPIDU`]
+names(cma.data.2021) <- c("ID","Name")
+cma.data.2021[,ID:=as.character(ID)]
+cma.data.2021[,ID.last.three:=str_sub(ID,3,5)]
+cma.data.2021 <- cma.data.2021[!(ID.last.three %in% c("000","996","997","998","999"))]
+
+cma.data.2021[,Name:=str_replace_all(Name,"--","-")]
+cma.data.2021[,Name:=str_replace_all(Name,"�","e")]
+cma.data.2021[,Name:=tstrsplit(Name," /",keep=1)]
+cma.data.2021[,Name:=tstrsplit(Name," \\(",keep=1)]
+setkey(cma.data.2021,ID)
+cma.data.2021[,long:=coordinates(areas.cma.2021)[,1]]
+cma.data.2021[,lat:=coordinates(areas.cma.2021)[,2]]
+rows.cma.2021 <- areas.cma.2021DF[,.N,by=id]
+rows.cma.2021[,id:=as.character(id)]
+setkey(rows.cma.2021,id)
+cma.data.2021[,num.row:=rows.cma.2021[,N]]
+use_data(cma.data.2021,overwrite=TRUE)
+
+
+
+######################
+#2021 CSD boundaries
+
+areas.csd.2021 <- readOGR("2021_geography/lcsd000b21a_e.shp")
+areas.csd.2021 <- spTransform(areas.csd.2021, CRS=CRS("+proj=longlat +datum=NAD83"))
+areas.csd.2021.simp <- gSimplify(areas.csd.2021,tol=0.01,topologyPreserve=TRUE)
+areas.csd.2021DF <- fortify(areas.csd.2021.simp)
+areas.csd.2021DF <- as.data.table(areas.csd.2021DF)
+areas.csd.2021DF[,num.row:=.N,by=group]
+areas.csd.2021DF.row <- areas.csd.2021DF[,.N,by=id]
+areas.csd.2021DF[,id:=rep(areas.csd.2021@data$CSDUID,areas.csd.2021DF.row[,N])]
+rm(areas.csd.2021DF.row)
+use_data(areas.csd.2021DF,overwrite=TRUE)
+
+
+csd.data.2021 <- geography.2021[,.(unique(`CSDNAME_SDRNOM`)),by=`CSDUID_SDRIDU`]
+names(csd.data.2021) <- c("ID","Name")
+csd.data.2021[,ID:=as.character(ID)]
+csd.data.2021[,Name:=str_replace_all(Name,"--","-")]
+csd.data.2021[,Name:=str_replace_all(Name,"�","e")]
+csd.data.2021[,Name:=tstrsplit(Name," /",keep=1)]
+csd.data.2021[,Name:=tstrsplit(Name," \\(",keep=1)]
+setkey(csd.data.2021,ID)
+csd.data.2021[,long:=coordinates(areas.csd.2021.simp)[,1]]
+csd.data.2021[,lat:=coordinates(areas.csd.2021.simp)[,2]]
+csd.data.2021[,num.row:=areas.csd.2021DF[,.N,by=id][,2]]
+use_data(csd.data.2021,overwrite=TRUE)
+
+
+
+
+#General testing
+test.plot <- ggplot(data=areas.csd.2021DF) +
+  brookfield.base.theme() +
+  theme(axis.line.x = element_blank(),
+        axis.line.y = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank()) +
+  geom_path(aes(x=long,y=lat,group=group),colour=set.colours(1,categorical.choice = "grey"),size=0.1) +
+  coord_map("lambert",parameters=c(49,77),expand=FALSE)

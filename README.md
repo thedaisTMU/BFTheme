@@ -344,7 +344,14 @@ correctly.
 
 ## Update logs
 
-Current Version: 1.0.1
+Current Version: 1.1.0 (updated November 4th 2022)
+
+New in Version 1.1.0
+
+-   Added 2021 Census geographies (namely for CMA and CSD). Mapping
+    functions default to 2021 geographies.
+-   Changed pacakge structure slightly, splitting each function into its
+    own R file.
 
 New in Version 1.0.1
 
