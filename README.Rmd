@@ -128,9 +128,13 @@ Installing the package is fairly straightforward, except for a fact that if you 
 
 ## Update logs
 
-Current Version: 1.1.0 (updated November 4th 2022)
+Current Version: 1.2.0 (updated November 29th 2022)
 
-New in Version 1.1.0
+New in Version 1.2.0
+
+-   Added option in plot.line.bf to fit loess line instead of just connecting dots
+
+New in Version 1.1.0 (November 4th 2022)
 
 -   Added 2021 Census geographies (namely for CMA and CSD). Mapping functions default to 2021 geographies.
 -   Changed pacakge structure slightly, splitting each function into its own R file.

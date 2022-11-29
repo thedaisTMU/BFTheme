@@ -9,6 +9,7 @@
 #' @param cat.order Put the order of categorical variable in here (as a vector) c("cat.1","cat.2","cat.3") and so on.
 #' If you don't, a default order will be generated.
 #' @param ingraph.labels TRUE/FALSE whether to show a label at the end of the line
+#' @param smooth TRUE/FALSE - default as FALSE. If TRUE, use loess to draw line instead of connected lines
 #' @param colours Vector (or set.colour function) of colours to use. If not, default palette is generated.
 #' @param plot.title Character denoting title of the plot
 #' @param plot.fig.num Character denoting plot number (or another plot annotations)
@@ -33,6 +34,7 @@ plot.line.bf <- function(data,x,y,
                          show.points = FALSE,
                          cat.order = NULL,
                          ingraph.labels = FALSE,
+                         smooth = FALSE,
                          colours = NULL,
                          plot.title="",
                          plot.fig.num="",
@@ -47,7 +49,7 @@ plot.line.bf <- function(data,x,y,
                          logo.type = "small",
                          export = FALSE,
                          export.name = ""){
-  if(!data.table::is.data.table(data)){ #Chek and coerce into data.table
+  if(!data.table::is.data.table(data)){ #Check and coerce into data.table
     clone <- data.table::as.data.table(data)
     warning("Data supplied is not data.table - forcing it to be data.table; may not produce desirable results")
   }
@@ -81,18 +83,35 @@ plot.line.bf <- function(data,x,y,
     if(is.null(colours)){
       colours <- set.colours(1) #Only use one colour
     }
-    p <- ggplot2::ggplot(clone,ggplot2::aes_string(x,y),colour=colours) + #Main plot object
-      line.theme +
-      ggplot2::geom_line(colour=colours,size=1.2)
+    if(smooth==TRUE){
+      p <- ggplot2::ggplot(clone,ggplot2::aes_string(x,y),colour=colours) + #Main plot object
+        line.theme +
+        ggplot2::geom_smooth(colour=colours,size=1.2,se=FALSE)
+    }
+    else{
+      p <- ggplot2::ggplot(clone,ggplot2::aes_string(x,y),colour=colours) + #Main plot object
+        line.theme +
+        ggplot2::geom_line(colour=colours,size=1.2)
+    }
+
   }
   else{
     if(is.null(colours)){
       colours <- set.colours(length(unique(clone[,get(group.by)]))) #Set colours according to the group
     }
-    p <- ggplot2::ggplot(data,ggplot2::aes_string(x,y,colour=group.by,group=group.by)) + #Main plot object
-      line.theme +
-      ggplot2::geom_line(ggplot2::aes_string(colour=group.by),size=1.2) +
-      ggplot2::scale_colour_manual(values=colours)
+    if(smooth==TRUE){
+      p <- ggplot2::ggplot(data,ggplot2::aes_string(x,y,colour=group.by,group=group.by)) + #Main plot object
+        line.theme +
+        ggplot2::geom_smooth(ggplot2::aes_string(colour=group.by),size=1.2,se=FALSE) +
+        ggplot2::scale_colour_manual(values=colours)
+    }
+    else{
+      p <- ggplot2::ggplot(data,ggplot2::aes_string(x,y,colour=group.by,group=group.by)) + #Main plot object
+        line.theme +
+        ggplot2::geom_line(ggplot2::aes_string(colour=group.by),size=1.2) +
+        ggplot2::scale_colour_manual(values=colours)
+    }
+
   }
   if(show.points){
     p <- p + ggplot2::geom_point(size=2.3) #Add in points
