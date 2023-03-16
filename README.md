@@ -334,9 +334,15 @@ correctly.
 
 ## Update logs
 
-Current Version: 1.2.0 (updated November 29th 2022)
+Current Version: 1.2.1 (updated March 16th 2023)
 
-New in Version 1.2.0
+New in version 1.2.1
+
+- Fixed a bug in plot.column.bf that prevented labels to plot from
+  stacked column
+- A few minor bugs here and there
+
+New in Version 1.2.0 (updated November 29th, 2022)
 
 - Added option in plot.line.bf to fit loess line instead of just
   connecting dots
