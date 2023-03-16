@@ -8,20 +8,51 @@
 #' @return A vector with $breaks which are breaks and $labels which are the labelled values
 #' @examples
 #' set.ticks.seq(100,0,"%")
-set.ticks.seq <- function(max,min,unit,num.ticks=5){
+set.ticks.seq <- function(max,min,unit,num.ticks=5,lang="EN"){
   if(unit==""){ #If there are no unit
-    ticks <- scales::cbreaks(c(max,min),labels= unit_format(unit=unit,big.mark = ",",sep=""))
+    if(lang=="EN"){
+      ticks <- scales::cbreaks(c(max,min),labels= unit_format(unit=unit,big.mark = ",",sep=""))
+      return(ticks)
+    }
+    else{
+      ticks <- scales::cbreaks(c(max,min),labels= unit_format(unit=unit,big.mark = " ",decimal.mark = ",",sep=""))
+      return(ticks)
+    }
+
   }
   if(unit=="$"){
-    ticks <- scales::cbreaks(c(max,min),labels = dollar_format(largest_with_cents = 100)) #Format money
-    return(ticks)
+    if(lang=="EN"){
+      ticks <- scales::cbreaks(c(max,min),labels = dollar_format(largest_with_cents = 100)) #Format money
+      return(ticks)
+    }
+    else{
+      ticks <- scales::cbreaks(c(max,min),labels = dollar_format(prefit="",
+                                                                 suffix=" $",
+                                                                 big.mark=" ",
+                                                                 decimal.mark=",",
+                                                                 largest_with_cents = 100)) #Format money
+      return(ticks)
+    }
+
   }
   if(unit=="%" & max >= 75){
-    ticks <- scales::cbreaks(c(100,0),labels = unit_format(unit="%",big.mark = ",",sep="")) #Format percentage
-    return(ticks)
+    if(lang=="EN"){
+      ticks <- scales::cbreaks(c(100,0),labels = unit_format(unit="%",big.mark = ",",sep="")) #Format percentage
+      return(ticks)
+    }
+    else{
+      ticks <- scales::cbreaks(c(100,0),labels = unit_format(unit="%",big.mark = " ",decimal.mark=",",sep="")) #Format percentage
+    }
   }
   else{
-    ticks <- scales::cbreaks(c(max,min),labels=unit_format(unit=unit,big.mark = ",",sep=" ")) #Format percentage without the percentage sign
-    return(ticks)
+    if(lang=="EN"){
+      ticks <- scales::cbreaks(c(max,min),labels=unit_format(unit=unit,big.mark = ",",sep=" ")) #Format percentage without the percentage sign
+      return(ticks)
+    }
+    else{
+      ticks <- scales::cbreaks(c(max,min),labels=unit_format(unit=unit,big.mark = " ",decimal.mark=",",sep=" ")) #Format percentage without the percentage sign
+      return(ticks)
+    }
+
   }
 }

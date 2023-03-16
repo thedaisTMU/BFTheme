@@ -96,6 +96,7 @@ plot.line.bf <- function(data,x,y,
 
   }
   else{
+    num.row <- round(sum(nchar(as.character(unique(clone[,get(group.by)]))))/100)+1 #Set numnber of legend rows
     if(is.null(colours)){
       colours <- set.colours(length(unique(clone[,get(group.by)]))) #Set colours according to the group
     }
@@ -124,10 +125,12 @@ plot.line.bf <- function(data,x,y,
     p <- p + ggplot2::theme(axis.text.x = ggplot2::element_text(angle=90,size=11, margin=ggplot2::margin(t=0,l=10),hjust=1,vjust=0.5))
   }
 
-  num.row <- round(sum(nchar(as.character(unique(clone[,get(group.by)]))))/100)+1 #Set numnber of legend rows
+
   p <- p + ggplot2::labs(title=plot.fig.num,subtitle=plot.title,x=x.axis,y=y.axis,caption = caption) + #Add in all the captions
-    ggplot2::guides(colour=guide_legend(title=legend.title,nrow=num.row,title.position = "top")) +
     ggplot2::scale_y_continuous(breaks = ticks.seq.y$breaks,labels = ticks.seq.y$labels)
+  if(!is.null(group.by)){
+    p <- p + ggplot2::guides(colour=guide_legend(title=legend.title,nrow=num.row,title.position = "top"))
+  }
   if(ingraph.labels){
     p <- p + directlabels::geom_dl(aes_string(label=group.by),method=list("last.points",
                                                                           fontfamily="GT-Pressura-Regular",
